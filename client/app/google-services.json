@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "977817463049",
+    "firebase_url": "https://criengine-server.firebaseio.com",
+    "project_id": "criengine-server",
+    "storage_bucket": "criengine-server.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977817463049:android:aefe94539e8adea3e14bd8",
+        "android_client_info": {
+          "package_name": "com.example.criengine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977817463049-bvfa373dnncbc8rsgmo3qvhjdkctdsfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD05ousR-k7OjQEmENiliIB2UDaXUrh9cQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977817463049-bvfa373dnncbc8rsgmo3qvhjdkctdsfk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

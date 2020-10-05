@@ -1,0 +1,29 @@
+Book
+{
+    "bookID": "Distinct String",
+    "owner": "String",
+    "title": "String",
+    "author": "String",
+    "description": "String",
+    "isbn": "String",
+    "status": "String/Enum",
+    "borrower": "String",
+    "geolocation": "String",
+    "imageUri": "String",
+}
+
+Profile
+{
+    "username": "Distinct String",
+    "contactInfo": {
+        "phone": "Int??",
+        "firstname": "String",
+        "email": "String"
+    },
+    "booksOwned":[
+        "bookId String"
+    ],
+    "booksNotOwned":[
+        "bookId String"
+    ]
+}
