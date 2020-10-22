@@ -20,6 +20,10 @@ public class ProfileActivity extends AppCompatActivity {
     private Button saveButton;
     private Button editCancelButton;
 
+    private String prevBioText;
+    private String prevPhoneText;
+    private String prevAddressText;
+
     private boolean editing = false;
 
     private void setPageViewOnly() {
@@ -63,9 +67,14 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (editing) {
-                    // TODO: reset text by storing current data somewhere
+                    bioEditText.setText(prevBioText);
+                    phoneEditText.setText(prevPhoneText);
+                    addressEditText.setText(prevAddressText);
                     setPageViewOnly();
                 } else {
+                    prevBioText = bioEditText.getText().toString();
+                    prevPhoneText = phoneEditText.getText().toString();
+                    prevAddressText = addressEditText.getText().toString();
                     setPageEditable();
                 }
                 editing = !editing;
