@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ProfileActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
 
     private ImageButton userImageButton;
     private TextView userTextView;
@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_my_profile);
 
         // get all the UI components
         userImageButton = findViewById(R.id.user_image);
