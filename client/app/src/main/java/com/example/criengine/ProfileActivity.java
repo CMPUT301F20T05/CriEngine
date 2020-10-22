@@ -45,6 +45,21 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (editing) {
+            // same as cancel button
+            bioEditText.setText(prevBioText);
+            phoneEditText.setText(prevPhoneText);
+            addressEditText.setText(prevAddressText);
+            setPageViewOnly();
+            editing = false;
+        } else {
+            // go back to previous activity
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
