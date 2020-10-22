@@ -17,8 +17,8 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText bioEditText;
     private EditText phoneEditText;
     private EditText addressEditText;
-    private Button saveButton;
-    private Button editCancelButton;
+    private Button cancelButton;
+    private Button editSaveButton;
 
     private String prevBioText;
     private String prevPhoneText;
@@ -27,8 +27,8 @@ public class ProfileActivity extends AppCompatActivity {
     private boolean editing = false;
 
     private void setPageViewOnly() {
-        saveButton.setVisibility(View.INVISIBLE);
-        editCancelButton.setText(R.string.edit_button);
+        cancelButton.setVisibility(View.INVISIBLE);
+        editSaveButton.setText(R.string.edit_button);
 
         bioEditText.setKeyListener(null);
         phoneEditText.setKeyListener(null);
@@ -36,8 +36,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setPageEditable() {
-        saveButton.setVisibility(View.VISIBLE);
-        editCancelButton.setText(R.string.cancel_button);
+        cancelButton.setVisibility(View.VISIBLE);
+        editSaveButton.setText(R.string.save_button);
 
         bioEditText.setKeyListener((KeyListener) bioEditText.getTag());
         phoneEditText.setKeyListener((KeyListener) phoneEditText.getTag());
@@ -55,23 +55,23 @@ public class ProfileActivity extends AppCompatActivity {
         bioEditText = findViewById(R.id.bio_text);
         phoneEditText = findViewById(R.id.phone_text);
         addressEditText = findViewById(R.id.addr_text);
-        saveButton = findViewById(R.id.save_button);
-        editCancelButton = findViewById(R.id.edit_cancel_button);
+        cancelButton = findViewById(R.id.cancel_button);
+        editSaveButton = findViewById(R.id.edit_save_button);
 
         // save the key listeners
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
 
-        editCancelButton.setOnClickListener(new View.OnClickListener() {
+        editSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editing) {
-                    bioEditText.setText(prevBioText);
-                    phoneEditText.setText(prevPhoneText);
-                    addressEditText.setText(prevAddressText);
+                    // pressing save on data
+                    // TODO: update database with new modified info
                     setPageViewOnly();
                 } else {
+                    // pressing edit data
                     prevBioText = bioEditText.getText().toString();
                     prevPhoneText = phoneEditText.getText().toString();
                     prevAddressText = addressEditText.getText().toString();
@@ -81,10 +81,12 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
+        cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // send to database
+                bioEditText.setText(prevBioText);
+                phoneEditText.setText(prevPhoneText);
+                addressEditText.setText(prevAddressText);
                 setPageViewOnly();
                 editing = false;
             }
@@ -92,5 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         setPageViewOnly();
         // TODO: update stuff with user from db
+        // TODO: get username from db
+        String username = "Lojpurgator3000";
+        userTextView.setText(getString(R.string.user_profile_text, username));
     }
 }
