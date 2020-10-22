@@ -1,5 +1,6 @@
 package com.example.criengine;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.view.View;
@@ -10,13 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MyProfileActivity extends AppCompatActivity {
-
-    private ImageButton userImageButton;
-    private TextView userTextView;
-    private EditText bioEditText;
-    private EditText phoneEditText;
-    private EditText addressEditText;
+public class MyProfileActivity extends ProfileActivity {
     private Button cancelButton;
     private Button editSaveButton;
 
@@ -61,15 +56,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
+        super.onCreate(savedInstanceState);
 
-        // get all the UI components
-        userImageButton = findViewById(R.id.user_image);
-        userTextView = findViewById(R.id.user_profile_text);
-        bioEditText = findViewById(R.id.bio_text);
-        phoneEditText = findViewById(R.id.phone_text);
-        addressEditText = findViewById(R.id.addr_text);
+        // new UI components
         cancelButton = findViewById(R.id.cancel_button);
         editSaveButton = findViewById(R.id.edit_save_button);
 
@@ -77,9 +67,6 @@ public class MyProfileActivity extends AppCompatActivity {
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
-
-        // TODO: set editSaveButton visibility depending on if user has permission to edit
-        // TODO: show user books
 
         editSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
