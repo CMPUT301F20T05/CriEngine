@@ -63,6 +63,9 @@ public class ProfileActivity extends AppCompatActivity {
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
 
+        // TODO: set editSaveButton visibility depending on if user has permission to edit
+        // TODO: show user books
+
         editSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
