@@ -9,4 +9,7 @@
     <color name="focused_button">#76c408</color>
     <color name="disabled_button">#c6f584</color>
     <color name="pressed_button">#77a13b</color>
+
+    <!--My Request Activity-->
+    <color name="item_background">#beeeef</color>
 </resources>
