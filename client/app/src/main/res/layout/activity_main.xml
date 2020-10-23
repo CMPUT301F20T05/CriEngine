@@ -11,8 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Profile Activity"
         android:background="@drawable/rounded_button"
+        android:paddingLeft="16dp"
+        android:paddingEnd="16dp"
+        android:text="Profile Activity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
