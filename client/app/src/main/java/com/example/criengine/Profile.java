@@ -5,12 +5,13 @@ import java.util.Map;
 public class Profile {
 
     private String username;
-    private long phone;
+    private String phone;
     private String firstname;
     private String lastname;
     private String email;
+    private String bio;
 
-    public Profile(String username, long phone, String firstname, String lastname, String email) {
+    public Profile(String username, String phone, String firstname, String lastname, String email) {
         this.username = username;
         this.phone = phone;
         this.firstname = firstname;
@@ -24,10 +25,11 @@ public class Profile {
 
     public Profile(Map<String, Object> map) {
         this.username = (String) map.get("username");
-        this.phone = (long) map.get("phone");
+        this.phone = (String) map.get("phone");
         this.firstname = (String) map.get("firstname");
         this.lastname = (String) map.get("lastname");
         this.email = (String) map.get("email");
+        this.bio = (String) map.get("bio");
 
     }
 
@@ -39,11 +41,11 @@ public class Profile {
         this.username = username;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -57,6 +59,14 @@ public class Profile {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
     public void setLastname(String lastname) {

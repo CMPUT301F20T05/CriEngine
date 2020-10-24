@@ -15,6 +15,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
     private Button myProfileActivityButton;
+    DatabaseWrapper dbw = new DatabaseWrapper("rmilford");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,5 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-        DatabaseWrapper dbw = new DatabaseWrapper("ssdsf");
-        dbw.getProfile("rmilford").addOnSuccessListener(
-                new OnSuccessListener<Profile>() {
-                    @Override
-                    public void onSuccess(Profile profile) {
-                        System.out.println(profile);
-                    }
-                }
-        );
     }
 }
