@@ -40,5 +40,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        dbw.getBook("Scooby-Doo").addOnSuccessListener(
+                new OnSuccessListener<Book>() {
+                    @Override
+                    public void onSuccess(Book book) {
+                        System.out.println(book);
+                    }
+                }
+        );
     }
 }

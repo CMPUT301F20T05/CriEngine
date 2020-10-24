@@ -46,4 +46,24 @@ public class DatabaseWrapper {
                   }
                 );
     }
+
+    public Task<Book> getBook(String bookID) {
+        return book
+                .document(bookID)
+                .get()
+                .continueWith(new Continuation<DocumentSnapshot, Book>() {
+                    @Override
+                    public Book then(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            Log.d(TAG, "Get book data: " + document.getData());
+                            System.out.println(document.getData());
+                            return new Book(document.getData());
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return null;
+                        }
+                    }
+                });
+    }
 }
