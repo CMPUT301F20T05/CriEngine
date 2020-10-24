@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 /*
  * BookListAdapter is custom ArrayAdapter that can be used to show Book instances in
  * a ListView
+ * @version 1.0
  */
 public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
@@ -28,11 +30,6 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         this.context = context;
         this.bookItems = bookItems;
     }
-
-    // @Override
-    // public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-    // }
 
     @NonNull
     @Override
