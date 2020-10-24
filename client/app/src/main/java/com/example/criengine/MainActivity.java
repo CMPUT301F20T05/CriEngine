@@ -32,5 +32,23 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
+
+        dbw.getProfile("rmilford").addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        System.out.println(profile);
+                    }
+                }
+        );
+
+        dbw.getBook("Scooby-Doo").addOnSuccessListener(
+                new OnSuccessListener<Book>() {
+                    @Override
+                    public void onSuccess(Book book) {
+                        System.out.println(book);
+                    }
+                }
+        );
     }
 }
