@@ -35,11 +35,5 @@ public abstract class ProfileActivity extends AppCompatActivity {
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
-
-      //TODO take a username parameter
-
-//        String username = "Lojpurgator3000";
-//        userTextView.setText(getString(R.string.user_profile_text, username));
-
     }
 }

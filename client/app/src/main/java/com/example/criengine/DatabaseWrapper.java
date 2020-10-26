@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,11 +19,21 @@ public class DatabaseWrapper {
 
     final CollectionReference users;
     final CollectionReference book;
+    public FirebaseUser user;
     public String myUsername;
     private FirebaseFirestore db;
 
-    public DatabaseWrapper(String myUsername) {
-        this.myUsername = myUsername;
+//    public DatabaseWrapper(String myUsername) {
+//        this.myUsername = myUsername;
+//        db = FirebaseFirestore.getInstance();
+//        users = db.collection("users");
+//        book = db.collection("books");
+//        dbw = this;
+//    }
+
+    public DatabaseWrapper(FirebaseUser user) {
+        this.user = user;
+        this.myUsername = "rmilford";
         db = FirebaseFirestore.getInstance();
         users = db.collection("users");
         book = db.collection("books");
@@ -32,7 +43,7 @@ public class DatabaseWrapper {
     //public singleton pattern
     public static DatabaseWrapper getWrapper() {
         if (dbw == null) {
-            dbw = new DatabaseWrapper(null);
+            dbw = new DatabaseWrapper((FirebaseUser) null);
         }
         return dbw;
     }
