@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public abstract class ProfileActivity extends AppCompatActivity {
 
     ImageButton userImageButton;
@@ -33,10 +35,5 @@ public abstract class ProfileActivity extends AppCompatActivity {
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
-
-        // TODO: update stuff with user from db
-        // TODO: get username from db
-        String username = "Lojpurgator3000";
-        userTextView.setText(getString(R.string.user_profile_text, username));
     }
 }
