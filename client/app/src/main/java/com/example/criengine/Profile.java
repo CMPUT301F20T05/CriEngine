@@ -16,7 +16,8 @@ public class Profile {
 
 
     public Profile() {
-
+        this.booksOwned = new ArrayList<>();
+        this.booksBorrowedOrRequested = new ArrayList<>();
     }
 
     public Profile(String userID, String email, String username, String phone, String firstname, String lastname, String bio) {

@@ -19,6 +19,8 @@ public class Book {
 
     // Needed for firebase object conversion
     public Book() {
+        this.requesters = new ArrayList<>();
+
     }
 
     // BOOKS WITH A BOOK ID WILL BE SAVED UNDER THAT ID. BOOKS WITHOUT AN ID WILL BE ASSIGNED A RANDOM ID
