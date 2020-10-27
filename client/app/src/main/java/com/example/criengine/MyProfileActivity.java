@@ -103,7 +103,8 @@ public class MyProfileActivity extends ProfileActivity {
         // TODO: update stuff with user from db
         // TODO: get username from db
         DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
-        dbw.getProfile(dbw.myUsername).addOnSuccessListener(
+
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
                 new OnSuccessListener<Profile>() {
                     @Override
                     public void onSuccess(Profile profile) {

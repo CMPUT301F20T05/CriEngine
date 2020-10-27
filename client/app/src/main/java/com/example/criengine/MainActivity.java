@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,7 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 System.out.println(user);
-//                dbw.setUser(user);
+                assert user != null;
+                dbw = new DatabaseWrapper(user);
+
+                Profile profile = new Profile(user.getUid(), user.getEmail(),"username", "phone_number", "first","last");
+                dbw.addProfile(profile);
+
+                ArrayList<String> requester = new ArrayList<String>();
+                requester.add("xyz");
+                requester.add("abc");
+                Book book = new Book("testBook", "owner", "title", "author", "description", "isbn", "Active", "borrower", requester, "geolocation", "imageURL");
+                dbw.addBook(book);
                 // ...user1
             } else {
                 // Sign in failed. If response is null the user canceled the
