@@ -7,30 +7,35 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Contains the fragment that appears if a user wants to filter information when viewing books they
+ * own.
+ */
 public class FilterFragmentActivity extends DialogFragment implements Serializable {
-    private Button avaliableButton;
-    private Button requestsButton;
-    private Button acceptedButton;
-    private Button noFilterButton;
-    private ArrayList<Book> myBooks;
+    private CheckBox avaliableButton;
+    private CheckBox requestsButton;
+    private CheckBox acceptedButton;
+    private ArrayList<String> filterStatus;
     private OnFragmentInteractionListener listener;
 
+    // Contains the method that the MyBooksActivity needs to implement.
     public interface OnFragmentInteractionListener {
-        void onOkPressed(ArrayList<Book> myBooks);
-        void onConfirmPressed();
+        void onConfirmPressed(ArrayList<String> filterStatus);
     }
 
+    // Constructor.
     public FilterFragmentActivity() {}
 
-    public FilterFragmentActivity(ArrayList<Book> myBooks) {
-        this.myBooks = myBooks;
+    public FilterFragmentActivity(ArrayList<String> filterStatus) {
+        this.filterStatus = filterStatus;
     }
 
     @Override
@@ -44,14 +49,18 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
         }
     }
 
+    /**
+     * Creates the fragment.
+     * @param savedInstanceState
+     * @return The ArrayList containing the filter status information.
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_filter_fragment, null);
-        noFilterButton = view.findViewById(R.id.no_filter_button);
-        avaliableButton = view.findViewById(R.id.available_button);
-        requestsButton = view.findViewById(R.id.requests_button);
-        acceptedButton = view.findViewById(R.id.accepted_button);
+        avaliableButton = view.findViewById(R.id.checkbox_available_filter);
+        requestsButton = view.findViewById(R.id.checkbox_requests_filter);
+        acceptedButton = view.findViewById(R.id.checkbox_accepted_filter);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder
@@ -59,33 +68,58 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
                 .setTitle("Filter By Status")
                 .setNegativeButton("Cancel", null);
 
-        if (this.city != null) {
-            cityName.setText(city.getCityName());
-            provinceName.setText(city.getProvinceName());
-            return builder
-                    .setTitle("Edit City")
-                    .setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            String city = cityName.getText().toString();
-                            String province = provinceName.getText().toString();
-                            editCity(city, province);
-                            listener.onConfirmPressed();
-                        }}).create();
+        // Get the saved status of the checkbox's.
+        if (filterStatus.contains("Available")) {
+            avaliableButton.setChecked(true);
         }
+        if (filterStatus.contains("Requests")) {
+            requestsButton.setChecked(true);
+        }
+        if (filterStatus.contains("Accepted")) {
+            acceptedButton.setChecked(true);
+        }
+
+        // Record the filters that the user wants to view.
+        avaliableButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (avaliableButton.isChecked()) {
+                    filterStatus.add("Available");
+                } else {
+                    filterStatus.remove("Available");
+                }
+            }
+        });
+
+        requestsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (requestsButton.isChecked()) {
+                    filterStatus.add("Requests");
+                } else {
+                    filterStatus.remove("Requests");
+                }
+            }
+        });
+
+        acceptedButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (acceptedButton.isChecked()) {
+                    filterStatus.add("Accepted");
+                } else {
+                    filterStatus.remove("Accepted");
+                }
+            }
+        });
+
+        // Transfer the information to the parent activity.
         return builder
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String city = cityName.getText().toString();
-                        String province = provinceName.getText().toString();
-                        listener.onOkPressed(new City(city, province));
+                        listener.onConfirmPressed(filterStatus);
                     }})
                 .create();
-    }
-
-    void filter(String newName, String newProvince) {
-        this.city.setName(newName);
-        this.city.setProvince(newProvince);
     }
 }

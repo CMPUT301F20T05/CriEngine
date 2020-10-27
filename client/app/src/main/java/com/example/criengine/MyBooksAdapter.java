@@ -55,12 +55,19 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         if (book.getRequesters().size() > 0 ) {
             bookActionButton.setText("See Requests");
             bookStatusTextView.setText("Has Requests");
-        } else if (!book.getBorrower().equals("")) {
+        } else if (book.getBorrower() != null) {
             bookActionButton.setText("Scan");
             bookStatusTextView.setText("Borrowed");
+        } else if (book.getPotentialBorrower() != null) {
+            bookStatusTextView.setText("Accepted");
+            if (!book.getPotentialBorrower().getHandOffCompelte()) {
+                bookActionButton.setText("Location");
+            } else {
+                bookActionButton.setText("Scan");
+            }
         } else {
             bookStatusTextView.setText("Available");
-            bookActionButton.setText("Ok");
+            bookActionButton.setVisibility(View.GONE);
         }
 
         return view;
