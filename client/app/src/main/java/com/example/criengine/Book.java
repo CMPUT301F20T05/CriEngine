@@ -13,7 +13,7 @@ public class Book {
     private String isbn;
     private String status;
     private String borrower;
-    private ArrayList<String> requesters;
+    private ArrayList<String> requesters = new ArrayList<>();
     private String geolocation;
     private String imageURL;
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /*
  * BookListAdapter is custom ArrayAdapter that can be used to show Book instances in
@@ -37,7 +35,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         // Get Item Data
         View view = convertView;
 
-        if( view == null ) {
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.book_item, parent, false);
         }
@@ -50,23 +48,48 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         bookNameTextView.setText(book.getTitle());
 
-        // TODO: get actual book status from db
-        // bookStatusTextView.setText(book.getStatus());
-        bookStatusTextView.setText("Available");
+        bookStatusTextView.setText(book.getStatus());
 
         // TODO: use db username and watchlist to determine state
         // Cancel -- we requested /  watching a book
         // Scan -- we have borrowed / Status == Accepted
         // Ok -- Rejected
         //if ( book.getRequesters().contains(Database.myUsername) || Database.getMyProfile.getWatchList().contains(book))
-        List<String> requesters = book.getRequesters();
-        if ( requesters != null && requesters.contains("genericUsername123")  ) {
+        DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
+        if (book.getRequesters().contains(dbw.myUsername)) {
             bookActionButton.setText("Cancel");
-        } else if(book.getBorrower() == "genericUsername123") {
+            bookActionButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO: remove request from profile && book
+                        }
+                    }
+            );
+
+        } else if (book.getBorrower() == dbw.myUsername) {
+            bookStatusTextView.setTextColor(view.getResources().getColor(R.color.status_accepted));
             bookActionButton.setText("Scan");
+            bookActionButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO : navigate to scan page
+                        }
+                    }
+            );
         } else {
             bookStatusTextView.setText("Rejected");
+            bookStatusTextView.setTextColor(view.getResources().getColor(R.color.status_rejected));
             bookActionButton.setText("Ok");
+            bookActionButton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO: remove request from profile
+                        }
+                    }
+            );
         }
 
 

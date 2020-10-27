@@ -12,4 +12,6 @@
 
     <!--My Request Activity-->
     <color name="item_background">#beeeef</color>
+    <color name="status_rejected">#8b0000</color>
+    <color name="status_accepted">#008b00</color>
 </resources>
