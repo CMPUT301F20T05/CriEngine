@@ -23,12 +23,24 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private Button myProfileActivityButton;
     private Button myBooksActivityButton;
+    private Button requestActivityButton;
     DatabaseWrapper dbw; // needs to be initialized by sign in
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        requestActivityButton = findViewById(R.id.requested_books_activity);
+
+        requestActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RequestActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         // router to other activities for testing
         myProfileActivityButton = findViewById(R.id.my_profile_activity_button);

@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".FilterFragmentActivity"></activity>
         <activity android:name=".MyBooksActivity" />
+        <activity android:name=".RequestActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
