@@ -22,6 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private Button myProfileActivityButton;
+    private Button myBooksActivityButton;
     DatabaseWrapper dbw; // needs to be initialized by sign in
 
     @Override
@@ -31,11 +32,20 @@ public class MainActivity extends AppCompatActivity {
 
         // router to other activities for testing
         myProfileActivityButton = findViewById(R.id.my_profile_activity_button);
+        myBooksActivityButton = findViewById(R.id.myBooksButton);
 
         myProfileActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyProfileActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        myBooksActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
