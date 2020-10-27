@@ -1,115 +1,97 @@
 package com.example.criengine;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Book {
-    private String title;
     private String bookID;
     private String owner;
+    private String title;
     private String author;
     private String description;
     private String isbn;
     private String status;
     private String borrower;
+    private ArrayList<String> requesters;
     private String geolocation;
-    private String imageUri;
-    private ArrayList<String> requesters = new ArrayList<String>();
+    private String imageURL;
 
-    Book(String title) {
+    public Book(String bookID, String owner, String title, String author, String description, String isbn, String status) {
+        this.bookID = bookID;
+        this.owner = owner;
         this.title = title;
+        this.author = author;
+        this.description = description;
+        this.isbn = isbn;
+        this.status = status;
     }
 
-    public String getTitle() {
-        return title;
-    }
+    public Book(Map<String, Object> data) {
+        this.bookID = (String) data.get("bookID");
+        this.owner = (String) data.get("owner");
+        this.title = (String) data.get("title");
+        this.author = (String) data.get("author");
+        this.description = (String) data.get("description");
+        this.isbn = (String) data.get("isbn");
+        this.status = (String) data.get("status");
 
-    public void setTitle(String title) {
-        this.title = title;
+        if (data.get("borrower") != null) {
+            this.borrower = (String) data.get("borrower");
+        }
+        if (data.get("geolocation") != null) {
+            this.geolocation = (String) data.get("geolocation");
+        }
+        if (data.get("imageURL") != null) {
+            this.imageURL = (String) data.get("imageURL");
+        }
+
+        if (!((ArrayList<String>) data.get("requesters")).isEmpty()) {
+            requesters = (ArrayList<String>) data.get("requesters");
+        }
     }
 
     public String getBookID() {
         return bookID;
     }
 
-    public void setBookID(String bookID) {
-        this.bookID = bookID;
-    }
-
     public String getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public String getTitle() {
+        return title;
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getBorrower() {
         return borrower;
     }
 
-    public void setBorrower(String borrower) {
-        this.borrower = borrower;
+    public List<String> getRequesters() {
+        return requesters;
     }
 
     public String getGeolocation() {
         return geolocation;
     }
 
-    public void setGeolocation(String geolocation) {
-        this.geolocation = geolocation;
+    public String getImageURL() {
+        return imageURL;
     }
-
-    public String getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-    }
-
-    public ArrayList<String> getRequesters() {
-        return requesters;
-    }
-
-    public void addRequester(String username) {
-        requesters.add(username);
-    }
-
-    public void removeRequester(String username) {
-        requesters.remove(username);
-    }
-
-
 }

@@ -9,6 +9,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Requested Books Activity
@@ -17,23 +19,27 @@ import java.util.Arrays;
 public class RequestActivity extends AppCompatActivity {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     ArrayList<Book> borrowerBooks;
+    DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
-        // TODO: FIX ME
-        // borrowerBooks = Database.getMyProfile().getbooksBorrowedOrRequested();
+        // TODO: get borrowed or requested books from db:
+        // borrowerBooks = dbw.getMyProfile().getbooksBorrowedOrRequested();
+        Map<String, Object> testData = new HashMap<String, Object>(){{
+                put("bookID", "123");
+                put("owner", "JohnDoe");
+                put("title", getString(R.string.lorem_ipsum));
+                put("author", "JaneDoe");
+                put("description", "A book");
+                put("isbn", "isbn");
+                put("status", "Available");
+                put("requesters", new ArrayList<String>());
+        }};
         Book[] books = {
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name"),
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name"),
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name"),
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name"),
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name"),
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name"),
-                new Book("This is a really looooooooooooooooooooooooooooooooooooooooong book name")
-
+                new Book(testData), new Book(testData), new Book(testData), new Book(testData)
         };
         borrowerBooks = new ArrayList<Book>();
         borrowerBooks.addAll(Arrays.asList(books));

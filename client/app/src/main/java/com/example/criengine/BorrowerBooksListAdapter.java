@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * BookListAdapter is custom ArrayAdapter that can be used to show Book instances in
@@ -50,15 +50,17 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         bookNameTextView.setText(book.getTitle());
 
-        bookStatusTextView.setText("Available");    // TODO: FIX ME
+        // TODO: get actual book status from db
         // bookStatusTextView.setText(book.getStatus());
+        bookStatusTextView.setText("Available");
 
-
+        // TODO: use db username and watchlist to determine state
         // Cancel -- we requested /  watching a book
         // Scan -- we have borrowed / Status == Accepted
         // Ok -- Rejected
         //if ( book.getRequesters().contains(Database.myUsername) || Database.getMyProfile.getWatchList().contains(book))
-        if ( book.getRequesters().contains("genericUsername123")  ) { // TODO: FIX ME
+        List<String> requesters = book.getRequesters();
+        if ( requesters != null && requesters.contains("genericUsername123")  ) {
             bookActionButton.setText("Cancel");
         } else if(book.getBorrower() == "genericUsername123") {
             bookActionButton.setText("Scan");
