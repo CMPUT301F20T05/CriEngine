@@ -121,7 +121,6 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
      */
     @Override
     public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
-        System.out.println(checkBox.getId() == R.id.checkbox_available_filter);
         if (isChecked) {
             filterStatus.add(checkBox.getText().toString().toLowerCase());
         } else {
