@@ -123,4 +123,8 @@ public class Book {
     public String getImageURL() {
         return imageURL;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

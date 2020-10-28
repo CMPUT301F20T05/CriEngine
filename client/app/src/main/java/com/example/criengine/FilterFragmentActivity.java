@@ -19,10 +19,11 @@ import java.util.ArrayList;
  * Contains the fragment that appears if a user wants to filter information when viewing books they
  * own.
  */
-public class FilterFragmentActivity extends DialogFragment implements Serializable {
-    private CheckBox avaliableButton;
-    private CheckBox requestsButton;
-    private CheckBox acceptedButton;
+public class FilterFragmentActivity extends DialogFragment implements Serializable, CompoundButton.OnCheckedChangeListener {
+    private CheckBox avaliableCheckBox;
+    private CheckBox requestsCheckBox;
+    private CheckBox acceptedCheckBox;
+    private CheckBox borrowedCheckBox;
     private ArrayList<String> filterStatus;
     private OnFragmentInteractionListener listener;
 
@@ -31,13 +32,22 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
         void onConfirmPressed(ArrayList<String> filterStatus);
     }
 
-    // Constructor.
+    // Empty Constructor.
     public FilterFragmentActivity() {}
 
+    /**
+     * Constructor 2. Passes down the filter status arraylist which contains all the filters
+     * that the user wants to view.
+     * @param filterStatus The ArrayList containing all the status's the user wants to view.
+     */
     public FilterFragmentActivity(ArrayList<String> filterStatus) {
         this.filterStatus = filterStatus;
     }
 
+    /**
+     * Sets the listener.
+     * @param context The context of the activity.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -58,9 +68,10 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_filter_fragment, null);
-        avaliableButton = view.findViewById(R.id.checkbox_available_filter);
-        requestsButton = view.findViewById(R.id.checkbox_requests_filter);
-        acceptedButton = view.findViewById(R.id.checkbox_accepted_filter);
+        avaliableCheckBox = view.findViewById(R.id.checkbox_available_filter);
+        requestsCheckBox = view.findViewById(R.id.checkbox_requests_filter);
+        acceptedCheckBox = view.findViewById(R.id.checkbox_accepted_filter);
+        borrowedCheckBox = view.findViewById(R.id.checkbox_borrowed_filter);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder
@@ -69,49 +80,24 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
                 .setNegativeButton("Cancel", null);
 
         // Get the saved status of the checkbox's.
-        if (filterStatus.contains("Available")) {
-            avaliableButton.setChecked(true);
+        if (filterStatus.contains("available")) {
+            avaliableCheckBox.setChecked(true);
         }
-        if (filterStatus.contains("Requests")) {
-            requestsButton.setChecked(true);
+        if (filterStatus.contains("requested")) {
+            requestsCheckBox.setChecked(true);
         }
-        if (filterStatus.contains("Accepted")) {
-            acceptedButton.setChecked(true);
+        if (filterStatus.contains("accepted")) {
+            acceptedCheckBox.setChecked(true);
+        }
+        if (filterStatus.contains("borrowed")) {
+            borrowedCheckBox.setChecked(true);
         }
 
-        // Record the filters that the user wants to view.
-        avaliableButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (avaliableButton.isChecked()) {
-                    filterStatus.add("Available");
-                } else {
-                    filterStatus.remove("Available");
-                }
-            }
-        });
-
-        requestsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (requestsButton.isChecked()) {
-                    filterStatus.add("Requests");
-                } else {
-                    filterStatus.remove("Requests");
-                }
-            }
-        });
-
-        acceptedButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (acceptedButton.isChecked()) {
-                    filterStatus.add("Accepted");
-                } else {
-                    filterStatus.remove("Accepted");
-                }
-            }
-        });
+        // Sets the listener to modify the ArrayList if a certain check box was selected.
+        avaliableCheckBox.setOnCheckedChangeListener(this);
+        requestsCheckBox.setOnCheckedChangeListener(this);
+        acceptedCheckBox.setOnCheckedChangeListener(this);
+        borrowedCheckBox.setOnCheckedChangeListener(this);
 
         // Transfer the information to the parent activity.
         return builder
@@ -121,5 +107,20 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
                         listener.onConfirmPressed(filterStatus);
                     }})
                 .create();
+    }
+
+    /**
+     * Adds the requests status to the list. This eventually determines what the view wants to
+     * view.
+     * @param checkBox The check box view.
+     * @param isChecked Whether the check box is currently active.
+     */
+    @Override
+    public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
+        if (isChecked) {
+            filterStatus.add(checkBox.getText().toString().toLowerCase());
+        } else {
+            filterStatus.remove(checkBox.getText().toString().toLowerCase());
+        }
     }
 }

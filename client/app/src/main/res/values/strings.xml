@@ -17,8 +17,8 @@
 
     <!--  My Book Filter Fragment  -->
     <string name="filter_fragment_header">Filter By:</string>
-    <string name="filter_available_button">Available</string>
-    <string name="filter_requests_button">Requests</string>
-    <string name="filter_accepted_button">Accepted</string>
-    <string name="filter_noFilter_button">No Filters</string>
+    <string name="filter_available_checkbox">Available</string>
+    <string name="filter_requests_checkbox">Requested</string>
+    <string name="filter_accepted_checkbox">Accepted</string>
+    <string name="filter_borrowed_checkbox">Borrowed</string>
 </resources>
