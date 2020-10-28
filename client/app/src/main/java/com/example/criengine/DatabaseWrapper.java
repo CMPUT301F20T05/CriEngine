@@ -1,5 +1,6 @@
 package com.example.criengine;
 
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -89,7 +92,6 @@ public class DatabaseWrapper {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
                             Log.d(TAG, "Get book data: " + document.getData());
-                            System.out.println(document.getData());
                             return document.toObject(Book.class);
 //                            return new Book(document.getData());
                         } else {
@@ -117,12 +119,46 @@ public class DatabaseWrapper {
         return books.document(BookID).delete();
     }
 
-    public Task<List<Book>> getOwnedBooks(String BookID) {
-        return null;
+    public Task<List<Book>> getOwnedBooks(Profile owner) {
+        ArrayList<String> ownedBooks = owner.getBooksOwned();
+        return books
+                .whereIn("bookID", ownedBooks)
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+                    @Override
+                    public List<Book> then(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            Log.d(TAG, "Get book list data: " + query.getDocuments());
+                            return query.toObjects(Book.class);
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return null;
+                        }
+                    }
+                });
     }
 
-    public Task<List<Book>> getBorrowedOrRequestedBooks(String BookID) {
-        return null;
+    public Task<List<Book>> getBorrowedOrRequestedBooks(Profile user) {
+        ArrayList<String> requestedBooks = user.getBooksBorrowedOrRequested();
+        return books
+                .whereIn("bookID", requestedBooks)
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+                    @Override
+                    public List<Book> then(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            Log.d(TAG, "Get book list data: " + query.getDocuments());
+                            return query.toObjects(Book.class);
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return null;
+                        }
+                    }
+                });
     }
 
 }
