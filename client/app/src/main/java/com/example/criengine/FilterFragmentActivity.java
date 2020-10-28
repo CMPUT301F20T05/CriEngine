@@ -72,12 +72,16 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
         requestsCheckBox = view.findViewById(R.id.checkbox_requests_filter);
         acceptedCheckBox = view.findViewById(R.id.checkbox_accepted_filter);
         borrowedCheckBox = view.findViewById(R.id.checkbox_borrowed_filter);
+
+        avaliableCheckBox.setText("Available");
+        requestsCheckBox.setText("Requested");
+        acceptedCheckBox.setText("Accepted");
+        borrowedCheckBox.setText("Borrowed");
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder
                 .setView(view)
-                .setTitle("Filter By Status")
-                .setNegativeButton("Cancel", null);
+                .setTitle("Filter By Status");
 
         // Get the saved status of the checkbox's.
         if (filterStatus.contains("available")) {
@@ -117,6 +121,7 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
      */
     @Override
     public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
+        System.out.println(checkBox.getId() == R.id.checkbox_available_filter);
         if (isChecked) {
             filterStatus.add(checkBox.getText().toString().toLowerCase());
         } else {

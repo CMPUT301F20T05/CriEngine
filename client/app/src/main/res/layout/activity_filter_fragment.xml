@@ -9,35 +9,31 @@
         android:id="@+id/checkbox_available_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
-        android:text="@string/filter_available_checkbox"
         android:textSize="24sp" />
 
     <CheckBox
         android:id="@+id/checkbox_requests_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:text="@string/filter_requests_checkbox"
         android:textSize="24sp" />
 
     <CheckBox
         android:id="@+id/checkbox_accepted_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:text="@string/filter_accepted_checkbox"
         android:textSize="24sp" />
 
     <CheckBox
         android:id="@+id/checkbox_borrowed_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:text="@string/filter_borrowed_checkbox"
         android:textSize="24sp" />
 </LinearLayout>
