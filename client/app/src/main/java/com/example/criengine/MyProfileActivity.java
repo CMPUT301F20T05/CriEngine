@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public class MyProfileActivity extends ProfileActivity {
     private Button cancelButton;
     private Button editSaveButton;
@@ -100,7 +102,18 @@ public class MyProfileActivity extends ProfileActivity {
         setPageViewOnly();
         // TODO: update stuff with user from db
         // TODO: get username from db
-        String username = "Lojpurgator3000";
-        userTextView.setText(getString(R.string.user_profile_text, username));
+        DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
+        dbw.getProfile(dbw.myUsername).addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        userTextView.setText(getString(R.string.user_profile_text, profile.getUsername()));
+                        bioEditText.setText(profile.getBio());
+                        phoneEditText.setText(profile.getPhone());
+                        addressEditText.setText(profile.getEmail());
+                        System.out.println(profile);
+                    }
+                }
+        );
     }
 }
