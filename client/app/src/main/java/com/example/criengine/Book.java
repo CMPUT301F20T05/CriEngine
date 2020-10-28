@@ -16,6 +16,7 @@ public class Book {
     private ArrayList<String> requesters = new ArrayList<>();
     private String geolocation;
     private String imageURL;
+    private PotentialBorrower potential;
 
     public Book(String bookID, String owner, String title, String author, String description, String isbn, String status) {
         this.bookID = bookID;
@@ -87,11 +88,43 @@ public class Book {
         return requesters;
     }
 
+    public void addRequesters(String name) {
+        requesters.add(name);
+    }
+
+    public void removeRequesters(String name) {
+        requesters.remove(name);
+    }
+
+    public void addBorrower(String name) {
+        borrower = name;
+    }
+
+    public void removeBorrower() {
+        borrower = null;
+    }
+
     public String getGeolocation() {
         return geolocation;
     }
 
+    public PotentialBorrower getPotentialBorrower() {
+        return potential;
+    }
+
+    public void setPotentialBorrower(String name) {
+        potential = new PotentialBorrower(name);
+    }
+
+    public void removePotentialBorrower() {
+        potential = null;
+    }
+
     public String getImageURL() {
         return imageURL;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
