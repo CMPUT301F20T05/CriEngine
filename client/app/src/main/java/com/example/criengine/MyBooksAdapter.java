@@ -1,6 +1,9 @@
 package com.example.criengine;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -46,7 +51,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         TextView bookStatusTextView = view.findViewById(R.id.bookStatusTextView);
         Button bookActionButton = view.findViewById(R.id.bookActionButton);
 
-        Book book = bookItems.get(position);
+        final Book book = bookItems.get(position);
 
         bookNameTextView.setText(book.getTitle());
         bookStatusTextView.setText(book.getStatus());
@@ -56,6 +61,14 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
             case "requested":
                 bookActionButton.setText("See Requests");
                 bookStatusTextView.setText("Has Requests");
+                bookActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), RequestsForBookActivity.class);
+                        intent.putExtra("Book", book);
+                        v.getContext().startActivity(intent);
+                    }
+                });
                 break;
             case "borrowed":
                 bookActionButton.setText("Scan");

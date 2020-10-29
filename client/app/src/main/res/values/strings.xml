@@ -15,10 +15,13 @@
     <string name="my_books_header">My Books</string>
     <string name="my_books_filter">Filter</string>
 
-    <!--  My Book Filter Fragment  -->
+    <!-- My Book Filter Fragment -->
     <string name="filter_fragment_header">Filter By:</string>
     <string name="filter_available_checkbox">Available</string>
     <string name="filter_requests_checkbox">Requested</string>
     <string name="filter_accepted_checkbox">Accepted</string>
     <string name="filter_borrowed_checkbox">Borrowed</string>
+
+    <!-- Requests For Book Activity -->
+    <string name="requests_for_book_header">Requests on: INSERT NAME</string>
 </resources>

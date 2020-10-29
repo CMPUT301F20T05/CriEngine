@@ -1,10 +1,11 @@
 package com.example.criengine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Book {
+public class Book implements Serializable {
     private String bookID;
     private String owner;
     private String title;
