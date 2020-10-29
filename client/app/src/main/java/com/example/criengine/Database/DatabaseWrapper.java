@@ -1,10 +1,11 @@
-package com.example.criengine;
+package com.example.criengine.Database;
 
-import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -108,6 +109,7 @@ public class DatabaseWrapper {
 
     public Task<List<Book>> getOwnedBooks(Profile owner) {
         ArrayList<String> ownedBooks = owner.getBooksOwned();
+        // TODO see if we can get away without owner (make the database get ownedbooks from uid)
         return books
                 .whereIn("bookID", ownedBooks)
                 .get()
@@ -120,7 +122,7 @@ public class DatabaseWrapper {
                             return query.toObjects(Book.class);
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
-                            return null;
+                            return new ArrayList<Book>();
                         }
                     }
                 });
@@ -140,7 +142,7 @@ public class DatabaseWrapper {
                             return query.toObjects(Book.class);
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
-                            return null;
+                            return new ArrayList<Book>();
                         }
                     }
                 });

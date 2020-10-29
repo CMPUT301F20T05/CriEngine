@@ -1,4 +1,4 @@
-package com.example.criengine;
+package com.example.criengine.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+import com.example.criengine.Objects.Book;
+import com.example.criengine.R;
+
 import java.util.ArrayList;
 
 /*

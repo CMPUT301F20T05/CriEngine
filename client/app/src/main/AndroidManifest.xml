@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RequestsForBookActivity"></activity>
-        <activity android:name=".FilterFragmentActivity" />
-        <activity android:name=".MyBooksActivity" />
-        <activity android:name=".RequestActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.FilterFragmentActivity"></activity>
+        <activity android:name=".Activities.MyBooksActivity" />
+        <activity android:name=".Activities.RequestActivity"></activity>
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,8 +21,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyProfileActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Activities.MyProfileActivity"
+            android:parentActivityName=".Activities.MainActivity" />
     </application>
 
 </manifest>
