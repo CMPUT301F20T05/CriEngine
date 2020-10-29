@@ -79,7 +79,6 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
-                            Log.d(TAG, "Get book data: " + document.getData());
                             return document.toObject(Book.class);
 //                            return new Book(document.getData());
                         } else {
@@ -118,7 +117,6 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             QuerySnapshot query = task.getResult();
                             assert query != null;
-                            Log.d(TAG, "Get book list data: " + query.getDocuments());
                             return query.toObjects(Book.class);
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
@@ -139,7 +137,6 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             QuerySnapshot query = task.getResult();
                             assert query != null;
-                            Log.d(TAG, "Get book list data: " + query.getDocuments());
                             return query.toObjects(Book.class);
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
