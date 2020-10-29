@@ -1,17 +1,15 @@
 package com.example.criengine;
 
 import android.os.Bundle;
-import android.text.method.KeyListener;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-
+/**
+ * General ProfileActivity class that sets up common features.
+ */
 public abstract class ProfileActivity extends AppCompatActivity {
 
     ImageButton userImageButton;
