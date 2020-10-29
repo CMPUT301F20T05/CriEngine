@@ -94,35 +94,37 @@ public class MainActivity extends AppCompatActivity {
                 assert user != null;
                 dbw = new DatabaseWrapper(user);
 
+                // Add a profile if none existed for this user
                 Profile profile = new Profile(user.getUid(), user.getEmail(),"username", "phone_number", "first","last");
                 dbw.addProfile(profile);
 
-                ArrayList<String> requester = new ArrayList<String>();
-                requester.add("xyz");
-                requester.add("abc");
-                Book book = new Book("testBook", "owner", "title", "author", "description", "isbn", "Active", "borrower", requester, "geolocation", "imageURL");
-                dbw.addBook(book);
-
-                Book book2 = new Book("testBook2", "owner", "title", "author", "description", "isbn", "Active", "borrower", requester, "geolocation", "imageURL");
-                dbw.addBook(book2);
-
-                ArrayList<String> ownedBooks = profile.getBooksOwned();
-                ownedBooks.add(book.getBookID());
-                ownedBooks.add(book2.getBookID());
-
-                profile.setBooksOwned(ownedBooks);
-
-                dbw.getOwnedBooks(profile).addOnSuccessListener(
-                        new OnSuccessListener<List<Book>>() {
-                            @Override
-                            public void onSuccess(List<Book> ownBooks) {
-                                for (Book i : ownBooks) {
-                                    System.out.println(i);
-                                    System.out.println(i.getBookID());
-                                }
-                            }
-                        }
-                );
+//                Test code please ignore
+//                ArrayList<String> requester = new ArrayList<String>();
+//                requester.add("xyz");
+//                requester.add("abc");
+//                Book book = new Book("testBook", "owner", "title", "author", "description", "isbn", "Active", "borrower", requester, "geolocation", "imageURL");
+//                dbw.addBook(book);
+//
+//                Book book2 = new Book("testBook2", "owner", "title", "author", "description", "isbn", "Active", "borrower", requester, "geolocation", "imageURL");
+//                dbw.addBook(book2);
+//
+//                ArrayList<String> ownedBooks = profile.getBooksOwned();
+//                ownedBooks.add(book.getBookID());
+//                ownedBooks.add(book2.getBookID());
+//
+//                profile.setBooksOwned(ownedBooks);
+//
+//                dbw.getOwnedBooks(profile).addOnSuccessListener(
+//                        new OnSuccessListener<List<Book>>() {
+//                            @Override
+//                            public void onSuccess(List<Book> ownBooks) {
+//                                for (Book i : ownBooks) {
+//                                    System.out.println(i);
+//                                    System.out.println(i.getBookID());
+//                                }
+//                            }
+//                        }
+//                );
                 // ...user1
             } else {
                 // Sign in failed. If response is null the user canceled the

@@ -30,13 +30,6 @@ public class DatabaseWrapper {
     public String userId;
     private FirebaseFirestore db;
 
-//    public DatabaseWrapper(String myUsername) {
-//        this.myUsername = myUsername;
-//        db = FirebaseFirestore.getInstance();
-//        users = db.collection("users");
-//        book = db.collection("books");
-//        dbw = this;
-//    }
 
     public DatabaseWrapper(FirebaseUser user) {
         this.user = user;
@@ -59,15 +52,10 @@ public class DatabaseWrapper {
                 .continueWith(new Continuation<DocumentSnapshot, Profile>() {
                     @Override
                     public Profile then(@NonNull Task<DocumentSnapshot> task) {
-                        System.out.println("get profile callback");
-                        System.out.println(task.isSuccessful());
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            System.out.println(document);
                             assert document != null;
-                            Profile p = document.toObject(Profile.class);
-                            System.out.println("success: " + p);
-                            return p;
+                            return document.toObject(Profile.class);
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
                             return null;
