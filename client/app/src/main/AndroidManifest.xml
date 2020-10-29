@@ -13,6 +13,8 @@
         <activity android:name=".Activities.MyBooksActivity" />
         <activity android:name=".Activities.RequestActivity"></activity>
         <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.MyBookActivity"></activity>
+        <activity android:name=".Activities.BookActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
