@@ -38,7 +38,6 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_books);
 
-        // FIXME: Remove the dummy-code and replace with the following commented out line.
         myBooks = new ArrayList<Book>();
         dbw = DatabaseWrapper.getWrapper();
 

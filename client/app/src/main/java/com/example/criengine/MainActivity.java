@@ -135,14 +135,12 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                System.out.println(user);
                 assert user != null;
                 dbw = new DatabaseWrapper(user);
                 dbw.getProfile(user.getUid()).addOnSuccessListener(
                         new OnSuccessListener<Profile>() {
                             @Override
                             public void onSuccess(Profile profile) {
-                                System.out.println(profile);
                                 if (profile == null) {
                                     // Add a profile if none existed for this user
                                     userProfile = new Profile(user.getUid(), user.getEmail(),"username", "phone_number", "first","last");
