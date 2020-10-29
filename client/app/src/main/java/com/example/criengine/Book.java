@@ -2,7 +2,6 @@ package com.example.criengine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Book {
     private String bookID;
@@ -13,7 +12,7 @@ public class Book {
     private String isbn;
     private String status;
     private String borrower;
-    private ArrayList<String> requesters = new ArrayList<>();
+    private ArrayList<String> requesters;
     private String geolocation;
     private String imageURL;
     private PotentialBorrower potential;
@@ -66,32 +65,6 @@ public class Book {
         this.geolocation = null;
         this.imageURL = null;
     }
-
-//    public Book(Map<String, Object> data) {
-//        this.bookID = (String) data.get("bookID");
-//        this.owner = (String) data.get("owner");
-//        this.title = (String) data.get("title");
-//        this.author = (String) data.get("author");
-//        this.description = (String) data.get("description");
-//        this.isbn = (String) data.get("isbn");
-//        this.status = (String) data.get("status");
-//
-//        if (data.get("borrower") != null) {
-//            this.borrower = (String) data.get("borrower");
-//        }
-//        if (data.get("geolocation") != null) {
-//            this.geolocation = (String) data.get("geolocation");
-//        }
-//        if (data.get("imageURL") != null) {
-//            this.imageURL = (String) data.get("imageURL");
-//        }
-//
-//        if (((ArrayList<String>) data.get("requesters")).isEmpty()) {
-//            this.requesters = new ArrayList<>();
-//        } else {
-//            this.requesters = (ArrayList<String>) data.get("requesters");
-//        }
-//    }
 
     public String getBookID() {
         return bookID;
