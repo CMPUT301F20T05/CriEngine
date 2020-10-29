@@ -1,18 +1,15 @@
 package com.example.criengine;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 
+/**
+ * A person's own profile activity where they can edit their profile.
+ */
 public class MyProfileActivity extends ProfileActivity {
     private Button cancelButton;
     private Button editSaveButton;
@@ -23,6 +20,9 @@ public class MyProfileActivity extends ProfileActivity {
 
     private boolean editing = false;
 
+    /**
+     * Changes the page to be in "view only" mode meaning edits cannot be made.
+     */
     private void setPageViewOnly() {
         cancelButton.setVisibility(View.INVISIBLE);
         editSaveButton.setText(R.string.edit_button);
@@ -30,8 +30,15 @@ public class MyProfileActivity extends ProfileActivity {
         bioEditText.setKeyListener(null);
         phoneEditText.setKeyListener(null);
         addressEditText.setKeyListener(null);
+
+        bioEditText.setBackground(null);
+        phoneEditText.setBackground(null);
+        addressEditText.setBackground(null);
     }
 
+    /**
+     * Changes the page to be in "editable" mode where the user can edit the page.
+     */
     private void setPageEditable() {
         cancelButton.setVisibility(View.VISIBLE);
         editSaveButton.setText(R.string.save_button);
@@ -39,8 +46,16 @@ public class MyProfileActivity extends ProfileActivity {
         bioEditText.setKeyListener((KeyListener) bioEditText.getTag());
         phoneEditText.setKeyListener((KeyListener) phoneEditText.getTag());
         addressEditText.setKeyListener((KeyListener) addressEditText.getTag());
+
+        bioEditText.setBackgroundResource(android.R.drawable.edit_text);
+        phoneEditText.setBackgroundResource(android.R.drawable.edit_text);
+        addressEditText.setBackgroundResource(android.R.drawable.edit_text);
     }
 
+    /**
+     * Allows the back button to be used as cancel when in edit mode.
+     * When in view only mode, the back button works as normal.
+     */
     @Override
     public void onBackPressed() {
         if (editing) {
