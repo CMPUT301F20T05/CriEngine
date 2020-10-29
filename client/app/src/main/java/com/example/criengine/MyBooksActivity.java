@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * My Books Activity. Displays all owned books and their status's.
@@ -28,31 +31,15 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
     ListView bookNameTextView;
     private ArrayList<String> filterStatus = new ArrayList<String>();
 
+    DatabaseWrapper dbw;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_books);
 
-        // FIXME: Remove the dummy-code and replace with the following commented out line.
-        // myBooks = Database.getMyProfile().getOwned();
-        Book book1 = new Book("Ralph", "This is a new Book!", "Author A.", "This is quite a nice description.", "1I2SS02", "available");
-        Book book2 = new Book("Ralph", "This is a different Book", "Author B.", "This is quite a good description.", "1I2SS03", "available");
-        Book book3 = new Book("Ralph", "A book of Cyn", "Author C.", "This is another description.", "1I2SS04", "available");
-        Book book4 = new Book("Ralph", "A book of Lyve", "Author D.", "This is a description.", "1I2SS05", "available");
-        Book book5 = new Book("Ralph", "A book of Evil", "Author E.", "This is yet another description.", "1I2SS06", "available");
-        book1.addRequesters("Joe Smith");
-        book1.setStatus("requested");
-        book2.addBorrower("Bill John");
-        book2.setStatus("borrowed");
-        book3.setPotentialBorrower("Cyn Lord");
-        book3.setStatus("accepted");
-        book4.setPotentialBorrower("Cyn Lord");
-        book4.getPotentialBorrower().setHandoffComplete();
-        book4.setStatus("accepted");
-        Book[] books = {book1, book2, book3, book4, book5};
         myBooks = new ArrayList<Book>();
-        myBooks.addAll(Arrays.asList(books));
-        // DUMMY CODE ENDS HERE.
+        dbw = DatabaseWrapper.getWrapper();
 
         // Contains the books that will be displayed on the screen.
         displayBooks = new ArrayList<Book>();
@@ -63,6 +50,26 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
 
         bookNameTextView = findViewById(R.id.bookListView);
         bookNameTextView.setAdapter(myBooksListAdapter);
+
+        // TODO: please pass this activity a profile object somehow, so we dont need to do this nightmare double call
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        dbw.getOwnedBooks(profile).addOnSuccessListener(
+                                new OnSuccessListener<List<Book>>() {
+                                    @Override
+                                    public void onSuccess(List<Book> books) {
+                                        myBooks.addAll(books);
+                                        // TODO: This will definitely break filters, let's stop that somehow
+                                        displayBooks.addAll(myBooks);
+                                        myBooksListAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                        );
+                    }
+                }
+        );
 
         // Opens to the book information screen when you click on a specific book.
         bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -117,7 +124,6 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
             // want.
             displayBooks.addAll(myBooks);
         }
-
-        bookNameTextView.setAdapter(myBooksListAdapter);
+        myBooksListAdapter.notifyDataSetChanged();
     }
 }
