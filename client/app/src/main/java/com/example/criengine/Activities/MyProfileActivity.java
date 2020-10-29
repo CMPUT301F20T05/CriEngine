@@ -1,10 +1,13 @@
-package com.example.criengine;
+package com.example.criengine.Activities;
 
 import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Objects.Profile;
+import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 /**

@@ -1,4 +1,4 @@
-package com.example.criengine;
+package com.example.criengine.Objects;
 
 /**
  * A person who has requested a book, been accepted but not yet performed the handoff.

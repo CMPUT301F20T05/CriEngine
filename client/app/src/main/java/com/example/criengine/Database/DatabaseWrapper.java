@@ -1,9 +1,11 @@
-package com.example.criengine;
+package com.example.criengine.Database;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;

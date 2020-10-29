@@ -1,4 +1,4 @@
-package com.example.criengine;
+package com.example.criengine.Activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,6 +12,9 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.criengine.R;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

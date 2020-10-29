@@ -1,4 +1,4 @@
-package com.example.criengine;
+package com.example.criengine.Objects;
 
 import java.util.ArrayList;
 import java.util.List;

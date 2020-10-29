@@ -1,4 +1,4 @@
-package com.example.criengine;
+package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Adapters.MyBooksAdapter;
+import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
+import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
