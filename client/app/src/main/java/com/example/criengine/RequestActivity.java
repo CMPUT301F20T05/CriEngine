@@ -35,11 +35,16 @@ public class RequestActivity extends AppCompatActivity {
                 put("author", "JaneDoe");
                 put("description", "A book");
                 put("isbn", "isbn");
-                put("status", "Available");
+                put("status", "available");
                 put("requesters", new ArrayList<String>());
         }};
+
+        Book book1 = new Book("John Doe", getString(R.string.lorem_ipsum), "JaneDoe","A book", "isbn","available");
+        Book book2 = new Book("John Doe", getString(R.string.lorem_ipsum), "JaneDoe","A book", "isbn","available");
+        Book book3 = new Book("John Doe", getString(R.string.lorem_ipsum), "JaneDoe","A book", "isbn","available");
+        Book book4 = new Book("John Doe", getString(R.string.lorem_ipsum), "JaneDoe","A book", "isbn","available");
         Book[] books = {
-                new Book(testData), new Book(testData), new Book(testData), new Book(testData)
+                book1, book2, book3, book4
         };
         borrowerBooks = new ArrayList<Book>();
         borrowerBooks.addAll(Arrays.asList(books));

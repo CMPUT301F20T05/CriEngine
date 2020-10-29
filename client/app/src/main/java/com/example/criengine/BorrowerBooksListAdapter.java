@@ -56,7 +56,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         // Ok -- Rejected
         //if ( book.getRequesters().contains(Database.myUsername) || Database.getMyProfile.getWatchList().contains(book))
         DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
-        if (book.getRequesters().contains(dbw.myUsername)) {
+        if (book.getRequesters().contains(dbw.userId)) {
             bookActionButton.setText("Cancel");
             bookActionButton.setOnClickListener(
                     new View.OnClickListener() {
@@ -67,7 +67,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     }
             );
 
-        } else if (book.getBorrower() == dbw.myUsername) {
+        } else if (book.getBorrower() == dbw.userId) {
             bookStatusTextView.setTextColor(view.getResources().getColor(R.color.status_accepted));
             bookActionButton.setText("Scan");
             bookActionButton.setOnClickListener(

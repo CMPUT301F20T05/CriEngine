@@ -35,11 +35,11 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
 
         // FIXME: Remove the dummy-code and replace with the following commented out line.
         // myBooks = Database.getMyProfile().getOwned();
-        Book book1 = new Book("10", "Ralph", "This is a new Book!", "Author A.", "This is quite a nice description.", "1I2SS02", "available");
-        Book book2 = new Book("11", "Ralph", "This is a different Book", "Author B.", "This is quite a good description.", "1I2SS03", "available");
-        Book book3 = new Book("12", "Ralph", "A book of Cyn", "Author C.", "This is another description.", "1I2SS04", "available");
-        Book book4 = new Book("13", "Ralph", "A book of Lyve", "Author D.", "This is a description.", "1I2SS05", "available");
-        Book book5 = new Book("14", "Ralph", "A book of Evil", "Author E.", "This is yet another description.", "1I2SS06", "available");
+        Book book1 = new Book("Ralph", "This is a new Book!", "Author A.", "This is quite a nice description.", "1I2SS02", "available");
+        Book book2 = new Book("Ralph", "This is a different Book", "Author B.", "This is quite a good description.", "1I2SS03", "available");
+        Book book3 = new Book("Ralph", "A book of Cyn", "Author C.", "This is another description.", "1I2SS04", "available");
+        Book book4 = new Book("Ralph", "A book of Lyve", "Author D.", "This is a description.", "1I2SS05", "available");
+        Book book5 = new Book("Ralph", "A book of Evil", "Author E.", "This is yet another description.", "1I2SS06", "available");
         book1.addRequesters("Joe Smith");
         book1.setStatus("requested");
         book2.addBorrower("Bill John");
