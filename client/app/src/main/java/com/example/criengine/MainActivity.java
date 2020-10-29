@@ -23,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final boolean CONFIG_LOGIN_AUTOMATICALLY = false;
+    private final boolean CONFIG_LOGIN_AUTOMATICALLY = true;
     private final String CONFIG_AUTO_LOGIN_EMAIL = "user2@email.com";
     private final String CONFIG_AUTO_LOGIN_PASSWORD = "password";
 

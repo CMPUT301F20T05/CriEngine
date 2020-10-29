@@ -68,7 +68,6 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
                                     }
                                 }
                         );
-                        System.out.println(profile);
                     }
                 }
         );
