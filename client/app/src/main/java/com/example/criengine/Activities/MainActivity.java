@@ -91,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 final FirebaseUser user = mAuth.getCurrentUser();
                                 dbw = new DatabaseWrapper(user);
-                                dbw.getProfile(user.getUid()).addOnSuccessListener(
-                                        new OnSuccessListener<Profile>() {
-                                            @Override
-                                            public void onSuccess(Profile profile) {
-                                                // Add a profile if none existed for this user
-                                                dbw.addProfile(profile);
-                                            }
-                                        }
-                                );
+//                                dbw.getProfile(user.getUid()).addOnSuccessListener(
+//                                        new OnSuccessListener<Profile>() {
+//                                            @Override
+//                                            public void onSuccess(Profile profile) {
+//                                                // Add a profile if none existed for this user
+//                                                dbw.addProfile(profile);
+//                                            }
+//                                        }
+//                                );
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("TAG", "signInWithEmail:failure", task.getException());

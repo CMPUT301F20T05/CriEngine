@@ -8,6 +8,7 @@ import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -110,6 +111,10 @@ public class DatabaseWrapper {
     public Task<List<Book>> getOwnedBooks(Profile owner) {
         ArrayList<String> ownedBooks = owner.getBooksOwned();
         // TODO see if we can get away without owner (make the database get ownedbooks from uid)
+        if (ownedBooks.isEmpty()) {
+            List<Book> books = new ArrayList<Book>();
+            return Tasks.forResult(books);
+        }
         return books
                 .whereIn("bookID", ownedBooks)
                 .get()
@@ -130,6 +135,10 @@ public class DatabaseWrapper {
 
     public Task<List<Book>> getBorrowedOrRequestedBooks(Profile user) {
         ArrayList<String> requestedBooks = user.getBooksBorrowedOrRequested();
+        if (requestedBooks.isEmpty()) {
+            List<Book> books = new ArrayList<Book>();
+            return Tasks.forResult(books);
+        }
         return books
                 .whereIn("bookID", requestedBooks)
                 .get()
