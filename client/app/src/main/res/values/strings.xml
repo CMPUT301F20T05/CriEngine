@@ -35,7 +35,8 @@
     <string name="book_author_hint">Author</string>
     <string name="book_isbn_hint">ISBN</string>
     <string name="book_status_hint">Status</string>
-    <string name="book_imageurl_hint">Image URL</string>
+    <string name="book_imageurl_hint">Image URL (optional)</string>
     <string name="book_warning">*Please Fill Out All Fields</string>
+    <string name="popup_confirm">Book Created</string>
 
 </resources>

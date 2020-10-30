@@ -14,6 +14,7 @@ import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -50,10 +51,10 @@ public class AddBookActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!bookTitle.getText().toString().isEmpty() &&
-                        !bookDesc.getText().toString().isEmpty() &&
-                        !bookAuthor.getText().toString().isEmpty() &&
-                        !bookISBN.getText().toString().isEmpty()) {
+                if (!bookTitle.getText().toString().isEmpty()
+                        && !bookDesc.getText().toString().isEmpty()
+                        && !bookAuthor.getText().toString().isEmpty()
+                        && !bookISBN.getText().toString().isEmpty()) {
 
                     // Create the book
                     Book newBook = new Book(bookProfile.getUserID(),
@@ -71,8 +72,11 @@ public class AddBookActivity extends AppCompatActivity {
                     // Adds new book to database
                     dbw.addBook(newBook);
                     // Go back to my books
-                    Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
-                    v.getContext().startActivity(intent);
+                    Snackbar.make(findViewById(R.id.popupMessage), R.string.popup_confirm, Snackbar.LENGTH_SHORT).show();
+                    bookTitle.setText("");
+                    bookAuthor.setText("");
+                    bookDesc.setText("");
+                    bookISBN.setText("");
                 } else {
                     // Don't create a new book
                     warning.setText(R.string.book_warning);
@@ -90,4 +94,5 @@ public class AddBookActivity extends AppCompatActivity {
         });
 
     }
+
 }

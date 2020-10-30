@@ -29,7 +29,8 @@
         android:background="@drawable/rounded_button"
         android:text="@string/scan_book_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAllCaps="false" />
 
     <EditText
         android:id="@+id/newBookDesc"
@@ -102,7 +103,8 @@
         android:text="@string/save_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/newBookCancelButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/newBookCancelButton"
@@ -115,7 +117,8 @@
         android:text="@string/cancel_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newBookSaveButton" />
+        app:layout_constraintStart_toEndOf="@+id/newBookSaveButton"
+        android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/newBookWarning"
@@ -130,5 +133,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newBookImageURL" />
+
+    <LinearLayout
+        android:id="@+id/popupMessage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
