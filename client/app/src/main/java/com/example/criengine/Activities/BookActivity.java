@@ -1,10 +1,12 @@
-package com.example.criengine;
+package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.example.criengine.R;
 
 public abstract class BookActivity extends AppCompatActivity {
     EditText bookTitle;

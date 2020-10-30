@@ -1,10 +1,11 @@
-package com.example.criengine;
+package com.example.criengine.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
+import com.example.criengine.R;
 
 public class MyBookActivity extends BookActivity {
 
@@ -57,7 +58,6 @@ public class MyBookActivity extends BookActivity {
 //            }
 //        });
 
-        DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
         // todo: set book data
     }
 
