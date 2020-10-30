@@ -36,6 +36,7 @@ public class AddBookActivity extends AppCompatActivity {
         final EditText bookDesc = findViewById(R.id.newBookDesc);
         final EditText bookAuthor = findViewById(R.id.newBookAuthor);
         final EditText bookISBN = findViewById(R.id.newBookISBN);
+        // TODO: replace editTExt with an actual image
         final EditText bookImageURL = findViewById(R.id.newBookImageURL);
         final TextView warning = findViewById(R.id.newBookWarning);
 
