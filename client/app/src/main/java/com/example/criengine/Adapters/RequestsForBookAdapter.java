@@ -1,6 +1,7 @@
 package com.example.criengine.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.example.criengine.Activities.MyBooksActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 import java.util.ArrayList;
@@ -63,10 +65,12 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                 @Override
                 public void onClick(View v) {
                     // TODO: The book status should be changed to accepted.
-                    // TODO: The user should be listed as a PotentialBorrower / Borrower.
+                    // TODO: The user should be listed as a PotentialBorrower / Borrower on the book.
+                    // TODO: Notify the accepted user.
+                    // TODO: Notify the rejected users.
                     // TODO: Wipe the requested list.
-                    // TODO: Return to MyBooks activity.
-                    // TODO: Notify user of accepted book.
+                    Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                    v.getContext().startActivity(intent);
                 }
             }
         );
