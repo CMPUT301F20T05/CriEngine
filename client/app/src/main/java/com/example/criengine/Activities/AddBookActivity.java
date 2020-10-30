@@ -43,7 +43,6 @@ public class AddBookActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Profile profile) {
                 bookProfile = profile;
-                bookTitle.setText(bookProfile.getUserID());
             }
         });
 
