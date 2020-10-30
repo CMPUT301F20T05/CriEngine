@@ -1,18 +1,16 @@
-package com.example.criengine;
+package com.example.criengine.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.criengine.Objects.Book;
+import com.example.criengine.R;
+import com.example.criengine.Adapters.RequestsForBookAdapter;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Requests for Book Activity. Displays all users who have requested an available book.

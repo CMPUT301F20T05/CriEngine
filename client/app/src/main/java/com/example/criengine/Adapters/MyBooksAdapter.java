@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
+
+import com.example.criengine.Activities.RequestsForBookActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 
@@ -93,5 +95,4 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
 
         return view;
     }
-
 }

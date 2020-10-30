@@ -1,4 +1,4 @@
-package com.example.criengine;
+package com.example.criengine.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.example.criengine.Objects.Book;
+import com.example.criengine.R;
 import java.util.ArrayList;
 
 /*
