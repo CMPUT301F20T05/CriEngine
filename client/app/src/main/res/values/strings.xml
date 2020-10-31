@@ -27,4 +27,7 @@
     <string name="filter_requests_checkbox">Requested</string>
     <string name="filter_accepted_checkbox">Accepted</string>
     <string name="filter_borrowed_checkbox">Borrowed</string>
+
+    <!-- Notifications Activity -->
+    <string name="notifications_header">Notifications</string>
 </resources>
