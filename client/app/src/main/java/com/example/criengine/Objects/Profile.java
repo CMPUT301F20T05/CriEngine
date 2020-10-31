@@ -232,10 +232,18 @@ public class Profile {
         notifications.remove(notif);
     }
 
+    /**
+     * Returns the whole notifications array.
+     * @return The entire array containing the notifications.
+     */
     public ArrayList<Notification> getNotifications() {
         return notifications;
     }
 
+    /**
+     * Assigns a new array for the notifications.
+     * @param newList The new array.
+     */
     public void setNotifications(ArrayList<Notification> newList) {
         notifications = newList;
     }
