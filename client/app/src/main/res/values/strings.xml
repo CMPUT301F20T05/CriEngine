@@ -30,10 +30,10 @@
 
     <!--  Book Activity  -->
     <string name="book_title_placeholder">Title</string>
-    <string name="book_detail">Detail:</string>
-    <string name="book_author">Author:</string>
-    <string name="book_isbn">ISBN:</string>
-    <string name="book_status">Status:</string>
+    <string name="book_detail">Detail: </string>
+    <string name="book_author">Author: </string>
+    <string name="book_isbn">ISBN: </string>
+    <string name="book_status">Status: </string>
 
     <!--  My Book Activity  -->
     <string name="edit_book">Edit Book</string>

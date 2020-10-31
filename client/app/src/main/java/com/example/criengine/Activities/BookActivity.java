@@ -20,7 +20,6 @@ public abstract class BookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Must setContentView(layoutID) in child activity before calling super method
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.component_book);
 
         bookTitle = findViewById(R.id.bookView_title);
         bookDetail = findViewById(R.id.bookView_detail);
@@ -28,7 +27,12 @@ public abstract class BookActivity extends AppCompatActivity {
         bookStatus = findViewById(R.id.bookView_status);
         bookISBN = findViewById(R.id.bookView_ISBN);
         bookImage = findViewById(R.id.bookView_image);
+
+        bookTitle.setTag(bookTitle.getKeyListener());
+        bookDetail.setTag(bookDetail.getKeyListener());
+        bookAuthor.setTag(bookAuthor.getKeyListener());
     }
+
 
     /**
      * TODO:
