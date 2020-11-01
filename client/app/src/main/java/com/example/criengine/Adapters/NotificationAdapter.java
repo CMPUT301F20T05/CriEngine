@@ -43,15 +43,15 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
         if( view == null ) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.book_item, parent, false);
+            view = inflater.inflate(R.layout.list_format, parent, false);
         }
 
         // Assign all view objects.
-        TextView notificationDescription = view.findViewById(R.id.bookNameTextView);
-        TextView notificationDate = view.findViewById(R.id.bookStatusTextView);
-        Button dismissButton = view.findViewById(R.id.bookActionButton);
+        TextView notificationDescription = view.findViewById(R.id.headerText);
+        TextView notificationDate = view.findViewById(R.id.statusText);
+        Button dismissButton = view.findViewById(R.id.actionButton);
 
-        // Get the object that was clicked on from the list.
+        // Object to be displayed.
         final Notification notification = notificationItems.get(position);
 
         // Set the text and date to their proper values.

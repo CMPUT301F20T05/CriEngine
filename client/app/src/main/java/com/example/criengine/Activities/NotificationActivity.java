@@ -2,6 +2,8 @@ package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.example.criengine.Adapters.NotificationAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
@@ -35,5 +37,13 @@ public class NotificationActivity extends AppCompatActivity {
         // Assign the view object.
         notificationListView = findViewById(R.id.notificationsListView);
         notificationListView.setAdapter(notificationAdapter);
+
+        // Opens to the book information screen when you click on a specific book.
+        notificationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // FIXME: redirect to view-book activity.
+            }
+        });
     }
 }
