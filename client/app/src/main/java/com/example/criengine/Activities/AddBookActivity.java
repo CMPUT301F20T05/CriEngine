@@ -52,36 +52,36 @@ public class AddBookActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!bookTitle.getText().toString().isEmpty()
-                        && !bookDesc.getText().toString().isEmpty()
-                        && !bookAuthor.getText().toString().isEmpty()
-                        && !bookISBN.getText().toString().isEmpty()) {
+                if (bookTitle.getText().toString().isEmpty()
+                        || bookDesc.getText().toString().isEmpty()
+                        || bookAuthor.getText().toString().isEmpty()
+                        || bookISBN.getText().toString().isEmpty()) {
 
-                    // Create the book
-                    Book newBook = new Book(bookProfile.getUserID(),
-                            bookTitle.getText().toString(),
-                            bookAuthor.getText().toString(),
-                            bookDesc.getText().toString(),
-                            bookISBN.getText().toString(),
-                            "Available");
-
-                    // Adds in image url if present
-                    if (!bookImageURL.getText().toString().isEmpty()) {
-                        newBook.setImageURL(bookImageURL.getText().toString());
-                    }
-
-                    // Adds new book to database
-                    dbw.addBook(newBook);
-                    // Go back to my books
-                    Snackbar.make(findViewById(R.id.popupMessage), R.string.popup_confirm, Snackbar.LENGTH_SHORT).show();
-                    bookTitle.setText("");
-                    bookAuthor.setText("");
-                    bookDesc.setText("");
-                    bookISBN.setText("");
-                } else {
-                    // Don't create a new book
                     warning.setText(R.string.book_warning);
+                    return;
                 }
+
+                // Create the book
+                Book newBook = new Book(bookProfile.getUserID(),
+                        bookTitle.getText().toString(),
+                        bookAuthor.getText().toString(),
+                        bookDesc.getText().toString(),
+                        bookISBN.getText().toString(),
+                        "available");
+
+                // Adds in image url if present
+                if (!bookImageURL.getText().toString().isEmpty()) {
+                    newBook.setImageURL(bookImageURL.getText().toString());
+                }
+
+                // Adds new book to database
+                dbw.addBook(newBook);
+                // Go back to my books
+                Snackbar.make(findViewById(R.id.popupMessage), R.string.popup_confirm, Snackbar.LENGTH_SHORT).show();
+                bookTitle.setText("");
+                bookAuthor.setText("");
+                bookDesc.setText("");
+                bookISBN.setText("");
             }
         });
 
