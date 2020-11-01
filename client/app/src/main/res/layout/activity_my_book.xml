@@ -19,7 +19,8 @@
         android:background="@drawable/rounded_button"
         android:text="@string/edit_book"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/see_requests_button"
@@ -30,6 +31,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/see_requests"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/edit_book_button"
         app:layout_constraintHorizontal_bias="0.0"
@@ -43,6 +45,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/delete_book"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -32,17 +32,4 @@ public abstract class BookActivity extends AppCompatActivity {
         bookDetail.setTag(bookDetail.getKeyListener());
         bookAuthor.setTag(bookAuthor.getKeyListener());
     }
-
-
-    /**
-     * TODO:
-     *  - modes:
-     *      - request book (if book.status = available)
-     *      - add book to wishlist (if book.status = borrowed)
-     *      - manage book (if book.owner = account.username)
-     *          - buttons:
-     *              - "edit book"
-     *              - "see requests"
-     *              - "delete book" => confirmation popup?
-     */
 }
