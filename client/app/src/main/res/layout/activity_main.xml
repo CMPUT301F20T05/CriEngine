@@ -11,9 +11,10 @@
         android:layout_height="fill_parent"
         android:gravity="fill_horizontal"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="65dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/requested_books_activity"
@@ -58,6 +59,17 @@
             android:paddingLeft="16dp"
             android:paddingEnd="16dp"
             android:text="Notification Activity"/>
+
+        <Button
+            android:id="@+id/my_book_activity_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"
+            android:paddingLeft="16dp"
+            android:paddingEnd="16dp"
+            android:text="My Book Activity" />
 
     </LinearLayout>
 

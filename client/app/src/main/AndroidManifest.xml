@@ -25,6 +25,8 @@
         <activity
             android:name=".Activities.MyProfileActivity"
             android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.MyBookActivity" />
+        <activity android:name=".Activities.BookActivity" />
     </application>
 
 </manifest>
