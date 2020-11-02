@@ -58,7 +58,6 @@ public class BookUnitTest {
 
     @Test
     public void testBookConstructorThree() {
-        List<String> newRequesterList = new ArrayList<>();
         Book mockBook = new Book("New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
 
         assertNull(mockBook.getBookID());
