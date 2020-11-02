@@ -110,10 +110,6 @@ public class Book {
         requesters.remove(name);
     }
 
-    public void addBorrower(String name) {
-        borrower = name;
-    }
-
     public void removeBorrower() {
         borrower = null;
     }
