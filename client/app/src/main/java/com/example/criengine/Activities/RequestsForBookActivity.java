@@ -13,13 +13,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Requests for Book Activity. Displays all users who have requested an available book.
- * Navigation to:
- * @version  1.0
+ * Requests for Book Activity. Displays all users who have requested an available book & allows for
+ * the owner to reject / accept a borrower.
  */
 public class RequestsForBookActivity extends AppCompatActivity implements Serializable {
     private RequestsForBookAdapter userListAdapter;
-    private ArrayList<String> userNameList;
     private ListView userListView;
     private TextView header;
     private Book book;

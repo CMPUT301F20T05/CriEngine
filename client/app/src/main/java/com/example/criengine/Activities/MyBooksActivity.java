@@ -25,7 +25,6 @@ import java.util.List;
  *  - See-Requests activity
  *  - Scan-Book activity
  *  - See-Location activity
- * @version  1.0
  */
 public class MyBooksActivity extends AppCompatActivity implements FilterFragmentActivity.OnFragmentInteractionListener {
     private MyBooksAdapter myBooksListAdapter;
@@ -43,16 +42,16 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_books);
 
-        myBooks = new ArrayList<Book>();
-        dbw = DatabaseWrapper.getWrapper();
-
         // Contains the books that will be displayed on the screen.
-        displayBooks = new ArrayList<Book>();
-        displayBooks.addAll(myBooks);
+        displayBooks = new ArrayList<>();
+        myBooks = new ArrayList<>();
+
+        dbw = DatabaseWrapper.getWrapper();
 
         // Set the adapter.
         myBooksListAdapter = new MyBooksAdapter(this, displayBooks);
 
+        // Setup the adapter.
         headerText = findViewById(R.id.bookListView);
         headerText.setAdapter(myBooksListAdapter);
 
@@ -66,7 +65,6 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
                                     @Override
                                     public void onSuccess(List<Book> books) {
                                         myBooks.addAll(books);
-                                        // TODO: This will definitely break filters, let's stop that somehow
                                         displayBooks.addAll(myBooks);
                                         myBooksListAdapter.notifyDataSetChanged();
                                     }

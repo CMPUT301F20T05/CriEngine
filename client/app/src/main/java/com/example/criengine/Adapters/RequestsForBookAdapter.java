@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.criengine.Activities.MyBooksActivity;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Notification;
 import com.example.criengine.R;
 import java.util.ArrayList;
 
@@ -53,22 +54,32 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         Button rejectUser = view.findViewById(R.id.user_reject);
 
         // Get the name of the user.
-        String name = userRequests.get(position);
+        final String name = userRequests.get(position);
 
         // Set the text for names / buttons.
         username.setText(name);
         acceptUser.setText("✔");
         rejectUser.setText("❌");
 
+        // Notifications to be sent to the appropriate users.
+        Notification rejectedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was refused.");
+        Notification acceptedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was accepted!");
+
         acceptUser.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: The book status should be changed to accepted.
-                    // TODO: The user should be listed as a PotentialBorrower / Borrower on the book.
-                    // TODO: Notify the accepted user.
-                    // TODO: Notify the rejected users.
-                    // TODO: Wipe the requested list.
+                    book.setStatus("accepted");
+                    // TODO: The user should be listed as a PotentialBorrower / Borrower on the book. (?)
+                    for (int i = 0; i < userRequests.size(); i++) {
+                        if (userRequests.get(i).equals(name)) {
+                            // TODO: Notify the accepted user + push changes to db.
+                        }
+                        // TODO: Notify the rejected user(s) + push changes to db.
+                    }
+                    userRequests.clear();
+                    // TODO: Push changes to database.
+
                     Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
                     v.getContext().startActivity(intent);
                 }
@@ -79,13 +90,23 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: The book status should be changed to available IF no other requesters.
-                    // TODO: The requester should be removed from the list.
                     // TODO: Notify the user of the rejection.
+                    userRequests.remove(name);
+                    // TODO: Push changes to database.
+
+                    if (userRequests.size() == 0) {
+                        book.setStatus("available");
+                        // TODO: Push changes to database.
+
+                        // Return to previous activity automatically.
+                        Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                        v.getContext().startActivity(intent);
+                    }
+
+                    notifyDataSetChanged();
                 }
             }
         );
         return view;
     }
-
 }
