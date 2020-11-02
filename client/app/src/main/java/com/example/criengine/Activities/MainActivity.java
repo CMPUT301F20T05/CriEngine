@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private Button myProfileActivityButton;
     private Button myBooksActivityButton;
     private Button requestActivityButton;
+    private Button myBookActivityButton;
+    private Button notificationActivityButton;
+  
     DatabaseWrapper dbw; // needs to be initialized by sign in
     Profile userProfile;
 
@@ -72,6 +75,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        // router to book activity
+        myBookActivityButton = findViewById(R.id.my_book_activity_button);
+
+        myBookActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MyBookActivity.class);
+
+        notificationActivityButton = findViewById(R.id.notificationButton);
+              
+        notificationActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), NotificationActivity.class);
                 v.getContext().startActivity(intent);
             }
         });

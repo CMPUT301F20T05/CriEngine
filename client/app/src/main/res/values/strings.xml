@@ -16,7 +16,7 @@
     <string name="edit_button">Edit</string>
     <string name="save_button">Save</string>
 
-    <!-- My Book Activity  -->
+    <!-- My Books Activity  -->
     <string name="add_a_book_button">Add A Book</string>
     <string name="my_books_header">My Books</string>
     <string name="my_books_filter">Filter</string>
@@ -28,6 +28,21 @@
     <string name="filter_accepted_checkbox">Accepted</string>
     <string name="filter_borrowed_checkbox">Borrowed</string>
 
+    <!--  Book Details Activity  -->
+    <string name="book_title_placeholder">Title</string>
+    <string name="book_detail">Detail: </string>
+    <string name="book_author">Author: </string>
+    <string name="book_isbn">ISBN: </string>
+    <string name="book_status">Status: </string>
+
+    <!--  My Book Details Activity  -->
+    <string name="edit_book">Edit Book</string>
+    <string name="see_requests">See Requests</string>
+    <string name="delete_book">Delete Book</string>
+
+    <!-- Notifications Activity -->
+    <string name="notifications_header">Notifications</string>
+  
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
     <string name="title_my_books">My Books</string>

@@ -33,7 +33,7 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
     private ArrayList<Book> displayBooks;
     private Button addBookButton;
     private Button filterButton;
-    ListView bookNameTextView;
+    ListView headerText;
     private ArrayList<String> filterStatus = new ArrayList<String>();
 
     DatabaseWrapper dbw;
@@ -53,8 +53,8 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         // Set the adapter.
         myBooksListAdapter = new MyBooksAdapter(this, displayBooks);
 
-        bookNameTextView = findViewById(R.id.bookListView);
-        bookNameTextView.setAdapter(myBooksListAdapter);
+        headerText = findViewById(R.id.bookListView);
+        headerText.setAdapter(myBooksListAdapter);
 
         // TODO: please pass this activity a profile object somehow, so we dont need to do this nightmare double call
         dbw.getProfile(dbw.userId).addOnSuccessListener(
@@ -77,7 +77,7 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         );
 
         // Opens to the book information screen when you click on a specific book.
-        bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        headerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // FIXME: redirect to view-book activity.
