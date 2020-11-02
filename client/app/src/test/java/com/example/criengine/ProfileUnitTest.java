@@ -19,6 +19,10 @@ public class ProfileUnitTest {
     @Before
     public void init() {
         mock = new Profile();
+    }
+
+    @Test
+    public void testConstructorOne() {
         assertNull(mock.getUserID());
         assertNull(mock.getEmail());
         assertNull(mock.getUsername());
@@ -26,14 +30,6 @@ public class ProfileUnitTest {
         assertNull(mock.getFirstname());
         assertNull(mock.getLastname());
         assertNull(mock.getBio());
-        assertEquals(mock.getBooksOwned().size(), 0);
-        assertEquals(mock.getBooksBorrowedOrRequested().size(), 0);
-    }
-
-    @Test
-    public void testConstructorOne() {
-        Profile mock = new Profile();
-
         assertEquals(mock.getBooksOwned().size(), 0);
         assertEquals(mock.getBooksBorrowedOrRequested().size(), 0);
     }
