@@ -3,7 +3,6 @@ package com.example.criengine.Objects;
 import java.util.ArrayList;
 
 public class Profile {
-
     private String userID;
     private String email;
     private String username;
@@ -13,11 +12,12 @@ public class Profile {
     private String bio;
     private ArrayList<String> booksOwned;
     private ArrayList<String> booksBorrowedOrRequested;
-
+    private ArrayList<Notification> notifications;
 
     public Profile() {
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public Profile(String userID, String email, String username, String phone, String firstname, String lastname, String bio) {
@@ -30,6 +30,7 @@ public class Profile {
         this.bio = bio;
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public Profile(String userID, String email, String username, String phone, String firstname, String lastname) {
@@ -42,6 +43,7 @@ public class Profile {
         this.bio = null;
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -114,5 +116,21 @@ public class Profile {
 
     public void setBooksBorrowedOrRequested(ArrayList<String> booksBorrowedOrRequested) {
         this.booksBorrowedOrRequested = booksBorrowedOrRequested;
+    }
+
+    public void addNotification(Notification notif) {
+        notifications.add(notif);
+    }
+
+    public void removeNotification(Notification notif) {
+        notifications.remove(notif);
+    }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> newList) {
+        notifications = newList;
     }
 }

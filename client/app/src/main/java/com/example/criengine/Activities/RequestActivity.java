@@ -37,12 +37,12 @@ public class RequestActivity extends AppCompatActivity {
 
         dbw = DatabaseWrapper.getWrapper();
 
-        borrowerBooks = new ArrayList<Book>();
+        borrowerBooks = new ArrayList<>();
 //        borrowerBooks.addAll(Arrays.asList(books));
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(this, borrowerBooks);
 
-        ListView bookNameTextView = findViewById(R.id.bookListView);
-        bookNameTextView.setAdapter(borrowerBooksListAdapter);
+        ListView headerText = findViewById(R.id.bookListView);
+        headerText.setAdapter(borrowerBooksListAdapter);
 
         dbw.getProfile(dbw.userId).addOnSuccessListener(
                 new OnSuccessListener<Profile>() {
@@ -61,7 +61,7 @@ public class RequestActivity extends AppCompatActivity {
                 }
         );
 
-        bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        headerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: redirect to book view

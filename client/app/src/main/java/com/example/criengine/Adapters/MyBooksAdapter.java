@@ -49,24 +49,24 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
 
         if( view == null ) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.book_item, parent, false);
+            view = inflater.inflate(R.layout.list_format, parent, false);
         }
 
-        TextView bookNameTextView = view.findViewById(R.id.bookNameTextView);
-        TextView bookStatusTextView = view.findViewById(R.id.bookStatusTextView);
-        Button bookActionButton = view.findViewById(R.id.bookActionButton);
+        TextView headerText = view.findViewById(R.id.headerText);
+        TextView statusText = view.findViewById(R.id.statusText);
+        Button actionButton = view.findViewById(R.id.actionButton);
 
         final Book book = bookItems.get(position);
 
-        bookNameTextView.setText(book.getTitle());
-        bookStatusTextView.setText(book.getStatus());
+        headerText.setText(book.getTitle());
+        statusText.setText(book.getStatus());
 
         // Modify the button and status seen from the screen depending on the status of the book.
         switch (book.getStatus()) {
             case "requested":
-                bookActionButton.setText("See Requests");
-                bookStatusTextView.setText("Has Requests");
-                bookActionButton.setOnClickListener(new View.OnClickListener() {
+                actionButton.setText("See Requests");
+                statusText.setText("Has Requests");
+                actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), RequestsForBookActivity.class);
@@ -76,20 +76,20 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 });
                 break;
             case "borrowed":
-                bookActionButton.setText("Scan");
-                bookStatusTextView.setText("Borrowed");
+                actionButton.setText("Scan");
+                statusText.setText("Borrowed");
                 break;
             case "accepted":
-                bookStatusTextView.setText("Accepted");
+                statusText.setText("Accepted");
                 if (!book.getPotentialBorrower().getHandOffCompelte()) {
-                    bookActionButton.setText("Location");
+                    actionButton.setText("Location");
                 } else {
-                    bookActionButton.setText("Scan");
+                    actionButton.setText("Scan");
                 }
                 break;
             default:
-                bookStatusTextView.setText("Available");
-                bookActionButton.setVisibility(View.GONE);
+                statusText.setText("Available");
+                actionButton.setVisibility(View.GONE);
                 break;
         }
 

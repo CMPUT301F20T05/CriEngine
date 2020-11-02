@@ -30,4 +30,7 @@
 
     <!-- Requests For Book Activity -->
     <string name="requests_for_book_header">Requests on: INSERT NAME</string>
+
+    <!-- Notifications Activity -->
+    <string name="notifications_header">Notifications</string>
 </resources>
