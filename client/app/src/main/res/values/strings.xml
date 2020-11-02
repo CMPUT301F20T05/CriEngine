@@ -27,4 +27,10 @@
     <string name="filter_requests_checkbox">Requested</string>
     <string name="filter_accepted_checkbox">Accepted</string>
     <string name="filter_borrowed_checkbox">Borrowed</string>
+
+    <!-- Bottom Navigation -->
+    <string name="title_search">Search</string>
+    <string name="title_my_books">My Books</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_my_profile">My profile</string>
 </resources>
