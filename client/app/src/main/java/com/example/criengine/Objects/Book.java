@@ -26,7 +26,6 @@ public class Book {
      */
     public Book() {
         this.requesters = new ArrayList<>();
-
     }
 
     /**

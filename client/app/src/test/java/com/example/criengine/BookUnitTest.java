@@ -28,14 +28,21 @@ public class BookUnitTest {
     public void testBookConstructorOne() {
         Book mockBook = new Book();
 
+        assertNull(mockBook.getBookID());
+        assertNull(mockBook.getOwner());
+        assertNull(mockBook.getTitle());
+        assertNull(mockBook.getAuthor());
+        assertNull(mockBook.getDescription());
+        assertNull(mockBook.getIsbn());
+        assertNull(mockBook.getStatus());
+        assertNull(mockBook.getBorrower());
         assertEquals(mockBook.getRequesters().size(), 0);
+        assertNull(mockBook.getGeolocation());
+        assertNull(mockBook.getImageURL());
     }
 
     @Test
     public void testBookConstructorTwo() {
-        List<String> newRequesterList = new ArrayList<>();
-        Book mockBook = new Book("ID 1", "New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
-
         assertEquals(mockBook.getBookID(), "ID 1");
         assertEquals(mockBook.getOwner(), "New Owner");
         assertEquals(mockBook.getTitle(), "New Title");
