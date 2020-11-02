@@ -16,6 +16,7 @@ public class Profile {
     private String bio;
     private ArrayList<String> booksOwned;
     private ArrayList<String> booksBorrowedOrRequested;
+    private ArrayList<Notification> notifications;
 
     /**
      * Constructor 1. No inputs, simply instantiates the arraylists.
@@ -23,6 +24,7 @@ public class Profile {
     public Profile() {
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     /**
@@ -45,6 +47,7 @@ public class Profile {
         this.bio = bio;
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     /**
@@ -66,6 +69,7 @@ public class Profile {
         this.bio = null;
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     /**
@@ -149,8 +153,8 @@ public class Profile {
     }
 
     /**
-     * Get the email from the profile.
-     * @return The profile.
+     * Get the email for the profile.
+     * @return The email.
      */
     public String getEmail() {
         return email;
@@ -242,5 +246,36 @@ public class Profile {
      */
     public void removeBooksBorrowedOrRequested(String title) {
         this.booksBorrowedOrRequested.remove(title);
+
+    /**
+     * Add a notification for the user.
+     * @param notif The notification to be added.
+     */
+    public void addNotification(Notification notif) {
+        notifications.add(notif);
+    }
+
+    /**
+     * Remove a notification from the user.
+     * @param notif The notification to be removed.
+     */
+    public void removeNotification(Notification notif) {
+        notifications.remove(notif);
+    }
+
+    /**
+     * Returns the whole notifications array.
+     * @return The entire array containing the notifications.
+     */
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    /**
+     * Assigns a new array for the notifications.
+     * @param newList The new array.
+     */
+    public void setNotifications(ArrayList<Notification> newList) {
+        notifications = newList;
     }
 }

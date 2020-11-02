@@ -41,18 +41,18 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.book_item, parent, false);
+            view = inflater.inflate(R.layout.list_format, parent, false);
         }
 
-        TextView bookNameTextView = view.findViewById(R.id.bookNameTextView);
-        TextView bookStatusTextView = view.findViewById(R.id.bookStatusTextView);
-        Button bookActionButton = view.findViewById(R.id.bookActionButton);
+        TextView headerText = view.findViewById(R.id.headerText);
+        TextView statusText = view.findViewById(R.id.statusText);
+        Button actionButton = view.findViewById(R.id.actionButton);
 
         Book book = bookItems.get(position);
 
-        bookNameTextView.setText(book.getTitle());
+        headerText.setText(book.getTitle());
 
-        bookStatusTextView.setText(book.getStatus());
+        statusText.setText(book.getStatus());
 
         // TODO: use db username and watchlist to determine state
         // Cancel -- we requested /  watching a book
@@ -61,8 +61,8 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         //if ( book.getRequesters().contains(Database.myUsername) || Database.getMyProfile.getWatchList().contains(book))
         DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
         if (book.getRequesters().contains(dbw.userId)) {
-            bookActionButton.setText("Cancel");
-            bookActionButton.setOnClickListener(
+            actionButton.setText("Cancel");
+            actionButton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -72,9 +72,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
             );
 
         } else if (book.getBorrower() == dbw.userId) {
-            bookStatusTextView.setTextColor(view.getResources().getColor(R.color.status_accepted));
-            bookActionButton.setText("Scan");
-            bookActionButton.setOnClickListener(
+            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
+            actionButton.setText("Scan");
+            actionButton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -83,10 +83,10 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     }
             );
         } else {
-            bookStatusTextView.setText("Rejected");
-            bookStatusTextView.setTextColor(view.getResources().getColor(R.color.status_rejected));
-            bookActionButton.setText("Ok");
-            bookActionButton.setOnClickListener(
+            statusText.setText("Rejected");
+            statusText.setTextColor(view.getResources().getColor(R.color.status_rejected));
+            actionButton.setText("Ok");
+            actionButton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
