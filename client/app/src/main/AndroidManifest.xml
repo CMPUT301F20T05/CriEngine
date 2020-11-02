@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.AddBookActivity"></activity>
         <activity android:name=".Activities.RequestsForBookActivity"></activity>
         <activity android:name=".Activities.NotificationActivity" />
         <activity android:name=".Activities.FilterFragmentActivity"
@@ -26,6 +27,8 @@
         <activity
             android:name=".Activities.MyProfileActivity"
             android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.MyBookActivity" />
+        <activity android:name=".Activities.BookActivity" />
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseUser;
@@ -91,12 +92,21 @@ public class DatabaseWrapper {
                 });
     }
 
-    public Task<Void> addBook(Book book) {
+    public Task<Void> addBook(final Book book) {
         // if book doesn't exist
         if (book.getBookID() == null) {
-            // generate ref and add it to the book
+            // generate ref and add it to the book and it's profile
             DocumentReference ref = books.document();
             book.setBookID(ref.getId());
+            dbw.getProfile(book.getOwner()).addOnSuccessListener(new OnSuccessListener<Profile>() {
+                @Override
+                public void onSuccess(Profile profile) {
+                    ArrayList<String> books = profile.getBooksOwned();
+                    books.add(book.getBookID());
+                    profile.setBooksOwned(books);
+                    dbw.addProfile(profile);
+                }
+            });
             return ref.set(book);
         } else {
             // otherwise use the bookID

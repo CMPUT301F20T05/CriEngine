@@ -1,6 +1,8 @@
 package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -87,7 +89,8 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // FIXME: redirect to add-book activity.
+                Intent intent = new Intent(v.getContext(), AddBookActivity.class);
+                v.getContext().startActivity(intent);
             }
         });
 
