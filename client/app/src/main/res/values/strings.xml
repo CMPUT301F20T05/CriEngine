@@ -39,4 +39,8 @@
     <string name="edit_book">Edit Book</string>
     <string name="see_requests">See Requests</string>
     <string name="delete_book">Delete Book</string>
+
+    <!-- Notifications Activity -->
+    <string name="notifications_header">Notifications</string>
+
 </resources>
