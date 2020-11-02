@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.criengine">
 
     <application
@@ -10,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.AddBookActivity"></activity>
-        <activity android:name=".Activities.FilterFragmentActivity" />
+        <activity android:name=".Activities.NotificationActivity" />
+        <activity android:name=".Activities.FilterFragmentActivity"
+            tools:ignore="Instantiatable" />
         <activity android:name=".Activities.MyBooksActivity" />
         <activity android:name=".Activities.RequestActivity" />
         <activity android:name=".Activities.MainActivity">
@@ -23,6 +26,8 @@
         <activity
             android:name=".Activities.MyProfileActivity"
             android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.MyBookActivity" />
+        <activity android:name=".Activities.BookActivity" />
     </application>
 
 </manifest>
