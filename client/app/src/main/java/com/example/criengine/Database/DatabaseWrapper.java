@@ -3,9 +3,11 @@ package com.example.criengine.Database;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -15,8 +17,10 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +169,58 @@ public class DatabaseWrapper {
                         }
                     }
                 });
+    }
+
+
+    public Task<Boolean> makeRequest (final String borrowerUid, final String bookID) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
+                List<String> bookList = (List<String>) userSnapshot.get("booksBorrowedOrRequested");
+
+                if (bookList == null) {
+                    bookList = new ArrayList<>();
+                }
+
+                List<String> profileList = (List<String>) bookSnapshot.get("requesters");
+
+                if (profileList == null) {
+                    profileList = new ArrayList<>();
+                }
+
+                if (profileList.contains(borrowerUid) || bookList.contains(bookID)) {
+                    return false;
+                }
+
+                bookList.add(bookID);
+                profileList.add(borrowerUid);
+                transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
+                transaction.update(books.document(bookID), "requesters", profileList);
+                return true;
+            };
+        });
+    }
+    public Task<Void> acceptRequest (String borrowerUid, String bookID) {
+        return null;
+    }
+    public Task<Void> declineRequest (String borrowerUid, String bookID) {
+        return null;
+    }
+    public Task<Void> borrowBook (String borrowerUid, String ISBN) {
+        return null;
+    }
+    public Task<Void> confrimBorrowBook (String borrowerUid, String ISBN) {
+        return null;
+    }
+    public Task<Void> returnBook (String borrowerUid, String ISBN) {
+        return null;
+    }
+    public Task<Void> confrimReturnBook (String borrowerUid, String ISBN) {
+        return null;
     }
 
 }

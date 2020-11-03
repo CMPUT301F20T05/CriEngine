@@ -210,18 +210,18 @@ public class Profile {
 
     /**
      * Add a book to the list of owned books.
-     * @param title The title of the book.
+     * @param bookID The ID of the book.
      */
-    public void addBooksOwned(String title) {
-        this.booksOwned.add(title);
+    public void addBooksOwned(String bookID) {
+        this.booksOwned.add(bookID);
     }
 
     /**
      * Remove a book from the list of owned books.
-     * @param title The title of the book.
+     * @param bookID The ID of the book.
      */
-    public void removeBooksOwned(String title) {
-        this.booksOwned.remove(title);
+    public void removeBooksOwned(String bookID) {
+        this.booksOwned.remove(bookID);
     }
 
     /**
@@ -234,18 +234,18 @@ public class Profile {
 
     /**
      * Add a book to the list of borrowed or requested books.
-     * @param title The title of the book.
+     * @param bookID The ID of the book.
      */
-    public void addBooksBorrowedOrRequested(String title) {
-        this.booksBorrowedOrRequested.add(title);
+    public void addBooksBorrowedOrRequested(String bookID) {
+        this.booksBorrowedOrRequested.add(bookID);
     }
 
     /**
      * Remove a book from the list of borrowed of requested books.
-     * @param title The title of the book.
+     * @param bookID The ID of the book.
      */
-    public void removeBooksBorrowedOrRequested(String title) {
-        this.booksBorrowedOrRequested.remove(title);
+    public void removeBooksBorrowedOrRequested(String bookID) {
+        this.booksBorrowedOrRequested.remove(bookID);
     }
     /**
      * Add a notification for the user.

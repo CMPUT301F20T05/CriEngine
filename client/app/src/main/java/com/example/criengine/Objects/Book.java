@@ -182,18 +182,18 @@ public class Book implements Serializable {
 
     /**
      * Add a person to list of requesters.
-     * @param name The name of the person requesting the book.
+     * @param userID The userID of the person requesting the book.
      */
-    public void addRequesters(String name) {
-        requesters.add(name);
+    public void addRequesters(String userID) {
+        requesters.add(userID);
     }
 
     /**
      * Remove a requester from the list.
-     * @param name The name of the person to be removed.
+     * @param userID The userID of the person to be removed.
      */
-    public void removeRequesters(String name) {
-        requesters.remove(name);
+    public void removeRequesters(String userID) {
+        requesters.remove(userID);
     }
 
     /**
@@ -254,7 +254,7 @@ public class Book implements Serializable {
 
     /**
      * Set the new owner of the book.
-     * @param owner The name of the new owner.
+     * @param owner The userID of the new owner.
      */
     public void setOwner(String owner) {
         this.owner = owner;
@@ -302,7 +302,7 @@ public class Book implements Serializable {
 
     /**
      * Set a borrower for the book.
-     * @param borrower The name of the person borrowing the book.
+     * @param borrower The userID of the person borrowing the book.
      */
     public void setBorrower(String borrower) {
         this.borrower = borrower;
