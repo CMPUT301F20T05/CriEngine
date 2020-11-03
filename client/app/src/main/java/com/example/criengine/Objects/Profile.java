@@ -136,14 +136,26 @@ public class Profile {
         this.lastname = lastname;
     }
 
+    /**
+     * Get the bio for the profile.
+     * @return The bio.
+     */
     public String getBio() {
         return bio;
     }
 
+    /**
+     * Set a new bio for the profile.
+     * @param bio The new bio.
+     */
     public void setBio(String bio) {
         this.bio = bio;
     }
 
+    /**
+     * Get the email for the profile.
+     * @return The email.
+     */
     public String getEmail() {
         return email;
     }
@@ -234,6 +246,7 @@ public class Profile {
      */
     public void removeBooksBorrowedOrRequested(String title) {
         this.booksBorrowedOrRequested.remove(title);
+    }
 
     /**
      * Add a notification for the user.
