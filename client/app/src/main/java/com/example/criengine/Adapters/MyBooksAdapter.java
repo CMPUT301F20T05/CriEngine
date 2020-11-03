@@ -85,7 +85,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 break;
             case "accepted":
                 statusText.setText("Accepted");
-                if (!book.getPotentialBorrower().getHandOffCompelte()) {
+                if (book.getGeolocation() == null) {
                     actionButton.setText("Location");
                 } else {
                     actionButton.setText("Scan");
