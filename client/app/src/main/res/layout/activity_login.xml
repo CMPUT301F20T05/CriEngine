@@ -30,18 +30,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30sp"
+            android:autofillHints=""
             android:ems="10"
-            android:inputType="textEmailAddress"
-            android:autofillHints="" />
+            android:hint="@string/fui_email_hint"
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/loginEditTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="30sp"
+            android:autofillHints=""
             android:ems="10"
-            android:inputType="textPassword"
-            android:autofillHints="" />
+            android:hint="@string/fui_password_hint"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/loginButton"
