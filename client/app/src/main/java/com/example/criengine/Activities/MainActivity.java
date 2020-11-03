@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private final String CONFIG_AUTO_LOGIN_EMAIL = "user2@email.com";
     private final String CONFIG_AUTO_LOGIN_PASSWORD = "password";
 
-
     private Button myProfileActivityButton;
     private Button myBooksActivityButton;
     private Button requestActivityButton;
+    private Button rootActivityButton;
     private Button myBookActivityButton;
     private Button notificationActivityButton;
-  
+
     DatabaseWrapper dbw; // needs to be initialized by sign in
     Profile userProfile;
 
@@ -48,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // router to other activities for testing
         requestActivityButton = findViewById(R.id.requested_books_activity);
+        myProfileActivityButton = findViewById(R.id.my_profile_activity_button);
+        myBooksActivityButton = findViewById(R.id.myBooksButton);
+        rootActivityButton = findViewById(R.id.rootActivityButton);
 
         requestActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,10 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-
-        // router to other activities for testing
-        myProfileActivityButton = findViewById(R.id.my_profile_activity_button);
-        myBooksActivityButton = findViewById(R.id.myBooksButton);
 
         myProfileActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
                 v.getContext().startActivity(intent);
             }
+        });
+
+        rootActivityButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(v.getContext(), RootActivity.class);
+                  v.getContext().startActivity(intent);
+              }
         });
 
         // router to book activity
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             if (CONFIG_LOGIN_AUTOMATICALLY) {
                 // Sign in with given username and password
                 mAuth.signInWithEmailAndPassword(CONFIG_AUTO_LOGIN_EMAIL, CONFIG_AUTO_LOGIN_PASSWORD)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
