@@ -247,6 +247,7 @@ public class Profile {
     public void removeBooksBorrowedOrRequested(String title) {
         this.booksBorrowedOrRequested.remove(title);
     }
+
     /**
      * Add a notification for the user.
      * @param notif The notification to be added.
@@ -259,10 +260,18 @@ public class Profile {
         notifications.remove(notif);
     }
 
+    /**
+     * Get the list of notifications.
+     * @return The list of notifications.
+     */
     public ArrayList<Notification> getNotifications() {
         return notifications;
     }
 
+    /**
+     * Set a new list of notifications.
+     * @param newList The notification list to be set.
+     */
     public void setNotifications(ArrayList<Notification> newList) {
         notifications = newList;
     }
