@@ -33,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private final String CONFIG_AUTO_LOGIN_EMAIL = "user2@email.com";
     private final String CONFIG_AUTO_LOGIN_PASSWORD = "password";
 
-
     private Button myProfileActivityButton;
     private Button myBooksActivityButton;
     private Button requestActivityButton;
     private Button rootActivityButton;
+    private Button myBookActivityButton;
+    private Button notificationActivityButton;
+
     DatabaseWrapper dbw; // needs to be initialized by sign in
     Profile userProfile;
 
@@ -84,7 +86,26 @@ public class MainActivity extends AppCompatActivity {
               }
         });
 
+        // router to book activity
+        myBookActivityButton = findViewById(R.id.my_book_activity_button);
 
+        myBookActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MyBookActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        notificationActivityButton = findViewById(R.id.notificationButton);
+              
+        notificationActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), NotificationActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         //begin sign in
         // accounts: user1@email.com:password
@@ -94,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             if (CONFIG_LOGIN_AUTOMATICALLY) {
                 // Sign in with given username and password
                 mAuth.signInWithEmailAndPassword(CONFIG_AUTO_LOGIN_EMAIL, CONFIG_AUTO_LOGIN_PASSWORD)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
