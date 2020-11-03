@@ -246,7 +246,7 @@ public class Profile {
      */
     public void removeBooksBorrowedOrRequested(String title) {
         this.booksBorrowedOrRequested.remove(title);
-
+    }
     /**
      * Add a notification for the user.
      * @param notif The notification to be added.
