@@ -132,4 +132,13 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         }
         myBooksListAdapter.notifyDataSetChanged();
     }
+
+    /**
+     * Overrides the back button so it returns to the main activity.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
