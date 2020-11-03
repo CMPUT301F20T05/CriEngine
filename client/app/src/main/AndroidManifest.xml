@@ -13,7 +13,7 @@
         <activity android:name=".Activities.AddBookActivity" />
         <activity android:name=".Activities.RequestsForBookActivity" />
         <activity android:name=".Activities.NotificationActivity" />
-        <activity android:name=".Activities.FilterFragmentActivity"
+        <activity android:name=".Fragments.MyBooksListFilterFragment"
             tools:ignore="Instantiatable" />
         <activity android:name=".Activities.MyBooksActivity" />
         <activity android:name=".Activities.RequestActivity" />
