@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyBookActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         notificationActivityButton = findViewById(R.id.notificationButton);
               
