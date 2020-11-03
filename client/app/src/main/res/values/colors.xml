@@ -9,6 +9,8 @@
     <color name="focused_button">#76c408</color>
     <color name="disabled_button">#c6f584</color>
     <color name="pressed_button">#77a13b</color>
+    <color name="safe_seeThrough_button">#32a852</color>
+    <color name="danger_seeThrough_button">#a85132</color>
 
     <!--My Request Activity-->
     <color name="item_background">#beeeef</color>

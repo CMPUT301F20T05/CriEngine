@@ -37,7 +37,7 @@ public class RequestActivity extends AppCompatActivity {
 
         dbw = DatabaseWrapper.getWrapper();
 
-        borrowerBooks = new ArrayList<Book>();
+        borrowerBooks = new ArrayList<>();
 //        borrowerBooks.addAll(Arrays.asList(books));
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(this, borrowerBooks);
 
