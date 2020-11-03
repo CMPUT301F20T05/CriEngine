@@ -33,24 +33,11 @@ public class RootActivity extends AppCompatActivity {
         viewPager.registerOnPageChangeCallback(new onPageChange());
     }
 
-    private class onNavItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem selectedItem) {
-            for (int i = 0; i < navigation.getMenu().size(); i++) {
-                if (navigation.getMenu().getItem(i) == selectedItem) {
-                    viewPager.setCurrentItem(i);
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
     private class RootPagerFragmentAdapter extends FragmentStateAdapter {
         public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) { super(fa); }
 
         @Override
-        public int getItemCount() { return 3; }
+        public int getItemCount() { return 5; }
 
         @NonNull
         @Override
@@ -61,6 +48,10 @@ public class RootActivity extends AppCompatActivity {
                 case 1:
                     return new RequestedBooksFragment();
                 case 2:
+                    return new RequestedBooksFragment();
+                case 3:
+                    return new RequestedBooksFragment();
+                case 4:
                     return new RequestedBooksFragment();
             }
 
@@ -74,6 +65,19 @@ public class RootActivity extends AppCompatActivity {
             super.onPageSelected(position);
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
+        }
+    }
+
+    private class onNavItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem selectedItem) {
+            for (int i = 0; i < navigation.getMenu().size(); i++) {
+                if (navigation.getMenu().getItem(i) == selectedItem) {
+                    viewPager.setCurrentItem(i);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

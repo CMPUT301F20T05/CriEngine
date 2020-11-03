@@ -59,4 +59,5 @@
     <string name="title_my_books">My Books</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_my_profile">My profile</string>
+    <string name="title_my_requests">My Requests</string>
 </resources>
