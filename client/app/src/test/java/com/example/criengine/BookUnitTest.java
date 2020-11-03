@@ -115,6 +115,13 @@ public class BookUnitTest {
     }
 
     @Test
+    public void testConfirmationNeededMethods() {
+        assertEquals(mockBook.isConfirmationNeeded(), true);
+        mockBook.setConfirmationNeeded(true);
+        assertEquals(mockBook.isConfirmationNeeded(), false);
+    }
+
+    @Test
     public void testOwnerMethods() {
         mockBook.setOwner("A new Owner");
         assertEquals(mockBook.getOwner(), "A new Owner");

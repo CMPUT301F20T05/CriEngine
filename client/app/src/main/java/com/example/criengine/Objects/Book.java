@@ -53,6 +53,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.status = status;
         this.borrower = borrower;
+        this.confirmationNeeded = false;
         this.requesters = (ArrayList<String>) requesters;
         this.geolocation = geolocation;
         this.imageURL = imageURL;
@@ -80,6 +81,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.status = status;
         this.borrower = borrower;
+        this.confirmationNeeded = false;
         this.requesters = (ArrayList<String>) requesters;
         this.geolocation = geolocation;
         this.imageURL = imageURL;
@@ -103,6 +105,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.status = status;
         this.borrower = null;
+        this.confirmationNeeded = false;
         this.requesters = new ArrayList<>();
         this.geolocation = null;
         this.imageURL = null;
@@ -303,7 +306,6 @@ public class Book implements Serializable {
      * Set a new list of requesters for the book.
      * @param requesters The new list of requesters.
      */
-
     public void setRequesters(ArrayList<String> requesters) {
         this.requesters = requesters;
     }
