@@ -65,8 +65,7 @@ public class DatabaseWrapper {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
                             try {
-                                Profile profile = document.toObject(Profile.class);
-                                return profile;
+                                return document.toObject(Profile.class);
                             }
                             catch(Exception e) {
                                 Log.e(TAG, e.getMessage());
@@ -95,7 +94,13 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
-                            return document.toObject(Book.class);
+                            try {
+                                return document.toObject(Book.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
 //                            return new Book(document.getData());
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
@@ -147,7 +152,13 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             QuerySnapshot query = task.getResult();
                             assert query != null;
-                            return query.toObjects(Book.class);
+                            try {
+                                return query.toObjects(Book.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
                             return new ArrayList<Book>();
@@ -171,7 +182,13 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             QuerySnapshot query = task.getResult();
                             assert query != null;
-                            return query.toObjects(Book.class);
+                            try {
+                                return query.toObjects(Book.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
                             return new ArrayList<Book>();
