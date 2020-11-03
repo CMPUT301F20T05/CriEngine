@@ -1,5 +1,6 @@
 package com.example.criengine;
 
+import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
 
 import org.junit.Before;
@@ -32,6 +33,7 @@ public class ProfileUnitTest {
         assertNull(mock.getBio());
         assertEquals(mock.getBooksOwned().size(), 0);
         assertEquals(mock.getBooksBorrowedOrRequested().size(), 0);
+        assertEquals(mock.getNotifications().size(), 0);
     }
 
     @Test
@@ -47,6 +49,7 @@ public class ProfileUnitTest {
         assertEquals(mock.getBio(), "Bio");
         assertEquals(mock.getBooksOwned().size(), 0);
         assertEquals(mock.getBooksBorrowedOrRequested().size(), 0);
+        assertEquals(mock.getNotifications().size(), 0);
     }
 
     @Test
@@ -62,6 +65,7 @@ public class ProfileUnitTest {
         assertNull(mock.getBio());
         assertEquals(mock.getBooksOwned().size(), 0);
         assertEquals(mock.getBooksBorrowedOrRequested().size(), 0);
+        assertEquals(mock.getNotifications().size(), 0);
     }
 
     @Test
@@ -132,5 +136,21 @@ public class ProfileUnitTest {
         newBorrowedOrRequested.add("A new book!");
         mock.setBooksBorrowedOrRequested(newBorrowedOrRequested);
         assertEquals(mock.getBooksBorrowedOrRequested().get(0), "A new book!");
+    }
+
+    @Test
+    public void testNotificationMethods() {
+        Notification mockNotification = new Notification("Mock notification.");
+        mock.addNotification(mockNotification);
+        assertEquals(mock.getNotifications().get(0).getDescription(), "Mock notification.");
+
+        mock.removeNotification(mockNotification);
+        assertEquals(mock.getNotifications().size(), 0);
+
+        ArrayList<Notification> newMockNotificationList = new ArrayList<>();
+        Notification anotherMockNotification = new Notification("Another mock notification.");
+        newMockNotificationList.add(anotherMockNotification);
+        mock.setNotifications(newMockNotificationList);
+        assertEquals(mock.getNotifications().get(0).getDescription(), "Another mock notification.");
     }
 }

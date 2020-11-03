@@ -256,6 +256,10 @@ public class Profile {
         notifications.add(notif);
     }
 
+    /**
+     * Remove a notification from the list.
+     * @param notif The notification to remove.
+     */
     public void removeNotification(Notification notif) {
         notifications.remove(notif);
     }
