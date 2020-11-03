@@ -34,14 +34,13 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/edit_book_button"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/delete_book_button" />
 
     <Button
         android:id="@+id/delete_book_button"
         android:layout_width="120sp"
         android:layout_height="40sp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/delete_book"
