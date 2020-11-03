@@ -42,7 +42,9 @@ public class RequestedBooksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         borrowerBooks = new ArrayList<Book>();
+
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
 
         ListView bookNameTextView = getView().findViewById(R.id.bookListView);
@@ -54,28 +56,5 @@ public class RequestedBooksFragment extends Fragment {
                 //TODO: redirect to book view
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        /* Crashes because dbw is null?
-        dbw = DatabaseWrapper.getWrapper();
-        dbw.getProfile(dbw.userId).addOnSuccessListener(
-                new OnSuccessListener<Profile>() {
-                    @Override
-                    public void onSuccess(Profile profile) {
-                        dbw.getBorrowedOrRequestedBooks(profile).addOnSuccessListener(
-                                new OnSuccessListener<List<Book>>() {
-                                    @Override
-                                    public void onSuccess(List<Book> books) {
-                                        borrowerBooks.addAll(books);
-                                        borrowerBooksListAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                        );
-                    }
-                }
-        );*/
     }
 }

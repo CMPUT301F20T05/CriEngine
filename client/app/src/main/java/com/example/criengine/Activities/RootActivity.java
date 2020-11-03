@@ -20,6 +20,7 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,9 @@ public class RootActivity extends AppCompatActivity {
         viewPager.registerOnPageChangeCallback(new onPageChange());
     }
 
+    /**
+     * FragmentStateAdapter for the ViewPager
+     */
     private class RootPagerFragmentAdapter extends FragmentStateAdapter {
         public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) { super(fa); }
 
@@ -59,6 +63,10 @@ public class RootActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * OnPageChangeCallback for the root ViewPager
+     * It updates the navigation selected item when the page is swiped
+     */
     private class onPageChange extends ViewPager2.OnPageChangeCallback {
         @Override
         public void onPageSelected(int position) {
@@ -68,6 +76,11 @@ public class RootActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * OnItemSelectedListener for the BottomNavigationView
+     * sets the ViewPager page to the index of the menu item selected
+     * ie. selecting the 2nd menu item will open the 2nd ViewPager page
+     */
     private class onNavItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem selectedItem) {
