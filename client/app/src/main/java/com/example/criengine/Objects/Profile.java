@@ -3,7 +3,8 @@ package com.example.criengine.Objects;
 import java.util.ArrayList;
 
 /**
- * Creates a profile for the user.
+ * Creates a user profile.
+ * Contains all information specific to a profile.
  */
 public class Profile {
     private String userID;
@@ -18,7 +19,7 @@ public class Profile {
     private ArrayList<Notification> notifications;
 
     /**
-     * Constructor 1. Takes no inputs and instantiates the different arrays.
+     * Constructor 1. No inputs, simply instantiates the arraylists.
      */
     public Profile() {
         this.booksOwned = new ArrayList<>();
@@ -28,14 +29,13 @@ public class Profile {
 
     /**
      * Constructor 2.
-     * Instantiates a profile with a bio.
-     * @param userID The user identifier.
+     * @param userID The user ID.
      * @param email The email of the user.
-     * @param username The username of the profile.
+     * @param username The username for the user.
      * @param phone The phone number for the user.
-     * @param firstname The first name of the user.
-     * @param lastname The last name of the user.
-     * @param bio The bio that the user wanted to enter.
+     * @param firstname The firstname of the user.
+     * @param lastname The lastname of the user.
+     * @param bio The bio for the user.
      */
     public Profile(String userID, String email, String username, String phone, String firstname, String lastname, String bio) {
         this.userID = userID;
@@ -52,9 +52,9 @@ public class Profile {
 
     /**
      * Constructor 3.
-     * @param userID The user identifier.
+     * @param userID The user ID.
      * @param email The email of the user.
-     * @param username The username of the profile.
+     * @param username The username of the user.
      * @param phone The phone number for the user.
      * @param firstname The first name of the user.
      * @param lastname The last name of the user.
@@ -73,8 +73,8 @@ public class Profile {
     }
 
     /**
-     * Get the username for the profile.
-     * @return The username.
+     * Get the username of the profile.
+     * @return The username for the profile.
      */
     public String getUsername() {
         return username;
@@ -82,14 +82,14 @@ public class Profile {
 
     /**
      * Set the username for the profile.
-     * @param username The new username.
+     * @param username The new username for the profile.
      */
     public void setUsername(String username) {
         this.username = username;
     }
 
     /**
-     * Get the phone number related to the account.
+     * Get the phone number from the profile.
      * @return The phone number.
      */
     public String getPhone() {
@@ -97,7 +97,7 @@ public class Profile {
     }
 
     /**
-     * Set a new phone number for the account.
+     * Set a new phone number for the profile
      * @param phone The new phone number.
      */
     public void setPhone(String phone) {
@@ -105,7 +105,7 @@ public class Profile {
     }
 
     /**
-     * Get the first name of the user.
+     * Get the first name from the profile.
      * @return The first name.
      */
     public String getFirstname() {
@@ -113,7 +113,7 @@ public class Profile {
     }
 
     /**
-     * Change the first name for the user.
+     * Set a new first name for the profile.
      * @param firstname The new first name.
      */
     public void setFirstname(String firstname) {
@@ -121,7 +121,7 @@ public class Profile {
     }
 
     /**
-     * Get the last name of the user.
+     * Get the last name for the profile.
      * @return The last name.
      */
     public String getLastname() {
@@ -129,7 +129,7 @@ public class Profile {
     }
 
     /**
-     * Set a new last name for the user.
+     * Set a new last name for the profile.
      * @param lastname The new last name.
      */
     public void setLastname(String lastname) {
@@ -161,7 +161,7 @@ public class Profile {
     }
 
     /**
-     * Set a new email for the account.
+     * Set a new email for the profile
      * @param email The new email.
      */
     public void setEmail(String email) {
@@ -169,15 +169,15 @@ public class Profile {
     }
 
     /**
-     * Get the user identifier.
-     * @return The ID.
+     * Get the user ID from the profile.
+     * @return The user ID.
      */
     public String getUserID() {
         return userID;
     }
 
     /**
-     * Set a new user identifier for the profile.
+     * Set a new user Id for the profile.
      * @param userID The new user ID.
      */
     public void setUserID(String userID) {
@@ -185,7 +185,7 @@ public class Profile {
     }
 
     /**
-     * Get a list of owned books.
+     * Get list of owned books from the profile.
      * @return The list of owned books.
      */
     public ArrayList<String> getBooksOwned() {
@@ -194,14 +194,14 @@ public class Profile {
 
     /**
      * Set a new list of owned books.
-     * @param booksOwned The list of owned books.
+     * @param booksOwned The new list of owned books.
      */
     public void setBooksOwned(ArrayList<String> booksOwned) {
         this.booksOwned = booksOwned;
     }
 
     /**
-     * Get a list of books that the user has borrowed or requested.
+     * Get the list of borrowed or requested books.
      * @return The list of borrowed or requested books.
      */
     public ArrayList<String> getBooksBorrowedOrRequested() {
@@ -209,12 +209,43 @@ public class Profile {
     }
 
     /**
-     * Set a list of borrowed or requested books.
-     * @param booksBorrowedOrRequested The list of borrowed or requested books.
+     * Add a book to the list of owned books.
+     * @param title The title of the book.
+     */
+    public void addBooksOwned(String title) {
+        this.booksOwned.add(title);
+    }
+
+    /**
+     * Remove a book from the list of owned books.
+     * @param title The title of the book.
+     */
+    public void removeBooksOwned(String title) {
+        this.booksOwned.remove(title);
+    }
+
+    /**
+     * Set a new list of borrowed or requested books.
+     * @param booksBorrowedOrRequested The new list of borrowed or requested books.
      */
     public void setBooksBorrowedOrRequested(ArrayList<String> booksBorrowedOrRequested) {
         this.booksBorrowedOrRequested = booksBorrowedOrRequested;
     }
+
+    /**
+     * Add a book to the list of borrowed or requested books.
+     * @param title The title of the book.
+     */
+    public void addBooksBorrowedOrRequested(String title) {
+        this.booksBorrowedOrRequested.add(title);
+    }
+
+    /**
+     * Remove a book from the list of borrowed of requested books.
+     * @param title The title of the book.
+     */
+    public void removeBooksBorrowedOrRequested(String title) {
+        this.booksBorrowedOrRequested.remove(title);
 
     /**
      * Add a notification for the user.
