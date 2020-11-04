@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.example.criengine.Activities.MyBooksActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.R;
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 /*
  * RequestsForBookAdapter is custom ArrayAdapter that can be used to show User profiles that have
  * requested a book in a ListView
- * @version 1.0
  */
 public class RequestsForBookAdapter extends ArrayAdapter<String> {
     private ArrayList<String> userRequests;
@@ -80,7 +79,8 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                     userRequests.clear();
                     // TODO: Push changes to database.
 
-                    Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                    Intent intent = new Intent(v.getContext(), RootActivity.class);
+                    intent.putExtra("Index", 3);
                     v.getContext().startActivity(intent);
                 }
             }
@@ -99,7 +99,8 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                         // TODO: Push changes to database.
 
                         // Return to previous activity automatically.
-                        Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                        Intent intent = new Intent(v.getContext(), RootActivity.class);
+                        intent.putExtra("Index", 3);
                         v.getContext().startActivity(intent);
                     }
 

@@ -28,8 +28,7 @@ import java.util.ArrayList;
 
 /*
  * MyBooksAdapter is custom ArrayAdapter that can be used to show Book instances in
- * a ListView
- * @version 1.0
+ * a ListView.
  */
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
@@ -52,7 +51,8 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         // Get Item Data
         View view = convertView;
 
-        if( view == null ) {
+        // Setup the inflater and view if there was none given.
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.list_format, parent, false);
         }
@@ -77,13 +77,9 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intent = new Intent(v.getContext(), RequestsForBookActivity.class);
-//                        intent.putExtra("Book", book);
-//                        v.getContext().startActivity(intent);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("Book", book);
-                        Fragment fragment = new RequestsForBookFragment();
-                        fragment.setArguments(bundle);
+                        Intent intent = new Intent(v.getContext(), RequestsForBookActivity.class);
+                        intent.putExtra("Book", book);
+                        v.getContext().startActivity(intent);
                     }
                 });
                 break;
