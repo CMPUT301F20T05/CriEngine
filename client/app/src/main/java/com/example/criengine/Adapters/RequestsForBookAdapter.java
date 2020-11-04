@@ -73,8 +73,9 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                     for (int i = 0; i < userRequests.size(); i++) {
                         if (userRequests.get(i).equals(name)) {
                             // TODO: Notify the accepted user + push changes to db.
+                        } else {
+                            // TODO: Notify the rejected user(s) + push changes to db.
                         }
-                        // TODO: Notify the rejected user(s) + push changes to db.
                     }
                     userRequests.clear();
                     // TODO: Push changes to database.
