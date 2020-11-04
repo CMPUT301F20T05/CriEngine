@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.bottomnavigation.BottomNavigationView
+id="@+id/bottom_navigation"
+layout_width="match_parent"
+layout_height="55sp"
+layout_weight="0"
+background="@color/colorPrimary"
+itemIconTint="#ffff"
+itemTextColor="#ffff"
+menu="@menu/bottom_navigation_menu" />

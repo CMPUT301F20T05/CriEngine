@@ -17,7 +17,6 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +70,7 @@ public class RootActivity extends AppCompatActivity {
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
             // TODO: Refresh stuff goes here.
+
         }
     }
 
@@ -90,5 +90,13 @@ public class RootActivity extends AppCompatActivity {
             }
             return false;
         }
+    }
+
+    /**
+     * Changes the viewPager page to the given page
+     * @ param id: page index
+     */
+    public void goToPage(int index) {
+        viewPager.setCurrentItem(index);
     }
 }

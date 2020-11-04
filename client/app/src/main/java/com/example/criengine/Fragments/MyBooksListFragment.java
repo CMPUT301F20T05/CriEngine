@@ -28,7 +28,7 @@ import java.util.List;
  * My Books Activity.
  * Displays all owned books and their status's.
  */
-public class MyBooksListFragment extends Fragment implements MyBooksListFilterFragment.OnFragmentInteractionListener {
+public class MyBooksListFragment extends RootFragment implements MyBooksListFilterFragment.OnFragmentInteractionListener {
     private MyBooksAdapter myBooksListAdapter;
     private ArrayList<Book> myBooks;
     private ArrayList<Book> displayBooks;
@@ -36,12 +36,10 @@ public class MyBooksListFragment extends Fragment implements MyBooksListFilterFr
     private Button filterButton;
     private ListView headerText;
     private ArrayList<String> filterStatus = new ArrayList<>();
-    private DatabaseWrapper dbw;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_my_books, container, false);
+    public int initRootFrag() {
+        return R.layout.activity_my_books;
     }
 
     @Override
@@ -52,7 +50,6 @@ public class MyBooksListFragment extends Fragment implements MyBooksListFilterFr
         displayBooks = new ArrayList<>();
         myBooks = new ArrayList<>();
 
-        dbw = DatabaseWrapper.getWrapper();
 
         // Set the adapter.
         myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks);
