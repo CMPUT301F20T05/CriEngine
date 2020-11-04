@@ -12,10 +12,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.Serializable;
 
 import com.example.criengine.Activities.RequestsForBookActivity;
+import com.example.criengine.Fragments.MyBooksListFilterFragment;
+import com.example.criengine.Fragments.RequestsForBookFragment;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 
@@ -72,9 +77,13 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(v.getContext(), RequestsForBookActivity.class);
-                        intent.putExtra("Book", book);
-                        v.getContext().startActivity(intent);
+//                        Intent intent = new Intent(v.getContext(), RequestsForBookActivity.class);
+//                        intent.putExtra("Book", book);
+//                        v.getContext().startActivity(intent);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("Book", book);
+                        Fragment fragment = new RequestsForBookFragment();
+                        fragment.setArguments(bundle);
                     }
                 });
                 break;
