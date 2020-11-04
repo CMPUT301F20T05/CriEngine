@@ -2,8 +2,6 @@ package com.example.criengine.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import java.io.Serializable;
-
 import com.example.criengine.Activities.RequestsForBookActivity;
-import com.example.criengine.Fragments.MyBooksListFilterFragment;
-import com.example.criengine.Fragments.RequestsForBookFragment;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
-
 import java.util.ArrayList;
 
 /*
