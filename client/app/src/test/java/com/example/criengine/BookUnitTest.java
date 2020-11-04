@@ -116,9 +116,9 @@ public class BookUnitTest {
 
     @Test
     public void testConfirmationNeededMethods() {
-        assertEquals(mockBook.isConfirmationNeeded(), true);
-        mockBook.setConfirmationNeeded(true);
         assertEquals(mockBook.isConfirmationNeeded(), false);
+        mockBook.setConfirmationNeeded(true);
+        assertEquals(mockBook.isConfirmationNeeded(), true);
     }
 
     @Test
