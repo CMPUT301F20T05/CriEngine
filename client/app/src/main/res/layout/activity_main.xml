@@ -42,12 +42,23 @@
             android:id="@+id/myBooksButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             android:background="@drawable/rounded_button"
             android:paddingLeft="16dp"
             android:paddingEnd="16dp"
             android:text="My Books Activity" />
+
+        <Button
+            android:id="@+id/rootActivityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_button"
+            android:paddingLeft="16dp"
+            android:paddingEnd="16dp"
+            android:text="Root Activity" />
 
         <Button
             android:id="@+id/notificationButton"
@@ -70,7 +81,6 @@
             android:paddingLeft="16dp"
             android:paddingEnd="16dp"
             android:text="My Book Activity" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

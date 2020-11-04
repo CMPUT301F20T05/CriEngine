@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private Button myProfileActivityButton;
     private Button myBooksActivityButton;
     private Button requestActivityButton;
+    private Button rootActivityButton;
     private Button myBookActivityButton;
     private Button notificationActivityButton;
-  
+
     DatabaseWrapper dbw; // needs to be initialized by sign in
     Profile userProfile;
 
@@ -46,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
         dbw = DatabaseWrapper.getWrapper();
         assert dbw != null;
 
-
         requestActivityButton = findViewById(R.id.requested_books_activity);
+        myProfileActivityButton = findViewById(R.id.my_profile_activity_button);
+        myBooksActivityButton = findViewById(R.id.myBooksButton);
+        rootActivityButton = findViewById(R.id.rootActivityButton);
 
         requestActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
-
-        // router to other activities for testing
-        myProfileActivityButton = findViewById(R.id.my_profile_activity_button);
-        myBooksActivityButton = findViewById(R.id.myBooksButton);
 
         myProfileActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
                 v.getContext().startActivity(intent);
             }
+        });
+
+        rootActivityButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(v.getContext(), RootActivity.class);
+                  v.getContext().startActivity(intent);
+              }
         });
 
         // router to book activity

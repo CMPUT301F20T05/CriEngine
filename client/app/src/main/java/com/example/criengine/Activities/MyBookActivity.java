@@ -145,15 +145,26 @@ public class MyBookActivity extends BookActivity {
         bookISBN.setBackgroundResource(android.R.color.transparent);
         bookStatus.setInputType(InputType.TYPE_NULL);
         bookStatus.setBackgroundResource(android.R.color.transparent);
+        bookOwner.setInputType(InputType.TYPE_NULL);
+        bookOwner.setBackgroundResource(android.R.color.transparent);
+        bookBorrower.setInputType(InputType.TYPE_NULL);
+        bookBorrower.setBackgroundResource(android.R.color.transparent);
 
         Book mockBook = new Book("Cynthia", "The hungry caterpillar", "Not Cynthia", "A very hungry caterpillar", "123abc", "Available");
-
+        mockBook.setBorrower("Aditya");
         // TODO: set book data
         bookTitle.setText(mockBook.getTitle());
         bookDetail.setText(mockBook.getDescription());
         bookAuthor.setText(mockBook.getAuthor());
         bookISBN.setText(mockBook.getIsbn());
         bookStatus.setText(mockBook.getStatus());
+        bookOwner.setText(mockBook.getOwner());
+        if (mockBook.getBorrower() != null) {
+            bookBorrower.setText(mockBook.getBorrower());
+        } else {
+            bookBorrowerLabel.setVisibility(View.GONE);
+            bookBorrower.setVisibility(View.GONE);
+        }
 //        bookImage.setImageURI(mockBook.getImageURL());
 
         editMode = false;
