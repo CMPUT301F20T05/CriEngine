@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.criengine.Fragments.MyBooksListFragment;
+import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 import com.example.criengine.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -52,7 +53,7 @@ public class RootActivity extends AppCompatActivity {
                 case 0:
                     return new RequestedBooksFragment();
                 case 1:
-                    return new RequestedBooksFragment();
+                    return new NotificationFragment();
                 case 2:
                     return new RequestedBooksFragment();
                 case 3:
