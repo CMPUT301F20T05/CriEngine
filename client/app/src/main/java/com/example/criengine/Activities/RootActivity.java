@@ -1,17 +1,14 @@
 package com.example.criengine.Activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
+import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 import com.example.criengine.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,7 +16,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +28,12 @@ public class RootActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new RootPagerFragmentAdapter(this));
         viewPager.registerOnPageChangeCallback(new onPageChange());
+
+        // If returning from another activity, this can control which screen to navigate to.
+        if (getIntent().getExtras() != null) {
+            int index = (int) getIntent().getSerializableExtra("Index");
+            viewPager.setCurrentItem(index);
+        }
     }
 
     /**
@@ -54,7 +56,7 @@ public class RootActivity extends AppCompatActivity {
                 case 2:
                     return new RequestedBooksFragment();
                 case 3:
-                    return new RequestedBooksFragment();
+                    return new MyBooksListFragment();
                 case 4:
                     return new RequestedBooksFragment();
             }
@@ -73,6 +75,7 @@ public class RootActivity extends AppCompatActivity {
             super.onPageSelected(position);
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
+            // TODO: Refresh stuff goes here.
         }
     }
 
@@ -93,4 +96,10 @@ public class RootActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    /**
+     * Overrides the back button so it does not return to the previous screen.
+     */
+    @Override
+    public void onBackPressed() {}
 }

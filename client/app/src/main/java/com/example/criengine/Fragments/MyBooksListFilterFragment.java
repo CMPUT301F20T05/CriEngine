@@ -1,4 +1,4 @@
-package com.example.criengine.Activities;
+package com.example.criengine.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,9 +12,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
 import com.example.criengine.R;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -22,7 +20,7 @@ import java.util.ArrayList;
  * Contains the fragment that appears if a user wants to filter information when viewing books they
  * own.
  */
-public class FilterFragmentActivity extends DialogFragment implements Serializable, CompoundButton.OnCheckedChangeListener {
+public class MyBooksListFilterFragment extends DialogFragment implements Serializable, CompoundButton.OnCheckedChangeListener {
     private CheckBox avaliableCheckBox;
     private CheckBox requestsCheckBox;
     private CheckBox acceptedCheckBox;
@@ -36,14 +34,14 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
     }
 
     // Empty Constructor.
-    public FilterFragmentActivity() {}
+    public MyBooksListFilterFragment() {}
 
     /**
      * Constructor 2. Passes down the filter status arraylist which contains all the filters
      * that the user wants to view.
      * @param filterStatus The ArrayList containing all the status's the user wants to view.
      */
-    public FilterFragmentActivity(ArrayList<String> filterStatus) {
+    public MyBooksListFilterFragment(ArrayList<String> filterStatus) {
         this.filterStatus = filterStatus;
     }
 
@@ -54,12 +52,7 @@ public class FilterFragmentActivity extends DialogFragment implements Serializab
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener){
-            listener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+            listener = (MyBooksListFragment) getParentFragment();
     }
 
     /**
