@@ -90,6 +90,7 @@ public class AddBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
                 v.getContext().startActivity(intent);
             }
         });

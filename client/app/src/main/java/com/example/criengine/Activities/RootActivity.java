@@ -17,6 +17,20 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
 
+    public static enum PAGE {
+        SEARCH(0),
+        NOTIFICATIONS(1),
+        REQUESTS(2),
+        MY_BOOKS(3),
+        PROFILE(4);
+
+        public final int position;
+
+        private PAGE(int position) {
+            this.position = position;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
