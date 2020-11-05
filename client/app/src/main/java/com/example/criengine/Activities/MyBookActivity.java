@@ -49,7 +49,7 @@ public class MyBookActivity extends BookActivity {
     /**
      * Changes page to view only mode and disables editing
      */
-    private void setPageViewOnly(Book book) {
+    private void setPageViewOnly() {
         editCancelBookButton.setText(R.string.edit_book);
         if (book.getRequesters().size() == 0) {
             // Only allow the user to see requests if there are requests.
@@ -86,7 +86,7 @@ public class MyBookActivity extends BookActivity {
             bookTitle.setText(prevTitle);
             bookDetail.setText(prevDetail);
             bookAuthor.setText(prevAuthor);
-            setPageViewOnly(book);
+            setPageViewOnly();
             editMode = false;
         } else {
             // go back to previous activity
@@ -129,7 +129,7 @@ public class MyBookActivity extends BookActivity {
                     bookTitle.setText(prevTitle);
                     bookDetail.setText(prevDetail);
                     bookAuthor.setText(prevAuthor);
-                    setPageViewOnly(book);
+                    setPageViewOnly();
                 } else {
                     prevTitle = bookTitle.getText().toString();
                     prevDetail = bookDetail.getText().toString();
@@ -153,7 +153,7 @@ public class MyBookActivity extends BookActivity {
             @Override
             public void onClick(View view) {
                 if (editMode) {
-                    setPageViewOnly(book);
+                    setPageViewOnly();
                     editMode = !editMode;
                     // TODO: send data to db
                 } else {
@@ -187,7 +187,7 @@ public class MyBookActivity extends BookActivity {
 //        bookImage.setImageURI(mockBook.getImageURL());
 
         editMode = false;
-        setPageViewOnly(book);
+        setPageViewOnly();
     }
 
     // code from: https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
