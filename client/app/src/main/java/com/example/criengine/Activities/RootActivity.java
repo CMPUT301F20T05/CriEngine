@@ -24,10 +24,14 @@ public class RootActivity extends AppCompatActivity {
         MY_BOOKS(3),
         PROFILE(4);
 
-        public final int position;
+        public final int value;
 
-        private PAGE(int position) {
-            this.position = position;
+        private PAGE(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
         }
     }
 
@@ -42,6 +46,12 @@ public class RootActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new RootPagerFragmentAdapter(this));
         viewPager.registerOnPageChangeCallback(new onPageChange());
+
+        // If returning from another activity, this can control which screen to navigate to.
+        if (getIntent().getExtras() != null) {
+            int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
+            viewPager.setCurrentItem(index);
+        }
     }
 
     /**
@@ -113,4 +123,10 @@ public class RootActivity extends AppCompatActivity {
     public void goToPage(int index) {
         viewPager.setCurrentItem(index);
     }
+
+    /**
+     * Overrides the back button so it does not return to the previous screen.
+     */
+    @Override
+    public void onBackPressed() {}
 }

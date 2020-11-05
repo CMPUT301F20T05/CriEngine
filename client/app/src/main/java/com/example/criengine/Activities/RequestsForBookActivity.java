@@ -1,5 +1,6 @@
 package com.example.criengine.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,5 +51,15 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
                 // TODO: redirect to view the user profile.
             }
         });
+    }
+
+    /**
+     * Overrides the back button so it returns to the main activity.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+        startActivity(intent);
     }
 }

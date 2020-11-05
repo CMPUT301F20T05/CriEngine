@@ -14,5 +14,6 @@
         android:background="@color/colorPrimary"
         app:itemIconTint="#ffff"
         app:itemTextColor="#ffff"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"
+        />
 </FrameLayout>
