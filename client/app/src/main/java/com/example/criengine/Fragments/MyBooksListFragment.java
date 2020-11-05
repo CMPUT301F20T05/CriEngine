@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import com.example.criengine.Activities.AddBookActivity;
-import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Objects.Book;
@@ -44,8 +43,6 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         // Contains the books that will be displayed on the screen.
         displayBooks = new ArrayList<>();
         myBooks = new ArrayList<>();
-
-        dbw = DatabaseWrapper.getWrapper();
 
         // Set the adapter.
         myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks);
