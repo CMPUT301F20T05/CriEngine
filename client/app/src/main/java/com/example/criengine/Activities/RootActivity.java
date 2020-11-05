@@ -10,6 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Fragments.MyBooksListFragment;
+import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
@@ -58,6 +59,9 @@ public class RootActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
             viewPager.setCurrentItem(index, false);
+        } else {
+            // Returns to my books. This will be the home screen.
+            viewPager.setCurrentItem(PAGE.MY_BOOKS.getValue());
         }
     }
 
@@ -97,7 +101,7 @@ public class RootActivity extends AppCompatActivity {
                 case 0:
                     return new RequestedBooksFragment();
                 case 1:
-                    return new RequestedBooksFragment();
+                    return new NotificationFragment();
                 case 2:
                     return new RequestedBooksFragment();
                 case 3:

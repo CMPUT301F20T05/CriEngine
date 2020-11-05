@@ -76,13 +76,31 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setText("Scan");
                 statusText.setText("Borrowed");
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: Redirect to Scan activity.
+                    }
+                });
                 break;
             case "accepted":
                 statusText.setText("Accepted");
                 if (book.getGeolocation() == null) {
                     actionButton.setText("Location");
+                    actionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO: Redirect to Geo-Location page.
+                        }
+                    });
                 } else {
                     actionButton.setText("Scan");
+                    actionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO: Redirect to Scan activity.
+                        }
+                    });
                 }
                 actionButton.setVisibility(View.VISIBLE);
                 break;

@@ -60,6 +60,7 @@
                 android:layout_weight="0.1"
                 android:background="@drawable/rounded_button"
                 android:text="Button"
+                android:focusable="false"
                 android:textAllCaps="false" />
 
         </LinearLayout>

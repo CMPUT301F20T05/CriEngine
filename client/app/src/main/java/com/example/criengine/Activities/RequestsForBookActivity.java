@@ -28,7 +28,7 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests_for_book);
 
-        // Grabs the gears object from DisplayGearListActivity.java
+        // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
         } else {
