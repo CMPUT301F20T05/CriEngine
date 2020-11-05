@@ -132,7 +132,6 @@ public class RootActivity extends AppCompatActivity {
                         int notificationCount = dummyProfile.getNotifications().size();
                         BadgeDrawable badge = navigation
                                 .getOrCreateBadge(R.id.bottom_navigation_item_notifications);
-                        // TODO: uncomment the next line when notifications work
                         badge.setVisible(notificationCount > 0);
                         badge.setNumber(notificationCount);
                     }
@@ -157,10 +156,9 @@ public class RootActivity extends AppCompatActivity {
             return false;
         }
     }
-    
+
     /**
      * Changes the viewPager page to the given page
-     *
      * @ param id: page index
      */
     public void goToPage(int index) {
@@ -171,7 +169,5 @@ public class RootActivity extends AppCompatActivity {
      * Overrides the back button so it does not return to the previous screen.
      */
     @Override
-    public void onBackPressed() {
-    }
-
+    public void onBackPressed() {}
 }
