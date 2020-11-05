@@ -27,23 +27,24 @@ import java.util.List;
  *
  * @version 1.0
  */
-public class RequestedBooksFragment extends Fragment {
+public class RequestedBooksFragment extends RootFragment {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     ArrayList<Book> borrowerBooks;
-    DatabaseWrapper dbw;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_request, container, false);
+    public int initRootFrag() {
+        return R.layout.activity_request;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        // TODO: remove dummy code
         borrowerBooks = new ArrayList<Book>();
+        borrowerBooks.add(new Book(
+                "Jane Doe", "Biography", "Nike Cage",
+                "A Biography of Jane Doe", "ISBN1234", "available"));
 
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
 

@@ -18,6 +18,24 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
 
+    public static enum PAGE {
+        SEARCH(0),
+        NOTIFICATIONS(1),
+        REQUESTS(2),
+        MY_BOOKS(3),
+        PROFILE(4);
+
+        public final int value;
+
+        private PAGE(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +50,7 @@ public class RootActivity extends AppCompatActivity {
 
         // If returning from another activity, this can control which screen to navigate to.
         if (getIntent().getExtras() != null) {
-            int index = (int) getIntent().getSerializableExtra("Index");
+            int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
             viewPager.setCurrentItem(index);
         }
     }
@@ -96,6 +114,14 @@ public class RootActivity extends AppCompatActivity {
             }
             return false;
         }
+    }
+
+    /**
+     * Changes the viewPager page to the given page
+     * @ param id: page index
+     */
+    public void goToPage(int index) {
+        viewPager.setCurrentItem(index);
     }
 
     /**

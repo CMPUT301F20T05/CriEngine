@@ -59,7 +59,7 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, RootActivity.class);
-        intent.putExtra("Index", 3);
+        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
         startActivity(intent);
     }
 }
