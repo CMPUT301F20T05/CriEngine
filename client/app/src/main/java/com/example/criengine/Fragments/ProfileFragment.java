@@ -23,7 +23,7 @@ public abstract class ProfileFragment extends RootFragment {
     EditText addressEditText;
 
     @Override
-    public int initRootFrag() {
+    public int getFragmentLayout() {
         return R.layout.component_profile;
     }
 

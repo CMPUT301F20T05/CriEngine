@@ -78,7 +78,7 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
     }
 
     @Override
-    public int initRootFrag() {
+    public int getFragmentLayout() {
         return R.layout.activity_my_profile;
     }
 

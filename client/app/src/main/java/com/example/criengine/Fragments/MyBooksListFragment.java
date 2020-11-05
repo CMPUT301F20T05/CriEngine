@@ -32,7 +32,7 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
     private ArrayList<String> filterStatus = new ArrayList<>();
 
     @Override
-    public int initRootFrag() {
+    public int getFragmentLayout() {
         return R.layout.activity_my_books;
     }
 
