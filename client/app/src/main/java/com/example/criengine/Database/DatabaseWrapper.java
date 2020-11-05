@@ -15,10 +15,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -114,8 +116,60 @@ public class DatabaseWrapper {
         }
     }
 
+    // Have a user request a book
+    public Task<Void> requestBook(final Book book) {
+        // Add userId to list of book's requesters
+        ArrayList<String> requesters = (ArrayList<String>) book.getRequesters();
+        requesters.add(userId);
+        book.setRequesters(requesters);
+
+        // Add book to list of user's requested books
+        dbw.getProfile(userId).addOnSuccessListener(new OnSuccessListener<Profile>() {
+            @Override
+            public void onSuccess(Profile profile) {
+                ArrayList<String> books = profile.getBooksBorrowedOrRequested();
+                books.add(book.getBookID());
+                profile.setBooksBorrowedOrRequested(books);
+                dbw.addProfile(profile);
+            }
+        });
+        // Update book in database
+        return addBook(book);
+    }
+
+    // Have owner accept accept a borrowers request
+    public Task<Void> acceptRequest(Book book, String borrowerId) {
+        book.setBorrower(borrowerId);
+        book.setStatus("accepted");
+        return addBook(book);
+    }
+
     public Task<Void> deleteBook(String BookID) {
         return books.document(BookID).delete();
+    }
+
+    public Task<List<Profile>> getRequesters(Book book) {
+        ArrayList<String> requesters = (ArrayList<String>) book.getRequesters();
+        if (requesters.isEmpty()) {
+            List<Profile> profiles = new ArrayList<Profile>();
+            return Tasks.forResult(profiles);
+        }
+        return users
+                .whereIn("userID", requesters)
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Profile>>() {
+                   @Override
+                   public List<Profile> then(@NonNull Task<QuerySnapshot> task) {
+                       if (task.isSuccessful()) {
+                           QuerySnapshot query = task.getResult();
+                           assert query != null;
+                           return query.toObjects(Profile.class);
+                       } else {
+                           Log.d(TAG, "Get Failure: " + task.getException());
+                           return new ArrayList<Profile>();
+                       }
+                   }
+                });
     }
 
     public Task<List<Book>> getOwnedBooks(Profile owner) {
@@ -153,6 +207,28 @@ public class DatabaseWrapper {
                 .whereIn("bookID", requestedBooks)
                 .get()
                 .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+                    @Override
+                    public List<Book> then(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            return query.toObjects(Book.class);
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return new ArrayList<Book>();
+                        }
+                    }
+                });
+    }
+
+    public Task<List<Book>> keywordSearch(String keyword) {
+        String words[] = keyword.split(", ", 0);
+        ArrayList<String> search = new ArrayList<String>();
+        Collections.addAll(search, words);
+        return books
+                .whereIn("description", search)
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Book>>(){
                     @Override
                     public List<Book> then(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
