@@ -12,6 +12,7 @@ import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
+import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +23,7 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
     private DatabaseWrapper dbw;
+    static public Profile dummyProfile;
 
     public enum PAGE {
         SEARCH(0),
@@ -48,6 +50,12 @@ public class RootActivity extends AppCompatActivity {
 
         dbw = DatabaseWrapper.getWrapper();
 
+        // Dummy Code starts here.
+        dummyProfile = new Profile();
+        dummyProfile.addNotification(new Notification("Your request for \"Book 1\" was rejected."));
+        dummyProfile.addNotification(new Notification("You got a new request for \"Book 2\"."));
+        // Dummy code ends here.
+
         navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new onNavItemSelect());
 
@@ -61,7 +69,7 @@ public class RootActivity extends AppCompatActivity {
             viewPager.setCurrentItem(index, false);
         } else {
             // Returns to my books. This will be the home screen.
-            viewPager.setCurrentItem(PAGE.MY_BOOKS.getValue());
+            viewPager.setCurrentItem(PAGE.MY_BOOKS.getValue(), false);
         }
     }
 
@@ -137,11 +145,11 @@ public class RootActivity extends AppCompatActivity {
                 new OnSuccessListener<Profile>() {
                     @Override
                     public void onSuccess(Profile profile) {
-                        int notificationCount = profile.getNotifications().size();
+                        int notificationCount = dummyProfile.getNotifications().size();
                         BadgeDrawable badge = navigation
                                 .getOrCreateBadge(R.id.bottom_navigation_item_notifications);
                         // TODO: uncomment the next line when notifications work
-                        // badge.setVisible(notificationCount > 0);
+                        badge.setVisible(notificationCount > 0);
                         badge.setNumber(notificationCount);
                     }
                 }

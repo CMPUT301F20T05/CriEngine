@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.criengine.Activities.AddBookActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Adapters.NotificationAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Adapters.MyBooksAdapter;
@@ -45,14 +46,10 @@ public class NotificationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Dummy Code starts here.
-        final Profile profile = new Profile();
-        profile.addNotification(new Notification("Your request for \"Book 1\" was rejected."));
-        profile.addNotification(new Notification("You got a new request for \"Book 2\"."));
-        // Dummy code ends here.
-
         // Set the adapter.
-        notificationAdapter = new NotificationAdapter(getContext(), profile.getNotifications(), profile);
+        notificationAdapter = new NotificationAdapter(getContext(),
+                RootActivity.dummyProfile.getNotifications(),
+                RootActivity.dummyProfile);
 
         // Assign the view object.
         notificationListView = getView().findViewById(R.id.notificationsListView);
