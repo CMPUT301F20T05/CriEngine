@@ -18,13 +18,13 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/edit_book"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/see_requests_button"
-        android:layout_width="120sp"
+        android:layout_width="0dp"
         android:layout_height="40sp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -32,8 +32,9 @@
         android:background="@drawable/rounded_button"
         android:text="@string/see_requests"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
         app:layout_constraintEnd_toStartOf="@+id/edit_book_button"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toEndOf="@+id/delete_book_button" />
 
     <Button
@@ -45,7 +46,17 @@
         android:background="@drawable/rounded_button"
         android:text="@string/delete_book"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <fragment
+        android:id="@+id/bottom_navigation_frag"
+        android:name="com.example.criengine.Fragments.BottomNavFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

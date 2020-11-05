@@ -2,30 +2,24 @@ package com.example.criengine.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-
 import com.example.criengine.Activities.AddBookActivity;
-import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * My Books Activity.
+ * My Books List Fragment.
  * Displays all owned books and their status's.
  */
 public class MyBooksListFragment extends RootFragment implements MyBooksListFilterFragment.OnFragmentInteractionListener {
@@ -49,7 +43,6 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         // Contains the books that will be displayed on the screen.
         displayBooks = new ArrayList<>();
         myBooks = new ArrayList<>();
-
 
         // Set the adapter.
         myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks);
@@ -81,7 +74,9 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         headerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // FIXME: redirect to view-book activity.
+                Intent intent = new Intent(view.getContext(), MyBookActivity.class);
+                intent.putExtra("Book", displayBooks.get(position));
+                view.getContext().startActivity(intent);
             }
         });
 

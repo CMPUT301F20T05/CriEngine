@@ -2,19 +2,17 @@ package com.example.criengine.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 
 public class MyBookActivity extends BookActivity {
-
     private Button editCancelBookButton;
     private Button seeRequestsButton;
     private Button deleteSaveBookButton;
@@ -22,6 +20,8 @@ public class MyBookActivity extends BookActivity {
     String prevTitle;
     String prevDetail;
     String prevAuthor;
+
+    private Book book;
 
     AlertDialog confirmDialog;
 
@@ -49,9 +49,12 @@ public class MyBookActivity extends BookActivity {
     /**
      * Changes page to view only mode and disables editing
      */
-    private void setPageViewOnly() {
+    private void setPageViewOnly(Book book) {
         editCancelBookButton.setText(R.string.edit_book);
-        seeRequestsButton.setVisibility(View.VISIBLE);
+        if (book.getRequesters().size() == 0) {
+            // Only allow the user to see requests if there are requests.
+            seeRequestsButton.setVisibility(View.GONE);
+        }
         deleteSaveBookButton.setText(R.string.delete_book);
 
         disableEditText(bookTitle);
@@ -83,18 +86,35 @@ public class MyBookActivity extends BookActivity {
             bookTitle.setText(prevTitle);
             bookDetail.setText(prevDetail);
             bookAuthor.setText(prevAuthor);
-            setPageViewOnly();
+            setPageViewOnly(book);
             editMode = false;
         } else {
             // go back to previous activity
-            super.onBackPressed();
+            Intent intent = new Intent(this, RootActivity.class);
+            intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+            startActivity(intent);
         }
     }
 
+    /**
+     * Set the layout.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void inflate() {
         setContentView(R.layout.activity_my_book);
-        super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * A custom OnCreate method which will
+     */
+    @Override
+    protected void customOnCreate() {
+        // Grabs the book.
+        if (getIntent().getExtras() != null) {
+            book = (Book) getIntent().getSerializableExtra("Book");
+        } else {
+            // TODO: If the intent fails to send, then redirect user to Error Screen. (in general this should not fail)
+        }
 
         // my book exclusive UI component
         editCancelBookButton = findViewById(R.id.edit_book_button);
@@ -109,7 +129,7 @@ public class MyBookActivity extends BookActivity {
                     bookTitle.setText(prevTitle);
                     bookDetail.setText(prevDetail);
                     bookAuthor.setText(prevAuthor);
-                    setPageViewOnly();
+                    setPageViewOnly(book);
                 } else {
                     prevTitle = bookTitle.getText().toString();
                     prevDetail = bookDetail.getText().toString();
@@ -123,7 +143,9 @@ public class MyBookActivity extends BookActivity {
         seeRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: redirect to requests for that book
+                Intent intent = new Intent(view.getContext(), RequestsForBookActivity.class);
+                intent.putExtra("Book", book);
+                view.getContext().startActivity(intent);
             }
         });
 
@@ -131,7 +153,7 @@ public class MyBookActivity extends BookActivity {
             @Override
             public void onClick(View view) {
                 if (editMode) {
-                    setPageViewOnly();
+                    setPageViewOnly(book);
                     editMode = !editMode;
                     // TODO: send data to db
                 } else {
@@ -150,17 +172,14 @@ public class MyBookActivity extends BookActivity {
         bookBorrower.setInputType(InputType.TYPE_NULL);
         bookBorrower.setBackgroundResource(android.R.color.transparent);
 
-        Book mockBook = new Book("Cynthia", "The hungry caterpillar", "Not Cynthia", "A very hungry caterpillar", "123abc", "Available");
-        mockBook.setBorrower("Aditya");
-        // TODO: set book data
-        bookTitle.setText(mockBook.getTitle());
-        bookDetail.setText(mockBook.getDescription());
-        bookAuthor.setText(mockBook.getAuthor());
-        bookISBN.setText(mockBook.getIsbn());
-        bookStatus.setText(mockBook.getStatus());
-        bookOwner.setText(mockBook.getOwner());
-        if (mockBook.getBorrower() != null) {
-            bookBorrower.setText(mockBook.getBorrower());
+        bookTitle.setText(book.getTitle());
+        bookDetail.setText(book.getDescription());
+        bookAuthor.setText(book.getAuthor());
+        bookISBN.setText(book.getIsbn());
+        bookStatus.setText(book.getStatus());
+        bookOwner.setText(book.getOwner());
+        if (book.getBorrower() != null) {
+            bookBorrower.setText(book.getBorrower());
         } else {
             bookBorrowerLabel.setVisibility(View.GONE);
             bookBorrower.setVisibility(View.GONE);
@@ -168,7 +187,7 @@ public class MyBookActivity extends BookActivity {
 //        bookImage.setImageURI(mockBook.getImageURL());
 
         editMode = false;
-        setPageViewOnly();
+        setPageViewOnly(book);
     }
 
     // code from: https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
@@ -182,7 +201,7 @@ public class MyBookActivity extends BookActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // TODO: remove book from database
                         dialog.dismiss();
-                        MyBookActivity.super.onBackPressed();
+                        onBackPressed();
                     }
 
                 })

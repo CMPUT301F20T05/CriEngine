@@ -1,7 +1,6 @@
 package com.example.criengine.Fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.criengine.Activities.MyBookActivity;
-import com.example.criengine.Activities.MyBooksActivity;
 import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

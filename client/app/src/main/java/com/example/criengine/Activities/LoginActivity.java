@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-
     EditText loginEmail;
     EditText loginPassword;
     Button loginButton;
@@ -68,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                         final FirebaseUser user = mAuth.getCurrentUser();
                                         dbw = new DatabaseWrapper(user);
 
-                                        Intent intent = new Intent(v.getContext(), MainActivity.class);
+                                        Intent intent = new Intent(v.getContext(), RootActivity.class);
                                         v.getContext().startActivity(intent);
 
                                     } else {
