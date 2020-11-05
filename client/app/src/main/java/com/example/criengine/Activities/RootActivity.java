@@ -74,22 +74,6 @@ public class RootActivity extends AppCompatActivity {
     }
 
     /**
-     * Changes the viewPager page to the given page
-     *
-     * @ param id: page index
-     */
-    public void goToPage(int index) {
-        viewPager.setCurrentItem(index);
-    }
-
-    /**
-     * Overrides the back button so it does not return to the previous screen.
-     */
-    @Override
-    public void onBackPressed() {
-    }
-
-    /**
      * FragmentStateAdapter for the ViewPager
      */
     private class RootPagerFragmentAdapter extends FragmentStateAdapter {
@@ -173,4 +157,21 @@ public class RootActivity extends AppCompatActivity {
             return false;
         }
     }
+    
+    /**
+     * Changes the viewPager page to the given page
+     *
+     * @ param id: page index
+     */
+    public void goToPage(int index) {
+        viewPager.setCurrentItem(index);
+    }
+
+    /**
+     * Overrides the back button so it does not return to the previous screen.
+     */
+    @Override
+    public void onBackPressed() {
+    }
+
 }

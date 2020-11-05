@@ -37,7 +37,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull final ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Get Item Data
         View view = convertView;
 
@@ -70,7 +70,6 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
                 // Set the new notification list. From here we can push to the database.
                 profile.setNotifications(notificationItems);
                 // TODO: push changes to database.
-                // TODO: update navigation bar
 
                 notifyDataSetChanged();
             }
