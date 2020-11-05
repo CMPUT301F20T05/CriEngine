@@ -40,6 +40,7 @@ public class RequestedBooksFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // TODO: remove dummy code
         borrowerBooks = new ArrayList<Book>();
         borrowerBooks.add(new Book(
                 "Jane Doe", "Biography", "Nike Cage",

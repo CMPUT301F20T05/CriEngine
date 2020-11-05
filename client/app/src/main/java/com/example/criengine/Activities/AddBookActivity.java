@@ -89,12 +89,20 @@ public class AddBookActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
-                intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                v.getContext().startActivity(intent);
+                onBackPressed();
             }
         });
 
+    }
+
+    /**
+     * Overrides the back button so it returns to the main activity.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+        startActivity(intent);
     }
 
 }
