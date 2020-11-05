@@ -54,7 +54,6 @@ public class RequestedBooksFragment extends RootFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: redirect to book view
-                root.goToPage(0);
             }
         });
     }
