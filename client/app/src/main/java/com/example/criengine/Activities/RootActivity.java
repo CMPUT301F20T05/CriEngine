@@ -52,6 +52,9 @@ public class RootActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
             viewPager.setCurrentItem(index);
+        } else {
+            // Returns to my books. This will be the home screen.
+            viewPager.setCurrentItem(PAGE.MY_BOOKS.getValue());
         }
     }
 

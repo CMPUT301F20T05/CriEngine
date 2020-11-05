@@ -19,12 +19,10 @@
         </activity>
         <activity android:name=".Activities.AddBookActivity" />
         <activity android:name=".Activities.RequestsForBookActivity" />
-        <activity android:name=".Activities.NotificationActivity" />
         <activity android:name=".Fragments.MyBooksListFilterFragment"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activities.MyBooksActivity" />
         <activity android:name=".Activities.RequestActivity" />
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.RootActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,9 +31,8 @@
         </activity>
         <activity
             android:name=".Activities.MyProfileActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:parentActivityName=".Activities.RootActivity" />
         <activity android:name=".Activities.MyBookActivity" />
         <activity android:name=".Activities.BookActivity" />
-        <activity android:name=".Activities.RootActivity" />
     </application>
 </manifest>

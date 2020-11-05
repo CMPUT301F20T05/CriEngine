@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.example.criengine.R;
 
+/**
+ * Abstract book class. Main purpose is to set up the view objects.
+ */
 public abstract class BookActivity extends AppCompatActivity {
     EditText bookTitle;
     EditText bookDetail;
@@ -24,6 +27,7 @@ public abstract class BookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Must setContentView(layoutID) in child activity before calling super method
         super.onCreate(savedInstanceState);
+        inflate();
 
         bookTitle = findViewById(R.id.bookView_title);
         bookDetail = findViewById(R.id.bookView_detail);
@@ -38,5 +42,10 @@ public abstract class BookActivity extends AppCompatActivity {
         bookTitle.setTag(bookTitle.getKeyListener());
         bookDetail.setTag(bookDetail.getKeyListener());
         bookAuthor.setTag(bookAuthor.getKeyListener());
+        customOnCreate();
     }
+
+    abstract protected void customOnCreate();
+
+    abstract protected void inflate();
 }
