@@ -94,7 +94,6 @@ public class RootActivity extends AppCompatActivity {
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
             // TODO: Refresh stuff goes here.
-
         }
     }
 

@@ -61,13 +61,10 @@
 
     <!-- Login Activity -->
     <string name="login_header">Login</string>
-  
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
     <string name="title_my_books">My Books</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_my_profile">My profile</string>
     <string name="title_my_requests">My Requests</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
