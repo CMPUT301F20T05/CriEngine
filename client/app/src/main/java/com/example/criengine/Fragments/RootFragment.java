@@ -17,13 +17,13 @@ public abstract class RootFragment extends Fragment {
     protected RootActivity root;
     protected DatabaseWrapper dbw;
 
-    public abstract int initRootFrag();
+    public abstract int getFragmentLayout();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = (RootActivity) getActivity();
         dbw = DatabaseWrapper.getWrapper();
-        return inflater.inflate(initRootFrag(), container, false);
+        return inflater.inflate(getFragmentLayout(), container, false);
     }
 }

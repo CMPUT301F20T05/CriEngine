@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.criengine.Fragments.MyBooksListFragment;
+import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
+import com.example.criengine.Interfaces.IOnBackPressed;
 import com.example.criengine.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -80,7 +82,7 @@ public class RootActivity extends AppCompatActivity {
                 case 3:
                     return new MyBooksListFragment();
                 case 4:
-                    return new RequestedBooksFragment();
+                    return new MyProfileFragment();
             }
 
             return null;
@@ -128,8 +130,17 @@ public class RootActivity extends AppCompatActivity {
     }
 
     /**
-     * Overrides the back button so it does not return to the previous screen.
+     * Overrides the back button so it does not return to the previous screen unless
+     * a fragment implements the IOnBackPressed interface.
      */
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            // TODO: ideally this should take you back to the previous screen
+//            super.onBackPressed();
+        }
+        return;
+    }
 }

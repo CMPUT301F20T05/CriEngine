@@ -32,7 +32,7 @@ public class RequestedBooksFragment extends RootFragment {
     ArrayList<Book> borrowerBooks;
 
     @Override
-    public int initRootFrag() {
+    public int getFragmentLayout() {
         return R.layout.activity_request;
     }
 
