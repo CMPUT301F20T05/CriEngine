@@ -8,16 +8,21 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
+    private DatabaseWrapper dbw;
 
-    public static enum PAGE {
+    public enum PAGE {
         SEARCH(0),
         NOTIFICATIONS(1),
         REQUESTS(2),
@@ -40,6 +45,8 @@ public class RootActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
 
+        dbw = DatabaseWrapper.getWrapper();
+
         navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new onNavItemSelect());
 
@@ -50,18 +57,38 @@ public class RootActivity extends AppCompatActivity {
         // If returning from another activity, this can control which screen to navigate to.
         if (getIntent().getExtras() != null) {
             int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
-            viewPager.setCurrentItem(index);
+            viewPager.setCurrentItem(index, false);
         }
+    }
+
+    /**
+     * Changes the viewPager page to the given page
+     *
+     * @ param id: page index
+     */
+    public void goToPage(int index) {
+        viewPager.setCurrentItem(index);
+    }
+
+    /**
+     * Overrides the back button so it does not return to the previous screen.
+     */
+    @Override
+    public void onBackPressed() {
     }
 
     /**
      * FragmentStateAdapter for the ViewPager
      */
     private class RootPagerFragmentAdapter extends FragmentStateAdapter {
-        public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) { super(fa); }
+        public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) {
+            super(fa);
+        }
 
         @Override
-        public int getItemCount() { return 5; }
+        public int getItemCount() {
+            return 5;
+        }
 
         @NonNull
         @Override
@@ -93,8 +120,28 @@ public class RootActivity extends AppCompatActivity {
             super.onPageSelected(position);
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
-            // TODO: Refresh stuff goes here.
+            // TODO: More refresh stuff goes here.
+            updateNotificationBadge();
         }
+    }
+
+    /**
+     * Updates the Notification menu item badge to show the number of notifications
+     */
+    private void updateNotificationBadge() {
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        int notificationCount = profile.getNotifications().size();
+                        BadgeDrawable badge = navigation
+                                .getOrCreateBadge(R.id.bottom_navigation_item_notifications);
+                        // TODO: uncomment the next line when notifications work
+                        // badge.setVisible(notificationCount > 0);
+                        badge.setNumber(notificationCount);
+                    }
+                }
+        );
     }
 
     /**
@@ -114,18 +161,4 @@ public class RootActivity extends AppCompatActivity {
             return false;
         }
     }
-
-    /**
-     * Changes the viewPager page to the given page
-     * @ param id: page index
-     */
-    public void goToPage(int index) {
-        viewPager.setCurrentItem(index);
-    }
-
-    /**
-     * Overrides the back button so it does not return to the previous screen.
-     */
-    @Override
-    public void onBackPressed() {}
 }
