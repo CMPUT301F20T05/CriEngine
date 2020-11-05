@@ -2,8 +2,6 @@ package com.example.criengine.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +10,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import java.io.Serializable;
-
 import com.example.criengine.Activities.RequestsForBookActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
-
 import java.util.ArrayList;
 
 /*
  * MyBooksAdapter is custom ArrayAdapter that can be used to show Book instances in
- * a ListView
- * @version 1.0
+ * a ListView.
  */
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
@@ -47,7 +40,8 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         // Get Item Data
         View view = convertView;
 
-        if( view == null ) {
+        // Setup the inflater and view if there was none given.
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.list_format, parent, false);
         }

@@ -17,7 +17,6 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +28,12 @@ public class RootActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new RootPagerFragmentAdapter(this));
         viewPager.registerOnPageChangeCallback(new onPageChange());
+
+        // If returning from another activity, this can control which screen to navigate to.
+        if (getIntent().getExtras() != null) {
+            int index = (int) getIntent().getSerializableExtra("Index");
+            viewPager.setCurrentItem(index);
+        }
     }
 
     /**
@@ -91,4 +96,10 @@ public class RootActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    /**
+     * Overrides the back button so it does not return to the previous screen.
+     */
+    @Override
+    public void onBackPressed() {}
 }
