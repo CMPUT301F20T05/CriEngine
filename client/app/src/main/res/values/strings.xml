@@ -61,6 +61,7 @@
 
     <!-- Login Activity -->
     <string name="login_header">Login</string>
+
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
     <string name="title_my_books">My Books</string>
