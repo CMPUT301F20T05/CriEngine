@@ -16,7 +16,7 @@ import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
- * A person's own profile activity where they can edit their profile.
+ * A person's own profile fragment where they can edit their profile.
  */
 public class MyProfileFragment extends ProfileFragment implements IOnBackPressed {
     private Button cancelButton;
