@@ -37,6 +37,7 @@ android:
       - 'google-gdk-license-.+'
 
 before_install:
+  - chmod +x gradlew
   - yes | sdkmanager "platforms;android-$ANDROID_EMU_API_LEVEL"
   - yes | sdkmanager "platforms;android-$ANDROID_API_LEVEL"
 
