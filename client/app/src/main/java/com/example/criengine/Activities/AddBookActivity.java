@@ -12,7 +12,6 @@ import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Allows for the addition of a new book to the database through either manual entries or through
