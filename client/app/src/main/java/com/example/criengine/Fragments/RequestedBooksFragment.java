@@ -30,6 +30,7 @@ import java.util.List;
 public class RequestedBooksFragment extends RootFragment {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     ArrayList<Book> borrowerBooks;
+    DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
     @Override
     public int getFragmentLayout() {
@@ -50,6 +51,16 @@ public class RequestedBooksFragment extends RootFragment {
 
         ListView bookNameTextView = getView().findViewById(R.id.bookListView);
         bookNameTextView.setAdapter(borrowerBooksListAdapter);
+
+        dbw.getBorrowedOrRequestedBooks(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<List<Book>>() {
+                    @Override
+                    public void onSuccess(List<Book> books) {
+                        borrowerBooks.addAll(books);
+                        borrowerBooksListAdapter.notifyDataSetChanged();
+                    }
+                }
+        );
 
         bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -34,6 +34,7 @@ public class DatabaseWrapper {
     private FirebaseFirestore db;
     private Boolean debug = false;
 
+    // Constructor for tests
     public DatabaseWrapper(DatabaseWrapper dbw) {
         DatabaseWrapper.dbw = dbw;
         this.user = dbw.user;
@@ -42,6 +43,16 @@ public class DatabaseWrapper {
         users = null;
         books = null;
     }
+
+    public DatabaseWrapper(FirebaseFirestore dbw, FirebaseUser user) {
+        this.user = user;
+        this.userId = null;
+        this.db = null;
+        this.users = dbw.collection("users");
+        this.books = dbw.collection("books");
+        DatabaseWrapper.dbw = this;
+    }
+
 
     public DatabaseWrapper(FirebaseUser user) {
         this.user = user;
@@ -92,7 +103,6 @@ public class DatabaseWrapper {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
                             return document.toObject(Book.class);
-//                            return new Book(document.getData());
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
                             return null;
@@ -123,6 +133,7 @@ public class DatabaseWrapper {
         }
     }
 
+    // TODO: Not gonna work
     public Task<Void> deleteBook(String BookID) {
         return books.document(BookID).delete();
     }
@@ -135,7 +146,7 @@ public class DatabaseWrapper {
             return Tasks.forResult(books);
         }
         return books
-                .whereIn("bookID", ownedBooks)
+                .whereEqualTo("owner", owner.getUserID())
                 .get()
                 .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
                     @Override
@@ -152,14 +163,9 @@ public class DatabaseWrapper {
                 });
     }
 
-    public Task<List<Book>> getBorrowedOrRequestedBooks(Profile user) {
-        ArrayList<String> requestedBooks = user.getBooksBorrowedOrRequested();
-        if (requestedBooks.isEmpty()) {
-            List<Book> books = new ArrayList<Book>();
-            return Tasks.forResult(books);
-        }
+    public Task<List<Book>> getBorrowedOrRequestedBooks(String userID) {
         return books
-                .whereIn("bookID", requestedBooks)
+                .whereArrayContains("requesters", userID)
                 .get()
                 .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
                     @Override
@@ -167,7 +173,11 @@ public class DatabaseWrapper {
                         if (task.isSuccessful()) {
                             QuerySnapshot query = task.getResult();
                             assert query != null;
-                            return query.toObjects(Book.class);
+                            List<Book> bookList = query.toObjects(Book.class);
+                            if (bookList == null) {
+                                bookList = new ArrayList<>();
+                            }
+                            return bookList;
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
                             return new ArrayList<Book>();

@@ -44,22 +44,17 @@ public class RequestActivity extends AppCompatActivity {
         ListView headerText = findViewById(R.id.bookListView);
         headerText.setAdapter(borrowerBooksListAdapter);
 
-        dbw.getProfile(dbw.userId).addOnSuccessListener(
-                new OnSuccessListener<Profile>() {
+
+        dbw.getBorrowedOrRequestedBooks(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<List<Book>>() {
                     @Override
-                    public void onSuccess(Profile profile) {
-                        dbw.getBorrowedOrRequestedBooks(profile).addOnSuccessListener(
-                                new OnSuccessListener<List<Book>>() {
-                                    @Override
-                                    public void onSuccess(List<Book> books) {
-                                        borrowerBooks.addAll(books);
-                                        borrowerBooksListAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                        );
+                    public void onSuccess(List<Book> books) {
+                        borrowerBooks.addAll(books);
+                        borrowerBooksListAdapter.notifyDataSetChanged();
                     }
                 }
         );
+
 
         headerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
