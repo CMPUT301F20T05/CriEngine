@@ -73,6 +73,7 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Create the book
                 Book newBook = new Book(bookProfile.getUserID(),
+                        bookProfile.getUsername(),
                         bookTitle.getText().toString(),
                         bookAuthor.getText().toString(),
                         bookDesc.getText().toString(),

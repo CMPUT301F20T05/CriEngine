@@ -24,7 +24,7 @@ public class BookUnitTest {
     @Before
     public void init() {
         newRequesterList = new ArrayList<>();
-        mockBook = new Book("ID 1", "New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
+        mockBook = new Book("ID 1", "New Owner","New Owner Username", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
     }
 
     /**
@@ -54,6 +54,7 @@ public class BookUnitTest {
     public void testBookConstructorTwo() {
         assertEquals(mockBook.getBookID(), "ID 1");
         assertEquals(mockBook.getOwner(), "New Owner");
+        assertEquals(mockBook.getOwnerUsername(), "New Owner Username");
         assertEquals(mockBook.getTitle(), "New Title");
         assertEquals(mockBook.getAuthor(), "New Author");
         assertEquals(mockBook.getDescription(), "New Description");
@@ -70,10 +71,11 @@ public class BookUnitTest {
      */
     @Test
     public void testBookConstructorThree() {
-        Book mockBook = new Book("New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
+        Book mockBook = new Book("New Owner", "New Owner Username", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
 
         assertNull(mockBook.getBookID());
         assertEquals(mockBook.getOwner(), "New Owner");
+        assertEquals(mockBook.getOwnerUsername(), "New Owner Username");
         assertEquals(mockBook.getTitle(), "New Title");
         assertEquals(mockBook.getAuthor(), "New Author");
         assertEquals(mockBook.getDescription(), "New Description");
@@ -90,10 +92,11 @@ public class BookUnitTest {
      */
     @Test
     public void testBookConstructorFour() {
-        Book mockBook = new Book("New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status");
+        Book mockBook = new Book("New Owner", "New Owner Username", "New Title", "New Author", "New Description", "New ISBN", "New Status");
 
         assertNull(mockBook.getBookID());
         assertEquals(mockBook.getOwner(), "New Owner");
+        assertEquals(mockBook.getOwnerUsername(), "New Owner Username");
         assertEquals(mockBook.getTitle(), "New Title");
         assertEquals(mockBook.getAuthor(), "New Author");
         assertEquals(mockBook.getDescription(), "New Description");
@@ -152,6 +155,15 @@ public class BookUnitTest {
     public void testOwnerMethods() {
         mockBook.setOwner("A new Owner");
         assertEquals(mockBook.getOwner(), "A new Owner");
+    }
+
+    /**
+     * Test getter/setters for the Owner Username attribute.
+     */
+    @Test
+    public void testOwnerUsernameMethods() {
+        mockBook.setOwner("A new Owner Username");
+        assertEquals(mockBook.getOwner(), "A new Owner Username");
     }
 
     /**

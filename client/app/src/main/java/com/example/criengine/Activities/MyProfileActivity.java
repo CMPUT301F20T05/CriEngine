@@ -137,7 +137,7 @@ public class MyProfileActivity extends ProfileActivity {
                         userTextView.setText(getString(R.string.user_profile_text, profile.getUsername()));
                         bioEditText.setText(profile.getBio());
                         phoneEditText.setText(profile.getPhone());
-                        addressEditText.setText(profile.getEmail());
+                        addressEditText.setText(profile.getAddress());
                         System.out.println(profile);
                     }
                 }

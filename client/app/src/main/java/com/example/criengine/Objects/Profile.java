@@ -10,6 +10,7 @@ public class Profile {
     private String userID;
     private String email;
     private String username;
+    private String address;
     private String phone;
     private String firstname;
     private String lastname;
@@ -37,10 +38,11 @@ public class Profile {
      * @param lastname The lastname of the user.
      * @param bio The bio for the user.
      */
-    public Profile(String userID, String email, String username, String phone, String firstname, String lastname, String bio) {
+    public Profile(String userID, String email, String username, String address, String phone, String firstname, String lastname, String bio) {
         this.userID = userID;
         this.email = email;
         this.username = username;
+        this.address = address;
         this.phone = phone;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -59,10 +61,11 @@ public class Profile {
      * @param firstname The first name of the user.
      * @param lastname The last name of the user.
      */
-    public Profile(String userID, String email, String username, String phone, String firstname, String lastname) {
+    public Profile(String userID, String email, String username, String address, String phone, String firstname, String lastname) {
         this.userID = userID;
         this.email = email;
         this.username = username;
+        this.address = address;
         this.phone = phone;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -86,6 +89,22 @@ public class Profile {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * Get the address of the profile.
+     * @return The address for the profile.
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * Set the address for the profile.
+     * @param address The new address for the profile.
+     */
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     /**

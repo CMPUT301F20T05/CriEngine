@@ -181,11 +181,78 @@ public class DatabaseWrapper {
 
     /**
      * Delete a book from the database.
-     * @param BookID The ID of the book.
+     * @param book The  book to be deleted.
      * @return The book deleted from the database.
      */
-    public Task<Void> deleteBook(String BookID) {
-        return books.document(BookID).delete();
+    public Task<Boolean> deleteBook(final Book book) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+//                DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(book.getBookID()));
+
+                List<String> requesterList = (List<String>) bookSnapshot.get("requesters");
+                if (requesterList == null) {
+                    requesterList = new ArrayList<>();
+                }
+
+                String bookOwnerID = (String) bookSnapshot.get("owner");
+                DocumentSnapshot bookOwnerProfile = null;
+                List<String> ownedBookList = null;
+                if (bookOwnerID != null) {
+                    bookOwnerProfile = transaction.get(users.document(bookOwnerID));
+                    ownedBookList = (List<String>) bookOwnerProfile.get("booksOwned");
+                    ownedBookList.remove(book.getBookID());
+                }
+
+                String bookBorrowerID = (String) bookSnapshot.get("borrower");
+                DocumentSnapshot bookBorrowerProfile = null;
+                List<String> borrowedBookList = null;
+                if (bookBorrowerID != null) {
+                    bookBorrowerProfile = transaction.get(users.document(bookBorrowerID));
+                    borrowedBookList = (List<String>) bookBorrowerProfile.get("booksBorrowedOrRequested");
+                    borrowedBookList.remove(book.getBookID());
+                }
+
+                Map<String, List<String>> toDeleteUserBookListMap = new HashMap<>();
+                for (String userID : requesterList) {
+                    DocumentSnapshot requesterProfile = transaction.get(users.document(userID));
+                    List<String> requestedBookList = (List<String>) requesterProfile.get("booksBorrowedOrRequested");
+                    requestedBookList.remove(book.getBookID());
+                    toDeleteUserBookListMap.put(userID, requestedBookList);
+                }
+                // Write
+                for (String userID : requesterList) {
+                    List<String> requestedBookList = toDeleteUserBookListMap.get(userID);
+                    transaction.update(users.document(userID), "booksBorrowedOrRequested", requestedBookList);
+                }
+
+                if (ownedBookList != null) {
+                    transaction.update(users.document(bookOwnerID), "booksOwned", ownedBookList);
+                }
+
+                if (borrowedBookList != null) {
+                    transaction.update(users.document(bookBorrowerID), "booksBorrowedOrRequested", borrowedBookList);
+                }
+
+                transaction.delete(books.document(book.getBookID()));
+
+
+
+//                if (profileList.contains(borrowerUid) || bookList.contains(bookID)) {
+//                    return false;
+//                }
+//
+//                bookList.add(bookID);
+//                profileList.add(borrowerUid);
+//                transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
+//                transaction.update(books.document(bookID), "status", "requested");
+//                transaction.update(books.document(bookID), "requesters", profileList);
+                return true;
+            };
+        });
     }
 
     /**
