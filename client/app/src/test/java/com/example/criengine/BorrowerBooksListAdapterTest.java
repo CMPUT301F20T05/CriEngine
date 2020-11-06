@@ -8,7 +8,6 @@ import android.widget.TextView;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
-import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 
@@ -24,6 +23,10 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for BorrowerBooksListAdapter
+ * Includes constructor and branch tests
+ */
 @RunWith(RobolectricTestRunner.class)
 public class BorrowerBooksListAdapterTest {
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();

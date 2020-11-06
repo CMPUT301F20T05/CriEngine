@@ -1,25 +1,18 @@
 package com.example.criengine.Fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
-import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
-import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**

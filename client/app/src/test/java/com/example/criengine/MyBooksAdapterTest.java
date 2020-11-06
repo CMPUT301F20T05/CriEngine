@@ -23,6 +23,10 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for MyBooksAdapter
+ * Includes constructor and branch tests
+ */
 @RunWith(RobolectricTestRunner.class)
 public class MyBooksAdapterTest {
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();

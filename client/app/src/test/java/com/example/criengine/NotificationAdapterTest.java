@@ -9,7 +9,6 @@ import androidx.test.core.app.ApplicationProvider;
 
 import com.example.criengine.Adapters.NotificationAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
-import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
 
@@ -25,6 +24,10 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for NotificationAdapter
+ * Includes constructor and branch tests
+ */
 @RunWith(RobolectricTestRunner.class)
 public class NotificationAdapterTest {
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();

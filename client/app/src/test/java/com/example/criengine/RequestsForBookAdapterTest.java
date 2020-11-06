@@ -2,11 +2,9 @@ package com.example.criengine;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.example.criengine.Adapters.RequestsForBookAdapter;
@@ -21,11 +19,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for RequestsForBookAdapter
+ * Includes constructor and branch tests
+ */
 @RunWith(RobolectricTestRunner.class)
 public class RequestsForBookAdapterTest {
     @Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
