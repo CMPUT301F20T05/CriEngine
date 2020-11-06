@@ -3,6 +3,7 @@ package com.example.criengine.Fragments;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 public class RequestedBooksFragment extends RootFragment {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
+    Button filterButton;
     ArrayList<Book> borrowerBooks;
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
@@ -51,6 +53,10 @@ public class RequestedBooksFragment extends RootFragment {
         borrowerBooks = new ArrayList<>();
 
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
+
+        filterButton = getView().findViewById(R.id.requests_filter_button);
+        // TODO: Enable button when functionality is here.
+        filterButton.setEnabled(false);
 
         ListView bookNameTextView = getView().findViewById(R.id.bookListView);
         bookNameTextView.setAdapter(borrowerBooksListAdapter);
