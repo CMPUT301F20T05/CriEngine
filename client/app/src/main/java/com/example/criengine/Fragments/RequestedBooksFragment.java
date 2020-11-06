@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Requested Books Fragment. Handles displaying information about all requested books.
+ * Requested Books Fragment. Handles displaying information about all outgoing requests.
  * Outstanding Issues:
- * - Does not retrieve the information from the database.
+ * - Does not navigate to a book if selected (activity not implemented).
  */
 public class RequestedBooksFragment extends RootFragment {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
@@ -48,8 +48,7 @@ public class RequestedBooksFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO: remove dummy code
-        borrowerBooks = new ArrayList<Book>();
+        borrowerBooks = new ArrayList<>();
 
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
 
@@ -69,7 +68,7 @@ public class RequestedBooksFragment extends RootFragment {
         bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: redirect to book view
+                // TODO: Navigate to book-view (non owner view)
             }
         });
     }

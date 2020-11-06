@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * BookListAdapter is a custom ArrayAdapter that can be used to show Book instances in
  * a ListView.
  * Outstanding Issues:
- * - Does not retrieve info/push changes to the database.
+ * - Does not push changes to the database.
  */
 public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
@@ -64,11 +64,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         statusText.setText(book.getStatus());
 
-        // TODO: use db username and watchlist to determine state
         // Cancel -- we requested /  watching a book
         // Scan -- we have borrowed / Status == Accepted
         // Ok -- Rejected
-        // if ( book.getRequesters().contains(Database.myUsername) || Database.getMyProfile.getWatchList().contains(book))
         DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
         if (book.getRequesters().contains(dbw.userId)) {
             actionButton.setText("Cancel");
@@ -83,7 +81,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     }
             );
 
-        } else if (book.getBorrower() == dbw.userId) {
+        } else if (book.getBorrower().equals(dbw.userId)) {
             statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
             actionButton.setText("Scan");
             // todo: remove once implemented functionality
