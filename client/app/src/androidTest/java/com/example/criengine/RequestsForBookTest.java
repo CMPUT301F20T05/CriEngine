@@ -34,10 +34,10 @@ public class RequestsForBookTest {
     }
 
     /**
-     * Test to see if the filter button functions properly.
+     * Test to see if accepting a requester will return to the main screen.
      */
     @Test
-    public void filterButtonTest() {
+    public void acceptARequestTest() {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
@@ -53,16 +53,79 @@ public class RequestsForBookTest {
         // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
         // at least 1 match.
         assertTrue(solo.waitForText("My Books", 1, 10000));
-
-        solo.drag();
-
         solo.clickOnButton("See Requests");
 
-        // Asserts that the current activity is the RootActivity.
+        // Asserts that the current activity is the RequestsForBookActivity.
         solo.assertCurrentActivity("Wrong Activity", RequestsForBookActivity.class);
         assertTrue(solo.waitForText("✔", 1, 2000));
 
         solo.clickOnButton("✔");
+
+        // Asserts that the current activity is the RequestsForBookActivity.
+        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
+    }
+
+    /**
+     * Test to see if declining a request will remain on the same page.
+     */
+    @Test
+    public void declineARequestTest() {
+        // Asserts that the current activity is the LoginActivity.
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+
+        // Get view for EditText and enter a city name
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user2@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
+
+        solo.clickOnButton("Login");
+
+        // Asserts that the current activity is the RootActivity.
+        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
+
+        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
+        // at least 1 match.
+        assertTrue(solo.waitForText("My Books", 1, 10000));
+        solo.clickOnButton("See Requests");
+
+        // Asserts that the current activity is the RequestsForBookActivity.
+        solo.assertCurrentActivity("Wrong Activity", RequestsForBookActivity.class);
+        assertTrue(solo.waitForText("✖", 1, 2000));
+
+        solo.clickOnButton("✖");
+
+        // Asserts that the current activity is the RequestsForBookActivity.
+        solo.assertCurrentActivity("Wrong Activity", RequestsForBookActivity.class);
+    }
+
+    /**
+     * Test to see if declining all request will return to main screen.
+     */
+    @Test
+    public void declineAllRequestsTest() {
+        // Asserts that the current activity is the LoginActivity.
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+
+        // Get view for EditText and enter a city name
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user2@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
+
+        solo.clickOnButton("Login");
+
+        // Asserts that the current activity is the RootActivity.
+        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
+
+        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
+        // at least 1 match.
+        assertTrue(solo.waitForText("My Books", 1, 10000));
+        solo.clickOnButton("See Requests");
+
+        // Asserts that the current activity is the RequestsForBookActivity.
+        solo.assertCurrentActivity("Wrong Activity", RequestsForBookActivity.class);
+
+        // Decline all requests.
+        while (solo.waitForText("✖", 1, 2000)) {
+            solo.clickOnButton("✖");
+        }
 
         // Asserts that the current activity is the RootActivity.
         solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
