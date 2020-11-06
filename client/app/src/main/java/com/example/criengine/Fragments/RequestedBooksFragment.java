@@ -48,9 +48,6 @@ public class RequestedBooksFragment extends RootFragment {
 
         // TODO: remove dummy code
         borrowerBooks = new ArrayList<Book>();
-        borrowerBooks.add(new Book(
-                "Jane Doe", "Biography", "Nike Cage",
-                "A Biography of Jane Doe", "ISBN1234", "available"));
 
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
 
