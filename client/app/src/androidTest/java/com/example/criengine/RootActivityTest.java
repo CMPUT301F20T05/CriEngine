@@ -43,8 +43,8 @@ public class RootActivityTest {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         // Get view for EditText and enter a city name
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user2@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
 
         solo.clickOnButton("Login");
 
