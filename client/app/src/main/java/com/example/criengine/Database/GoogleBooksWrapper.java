@@ -84,7 +84,7 @@ public class GoogleBooksWrapper {
                     }
                 }
 
-                Book book = new Book(null, null, title, authorsString, description, null, "Available");
+                Book book = new Book(null, null, title, authorsString, description, null, "available");
 
                 return book;
 

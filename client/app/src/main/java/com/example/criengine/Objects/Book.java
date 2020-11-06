@@ -65,7 +65,8 @@ public class Book implements Serializable {
     /**
      * Constructor 3.
      * @param owner The owner of the book's ID.
-     * @param ownerUsername The owner of the book's username.     * @param title The title of the book.
+     * @param ownerUsername The owner of the book's username.
+     * @param title The title of the book.
      * @param author The author of the book.
      * @param description The description of the book.
      * @param isbn The isbn code of the book.
@@ -94,7 +95,8 @@ public class Book implements Serializable {
     /**
      * Constructor 4.
      * @param owner The owner of the book's ID.
-     * @param ownerUsername The owner of the book's username.     * @param title The title of the book.
+     * @param ownerUsername The owner of the book's username.
+     * @param title The title of the book.
      * @param author The author of the book.
      * @param description The description of the book.
      * @param isbn The isbn code of the book.
