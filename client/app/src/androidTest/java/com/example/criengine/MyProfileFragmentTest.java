@@ -11,6 +11,8 @@ import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
 
+import junit.framework.TestCase;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -42,13 +44,17 @@ public class MyProfileFragmentTest {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
         // Get view for EditText and enter a city name
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user2@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
 
         solo.clickOnButton("Login");
 
         // Asserts that the current activity is the RootActivity.
         solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
+
+        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
+        // at least 1 match.
+        TestCase.assertTrue(solo.waitForText("My Books", 1, 10000));
     }
 
     /**
@@ -57,6 +63,16 @@ public class MyProfileFragmentTest {
     @Test
     public void MyProfileFragmentSwipeReachedTest() {
         solo.scrollToSide(Solo.RIGHT);
+        assertTrue(solo.waitForText("Profile", 1, 2000));
+    }
+
+    /**
+     * Test to see if the fragment is reached when tapped
+     */
+    @Test
+    public void MyProfileFragmentTapReachedTest() {
+        // Navigate to the user profile fragment.
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_profile));
         assertTrue(solo.waitForText("Profile", 1, 2000));
     }
 
