@@ -63,6 +63,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setText("See Requests");
                 statusText.setText("Has Requests");
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setEnabled(true); // Enable the button.
                 actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -76,6 +77,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setText("Scan");
                 statusText.setText("Borrowed");
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setEnabled(false); // Temp disable the button.
                 actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -103,10 +105,12 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                     });
                 }
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setEnabled(false); // Temp disable the button.
                 break;
             default:
                 statusText.setText("Available");
                 actionButton.setVisibility(View.GONE);
+                actionButton.setEnabled(false); // Temp disable the button.
                 break;
         }
 
