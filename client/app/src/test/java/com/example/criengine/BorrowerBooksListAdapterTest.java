@@ -55,6 +55,7 @@ public class BorrowerBooksListAdapterTest {
         book = new Book();
         book.setTitle("Test");
         book.setStatus("");
+
     }
 
     /**
@@ -108,6 +109,7 @@ public class BorrowerBooksListAdapterTest {
      */
     @Test
     public void rejectedRequestTest() {
+        book.setBorrower("nobody");
         setupAdaptedItemView();
         Assert.assertEquals("Ok", actionButton.getText());
         Assert.assertEquals("Rejected", statusText.getText());
