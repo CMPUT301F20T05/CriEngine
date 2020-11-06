@@ -1,0 +1,16 @@
+language: android
+jdk: oraclejdk8
+dist: trusty
+
+env:
+  global:
+  
+android:
+  components:
+ 
+  licenses:
+  
+before_install:
+  - yes | sdkmanager "platforms;android-29"
+ 
+before_script:
