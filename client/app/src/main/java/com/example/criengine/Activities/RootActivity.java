@@ -140,7 +140,7 @@ public class RootActivity extends AppCompatActivity {
 
     /**
      * Changes the viewPager page to the given page
-     * @param index: page index
+     * @param index page index
      */
     public void goToPage(int index) {
         viewPager.setCurrentItem(index);
