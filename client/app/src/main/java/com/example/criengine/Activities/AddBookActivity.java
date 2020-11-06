@@ -86,12 +86,8 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Adds new book to database
                 dbw.addBook(newBook);
-                // Go back to my books
-                Snackbar.make(findViewById(R.id.popupMessage), R.string.popup_confirm, Snackbar.LENGTH_SHORT).show();
-                bookTitle.setText("");
-                bookAuthor.setText("");
-                bookDesc.setText("");
-                bookISBN.setText("");
+                // Go back to my-books
+                onBackPressed();
             }
         });
 
