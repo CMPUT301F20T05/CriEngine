@@ -3,6 +3,7 @@ package com.example.criengine.Fragments;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -18,12 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Requested Books Fragment. Handles displaying information about all requested books.
+ * Requested Books Fragment. Handles displaying information about all outgoing requests.
  * Outstanding Issues:
- * - Does not retrieve the information from the database.
+ * - Does not navigate to a book if selected (activity not implemented).
  */
 public class RequestedBooksFragment extends RootFragment {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
+    Button filterButton;
     ArrayList<Book> borrowerBooks;
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
@@ -48,10 +50,13 @@ public class RequestedBooksFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO: remove dummy code
-        borrowerBooks = new ArrayList<Book>();
+        borrowerBooks = new ArrayList<>();
 
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
+
+        filterButton = getView().findViewById(R.id.requests_filter_button);
+        // TODO: Enable button when functionality is here.
+        filterButton.setEnabled(false);
 
         ListView bookNameTextView = getView().findViewById(R.id.bookListView);
         bookNameTextView.setAdapter(borrowerBooksListAdapter);
@@ -69,7 +74,7 @@ public class RequestedBooksFragment extends RootFragment {
         bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: redirect to book view
+                // TODO: Navigate to book-view (non owner view)
             }
         });
     }
