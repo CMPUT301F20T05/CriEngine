@@ -41,9 +41,9 @@ public class LoginScreenTest {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
-        // Get view for EditText and enter a city name
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user2@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
+        // Input username and password
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
 
         solo.clickOnButton("Login");
 
@@ -63,7 +63,7 @@ public class LoginScreenTest {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
-        // Get view for EditText and enter a city name
+        // Input fake username and password
         solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user200@email.com");
         solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
 

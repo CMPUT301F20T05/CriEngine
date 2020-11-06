@@ -1,8 +1,12 @@
 package com.example.criengine;
 
 import android.widget.EditText;
+import android.widget.ListView;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
+import com.example.criengine.Activities.AddBookActivity;
 import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
@@ -31,19 +35,13 @@ public class MyBooksListTest {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-    }
 
-    /**
-     * Test to see if the filter button functions properly.
-     */
-    @Test
-    public void filterButtonTest() {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
-        // Get view for EditText and enter a city name
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "user2@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "password");
+        // Input username and password
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
 
         solo.clickOnButton("Login");
 
@@ -54,6 +52,17 @@ public class MyBooksListTest {
         // at least 1 match.
         assertTrue(solo.waitForText("My Books", 1, 10000));
 
+        addBook();
+    }
+
+    /**
+     * Test to see if the filter button functions properly.
+     */
+    @Test
+    public void filterButtonTest() throws InterruptedException {
+
+        assertTrue(solo.waitForText("This is a new book Title", 1, 2000));
+
         solo.clickOnButton("Filter");
 
         // Check if every option (4 total) is available to be clicked on.
@@ -63,19 +72,49 @@ public class MyBooksListTest {
         assertTrue(solo.waitForText("Accepted", 1, 2000));
         assertTrue(solo.waitForText("Borrowed", 1, 2000));
 
-        // Filter for only available books.
-        solo.clickOnText("Available");
-        solo.clickOnText("Confirm");
-        assertFalse(solo.waitForText("Accepted", 1, 2000));
-        assertFalse(solo.waitForText("Has Requests", 1, 2000));
-        assertFalse(solo.waitForText("Borrowed", 1, 2000));
 
-        // Add on two more filters to see if it allows for multiple filters at once.
-        solo.clickOnButton("Filter");
-        solo.clickOnText("Requested");
-        solo.clickOnText("Accepted");
+        // Filter for only available books.
+        solo.clickOnCheckBox(0);
         solo.clickOnText("Confirm");
-        assertFalse(solo.waitForText("Borrowed", 1, 2000));
+
+        assertTrue(solo.waitForText("This is a new book Title", 1, 2000));
+//        solo.clickOnButton("Filter");
+//        solo.clickOnCheckBox(0);
+//        solo.clickOnCheckBox(1);
+//        solo.clickOnText("Confirm");
+//
+//
+//        solo.waitForDialogToClose();
+//        assertFalse(solo.waitForText("This is a new book Title", 1, 2000));
+
+        solo.clickOnButton("Filter");
+        solo.clickOnCheckBox(0);
+        solo.clickOnText("Confirm");
+        assertTrue(solo.waitForText("This is a new book Title", 1, 2000));
+    }
+
+
+    public void addBook() {
+        solo.clickOnButton("Add A Book");
+
+
+        assertTrue(solo.waitForText("Save", 1, 2000));
+
+        solo.enterText((EditText) solo.getView(R.id.newBookTitle), "This is a new book Title");
+        solo.enterText((EditText) solo.getView(R.id.newBookDesc), "This is a new Description");
+        solo.enterText((EditText) solo.getView(R.id.newBookAuthor), "This is a new Author");
+        solo.enterText((EditText) solo.getView(R.id.newBookISBN), "This is a new ISBN");
+        solo.enterText((EditText) solo.getView(R.id.newBookImageURL), "This is an optional input");
+
+        solo.clickOnButton("Save");
+    }
+
+    public void deleteBook() {
+        solo.clickInList(0);
+
+        solo.clickOnButton("Delete Book");
+        solo.clickOnText("DELETE");
+
     }
 
     /**
@@ -84,6 +123,7 @@ public class MyBooksListTest {
      */
     @After
     public void tearDown() throws Exception{
+        deleteBook();
         solo.finishOpenedActivities();
     }
 }

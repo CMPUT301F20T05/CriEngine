@@ -215,7 +215,7 @@ public class MyBookActivity extends BookActivity {
                 // set title and message and button behaviors
                 .setTitle("Delete Book")
                 .setMessage("Are you sure you want to delete this book?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dbw.deleteBook(book);
                         dialog.dismiss();
