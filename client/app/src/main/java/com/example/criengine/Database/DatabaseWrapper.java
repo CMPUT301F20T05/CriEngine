@@ -23,6 +23,10 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * A wrapper class for the database. This is where the front end is capable of communicating with
+ * the back end database.
+ */
 public class DatabaseWrapper {
 
     private static DatabaseWrapper dbw = null;
@@ -33,7 +37,10 @@ public class DatabaseWrapper {
     public String userId;
     private FirebaseFirestore db;
 
-
+    /**
+     * Constructor for the wrapper.
+     * @param user The firebase user.
+     */
     public DatabaseWrapper(FirebaseUser user) {
         this.user = user;
         this.userId = user.getUid();
@@ -43,11 +50,16 @@ public class DatabaseWrapper {
         dbw = this;
     }
 
-    //public singleton pattern
+    // public singleton pattern
     public static DatabaseWrapper getWrapper() {
         return dbw;
     }
 
+    /**
+     * Gets the profile from the databse.
+     * @param userId The id of the user to get the profile from.
+     * @return The user profile.
+     */
     public Task<Profile> getProfile(String userId) {
         return users
                 .document(userId)

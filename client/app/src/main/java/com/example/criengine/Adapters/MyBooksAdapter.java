@@ -16,8 +16,9 @@ import com.example.criengine.R;
 import java.util.ArrayList;
 
 /*
- * MyBooksAdapter is custom ArrayAdapter that can be used to show Book instances in
- * a ListView.
+ * MyBooksAdapter is custom ArrayAdapter that can be used to owned books in a list view.
+ * Outstanding Issues:
+ * - Does not redirect to scanning/location activities. (Need to implement)
  */
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
@@ -34,6 +35,13 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         this.bookItems = bookItems;
     }
 
+    /**
+     * Returns a view with the properly formatted information.
+     * @param position The position from the list.
+     * @param convertView The old view to reuse (if possible).
+     * @param parent The parent view group.
+     * @return The view that displays the formatted data at the specified position in the data set.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

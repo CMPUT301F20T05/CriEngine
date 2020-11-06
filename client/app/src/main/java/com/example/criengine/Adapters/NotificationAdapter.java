@@ -15,8 +15,9 @@ import com.example.criengine.R;
 import java.util.ArrayList;
 
 /*
- * Custom ArrayAdapter that can be used to show notification instances in a ListView
- * @version 1.0
+ * Custom ArrayAdapter that can be used to show notification instances in a ListView.
+ * Outstanding Issues:
+ * - Does not push changes to the database.
  */
 public class NotificationAdapter extends ArrayAdapter<Notification> {
     private ArrayList<Notification> notificationItems;
@@ -35,6 +36,13 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         this.profile = profile;
     }
 
+    /**
+     * Returns a view with the properly formatted information.
+     * @param position The position from the list.
+     * @param convertView The old view to reuse (if possible).
+     * @param parent The parent view group.
+     * @return The view that displays the formatted data at the specified position in the data set.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

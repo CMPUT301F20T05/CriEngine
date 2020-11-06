@@ -16,6 +16,17 @@ import com.example.criengine.Interfaces.IOnBackPressed;
 import com.example.criengine.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+/**
+ * The central navigation activity. Handles creating the following fragments:
+ * - Search fragment
+ * - Notifications fragment
+ * - Outgoing Requests fragment
+ * - My Books fragment
+ * - My Profile fragment
+ *
+ * Outstanding Issues:
+ * - Does not refresh information on page swipe.
+ */
 public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
@@ -38,6 +49,12 @@ public class RootActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +140,7 @@ public class RootActivity extends AppCompatActivity {
 
     /**
      * Changes the viewPager page to the given page
-     * @ param id: page index
+     * @param index: page index
      */
     public void goToPage(int index) {
         viewPager.setCurrentItem(index);
