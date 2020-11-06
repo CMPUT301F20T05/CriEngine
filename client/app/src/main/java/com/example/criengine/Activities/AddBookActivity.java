@@ -12,7 +12,6 @@ import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 
 /**
  * Allows for the addition of a new book to the database through either manual entries or through
@@ -87,12 +86,8 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Adds new book to database
                 dbw.addBook(newBook);
-                // Go back to my books
-                Snackbar.make(findViewById(R.id.popupMessage), R.string.popup_confirm, Snackbar.LENGTH_SHORT).show();
-                bookTitle.setText("");
-                bookAuthor.setText("");
-                bookDesc.setText("");
-                bookISBN.setText("");
+                // Go back to my-books
+                onBackPressed();
             }
         });
 
