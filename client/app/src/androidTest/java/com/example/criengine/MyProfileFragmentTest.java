@@ -69,6 +69,7 @@ public class MyProfileFragmentTest {
         assertTrue(solo.waitForText("Profile", 1, 2000));
         solo.clickOnButton("Edit");
         String testBioString = "This is a bio text test";
+        solo.clearEditText((EditText) solo.getView(R.id.bio_text));
         assertFalse(solo.waitForText(testBioString, 1, 2000));
         solo.enterText((EditText) solo.getView(R.id.bio_text), testBioString);
         assertTrue(solo.waitForText(testBioString, 1, 2000));
@@ -83,6 +84,7 @@ public class MyProfileFragmentTest {
         assertTrue(solo.waitForText("Profile", 1, 2000));
         solo.clickOnButton("Edit");
         String testPhoneString = "9999999999";
+        solo.clearEditText((EditText) solo.getView(R.id.phone_text));
         assertFalse(solo.waitForText(testPhoneString, 1, 2000));
         solo.enterText((EditText) solo.getView(R.id.phone_text), testPhoneString);
         assertTrue(solo.waitForText(testPhoneString, 1, 2000));
@@ -97,6 +99,7 @@ public class MyProfileFragmentTest {
         assertTrue(solo.waitForText("Profile", 1, 2000));
         solo.clickOnButton("Edit");
         String testAddrString = "99 Wayne Gretzky Ave";
+        solo.clearEditText((EditText) solo.getView(R.id.phone_text));
         assertFalse(solo.waitForText(testAddrString, 1, 2000));
         solo.enterText((EditText) solo.getView(R.id.phone_text), testAddrString);
         assertTrue(solo.waitForText(testAddrString, 1, 2000));
@@ -111,6 +114,7 @@ public class MyProfileFragmentTest {
         assertTrue(solo.waitForText("Profile", 1, 2000));
         solo.clickOnButton("Edit");
         String testString = "This is a bio text test";
+        solo.clearEditText((EditText) solo.getView(R.id.bio_text));
         assertFalse(solo.waitForText(testString, 1, 2000));
         solo.enterText((EditText) solo.getView(R.id.bio_text), testString);
         assertTrue(solo.waitForText(testString, 1, 2000));
@@ -127,6 +131,7 @@ public class MyProfileFragmentTest {
         assertTrue(solo.waitForText("Profile", 1, 2000));
         solo.clickOnButton("Edit");
         String testString = "This is a bio text test";
+        solo.clearEditText((EditText) solo.getView(R.id.bio_text));
         assertFalse(solo.waitForText(testString, 1, 2000));
         solo.enterText((EditText) solo.getView(R.id.bio_text), testString);
         assertTrue(solo.waitForText(testString, 1, 2000));
