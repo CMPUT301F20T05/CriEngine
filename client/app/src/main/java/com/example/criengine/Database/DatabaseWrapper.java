@@ -32,7 +32,16 @@ public class DatabaseWrapper {
     public FirebaseUser user;
     public String userId;
     private FirebaseFirestore db;
+    private Boolean debug = false;
 
+    public DatabaseWrapper(DatabaseWrapper dbw) {
+        DatabaseWrapper.dbw = dbw;
+        this.user = dbw.user;
+        this.userId = null;
+        db = null;
+        users = null;
+        books = null;
+    }
 
     public DatabaseWrapper(FirebaseUser user) {
         this.user = user;
