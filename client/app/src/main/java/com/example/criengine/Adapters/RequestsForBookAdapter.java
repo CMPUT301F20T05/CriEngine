@@ -67,7 +67,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         // Set the text for names / buttons.
         username.setText(name);
         acceptUser.setText("✔");
-        rejectUser.setText("❌");
+        rejectUser.setText("✖");
 
         // Notifications to be sent to the appropriate users.
         Notification rejectedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was refused.");

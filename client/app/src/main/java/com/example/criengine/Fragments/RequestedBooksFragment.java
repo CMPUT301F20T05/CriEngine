@@ -22,7 +22,7 @@ public class RequestedBooksFragment extends RootFragment {
 
     /**
      * Get the layout associated with the fragment.
-     * @return
+     * @return The layout associated with the fragment.
      */
     @Override
     public int getFragmentLayout() {
