@@ -24,8 +24,8 @@ Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
 ### User Test Account Login Credentials
 - To log into an existing account, please use one of the following two accounts:
   - Account 1:
-    - Username: user2@email.com
+    - Username: user1@email.com
     - Password: password
   - Account 2:
-    - Username: user1@email.com
+    - Username: user2@email.com
     - Password: password
