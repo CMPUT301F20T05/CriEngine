@@ -39,6 +39,7 @@ public class AddBookActivity extends AppCompatActivity {
         // Set buttons and warning field to views
         final Button cancelButton = findViewById(R.id.newBookCancelButton);
         final Button saveButton = findViewById(R.id.newBookSaveButton);
+        final Button scanButton = findViewById(R.id.newBookScanButton);
 
         // The fields of the book
         final EditText bookTitle = findViewById(R.id.newBookTitle);
@@ -56,6 +57,9 @@ public class AddBookActivity extends AppCompatActivity {
                 bookProfile = profile;
             }
         });
+
+        // disable button until feature is implemented
+        scanButton.setEnabled(false);
 
         // Save button is clicked
         saveButton.setOnClickListener(new View.OnClickListener() {
