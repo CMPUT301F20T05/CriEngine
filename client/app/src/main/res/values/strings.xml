@@ -66,7 +66,7 @@
     <string name="title_search">Search</string>
     <string name="title_my_books">My Books</string>
     <string name="title_notifications">Notifications</string>
-    <string name="title_my_profile">My profile</string>
+    <string name="title_my_profile">My Profile</string>
     <string name="title_my_requests">My Requests</string>
 
     <!-- Outgoing Requests Fragment -->
