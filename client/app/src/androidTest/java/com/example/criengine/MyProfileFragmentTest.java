@@ -1,7 +1,5 @@
 package com.example.criengine;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -19,8 +17,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -36,10 +32,9 @@ public class MyProfileFragmentTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
@@ -149,18 +144,25 @@ public class MyProfileFragmentTest {
         String testString = "This is a bio text test";
         solo.clearEditText((EditText) solo.getView(R.id.bio_text));
         assertFalse(solo.waitForText(testString, 1, 2000));
+        String prevString = ((EditText) solo.getView(R.id.bio_text)).getText().toString();
         solo.enterText((EditText) solo.getView(R.id.bio_text), testString);
         assertTrue(solo.waitForText(testString, 1, 2000));
         solo.clickOnButton("Save");
         assertTrue(solo.waitForText(testString, 1, 2000));
+
+        // revert the save
+        solo.clickOnButton("Edit");
+        solo.clearEditText((EditText) solo.getView(R.id.bio_text));
+        solo.enterText((EditText) solo.getView(R.id.bio_text), prevString);
+        solo.clickOnButton("Save");
+        assertTrue(solo.waitForText(prevString, 1, 2000));
     }
 
     /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
         solo.finishOpenedActivities();
     }
 }
