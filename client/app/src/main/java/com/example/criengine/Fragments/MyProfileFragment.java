@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.example.criengine.Activities.ProfileActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Interfaces.IOnBackPressed;
 import com.example.criengine.Objects.Profile;
@@ -17,6 +14,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * A person's own profile fragment where they can edit their profile.
+ * Outstanding Issues:
+ * - Does not push changes to the database.
  */
 public class MyProfileFragment extends ProfileFragment implements IOnBackPressed {
     private Button cancelButton;
@@ -77,11 +76,23 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
         return false;
     }
 
+    /**
+     * Returns the layout for the fragment.
+     * @return The layout.
+     */
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_my_profile;
     }
 
+    /**
+     * Called immediately after onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+     * android.os.Bundle) has returned, but before any saved state has been restored in to the view.
+     * @param view The view.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

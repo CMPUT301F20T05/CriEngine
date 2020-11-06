@@ -12,6 +12,11 @@ import android.widget.EditText;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 
+/**
+ * Handles displaying information about a book. Items such as the title, author, description etc.
+ * Outstanding Issues:
+ * - Does not push changes to database.
+ */
 public class MyBookActivity extends BookActivity {
     private Button editCancelBookButton;
     private Button seeRequestsButton;
@@ -105,7 +110,8 @@ public class MyBookActivity extends BookActivity {
     }
 
     /**
-     * A custom OnCreate method which will
+     * A custom onCreate() method. Allows for the usage for fragments in the activity.
+     * Without this method, there is the possible issue of the fragment being null when it is called
      */
     @Override
     protected void customOnCreate() {
@@ -190,7 +196,12 @@ public class MyBookActivity extends BookActivity {
         setPageViewOnly();
     }
 
-    // code from: https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+    /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to delete the book, then redirect to
+     *          the main activity.
+     */
     private AlertDialog confirmDelete()
     {
         return new AlertDialog.Builder(this)

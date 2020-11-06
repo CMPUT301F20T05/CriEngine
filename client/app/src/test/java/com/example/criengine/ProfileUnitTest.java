@@ -2,12 +2,9 @@ package com.example.criengine;
 
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
 /**
@@ -17,11 +14,17 @@ import static org.junit.Assert.*;
 public class ProfileUnitTest {
     Profile mock;
 
+    /**
+     * Run before every test case.
+     */
     @Before
     public void init() {
         mock = new Profile();
     }
 
+    /**
+     * Test the first constructor.
+     */
     @Test
     public void testConstructorOne() {
         assertNull(mock.getUserID());
@@ -36,6 +39,9 @@ public class ProfileUnitTest {
         assertEquals(mock.getNotifications().size(), 0);
     }
 
+    /**
+     * Test the second constructor.
+     */
     @Test
     public void testConstructorTwo() {
         Profile mock = new Profile("UserID", "newEmail@email.com", "UserName", "780-780-7800", "John", "Doe", "Bio");
@@ -52,6 +58,9 @@ public class ProfileUnitTest {
         assertEquals(mock.getNotifications().size(), 0);
     }
 
+    /**
+     * Test the third constructor.
+     */
     @Test
     public void testConstructorThree() {
         Profile mock = new Profile("UserID", "newEmail@email.com", "UserName", "780-780-7800", "John", "Doe");
@@ -68,48 +77,72 @@ public class ProfileUnitTest {
         assertEquals(mock.getNotifications().size(), 0);
     }
 
+    /**
+     * Test getter/setters for the username attribute.
+     */
     @Test
     public void testUsernameMethods() {
         mock.setUsername("Nice");
         assertEquals(mock.getUsername(), "Nice");
     }
 
+    /**
+     * Test getter/setters for the phone attribute.
+     */
     @Test
     public void testPhoneMethods() {
         mock.setPhone("780-999-9199");
         assertEquals(mock.getPhone(), "780-999-9199");
     }
 
+    /**
+     * Test getter/setters for the first-name attribute.
+     */
     @Test
     public void testFirstNameMethods() {
         mock.setFirstname("Captain");
         assertEquals(mock.getFirstname(), "Captain");
     }
 
+    /**
+     * Test getter/setters for the last-name attribute.
+     */
     @Test
     public void testLastNameMethods() {
         mock.setLastname("Rex");
         assertEquals(mock.getLastname(), "Rex");
     }
 
+    /**
+     * Test getter/setters for the bio attribute.
+     */
     @Test
     public void testBioMethods() {
         mock.setBio("Rex");
         assertEquals(mock.getBio(), "Rex");
     }
 
+    /**
+     * Test getter/setters for the email attribute.
+     */
     @Test
     public void testEmailMethods() {
         mock.setEmail("Rex@email.com");
         assertEquals(mock.getEmail(), "Rex@email.com");
     }
 
+    /**
+     * Test getter/setters for the userID attribute.
+     */
     @Test
     public void testUserIDMethods() {
         mock.setUserID("Rex");
         assertEquals(mock.getUserID(), "Rex");
     }
 
+    /**
+     * Test getter/setters/add/remove for the ownedBooks attribute.
+     */
     @Test
     public void testOwnedBooksMethods() {
         mock.addBooksOwned("This is my book");
@@ -124,6 +157,9 @@ public class ProfileUnitTest {
         assertEquals(mock.getBooksOwned().get(0), "A new book!");
     }
 
+    /**
+     * Test getter/setters/add/remove for the borrowedOrRequested attribute.
+     */
     @Test
     public void testBorrowedOrRequestedMethods() {
         mock.addBooksBorrowedOrRequested("A new borrowed book");
@@ -138,6 +174,9 @@ public class ProfileUnitTest {
         assertEquals(mock.getBooksBorrowedOrRequested().get(0), "A new book!");
     }
 
+    /**
+     * Test getter/setters/add/remove for the notification attribute.
+     */
     @Test
     public void testNotificationMethods() {
         Notification mockNotification = new Notification("Mock notification.");
