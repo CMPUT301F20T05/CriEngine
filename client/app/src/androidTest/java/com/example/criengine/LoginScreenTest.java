@@ -38,7 +38,7 @@ public class LoginScreenTest {
      */
     @Test
     public void successfulLoginTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
+        // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
         // Get view for EditText and enter a city name
@@ -47,7 +47,7 @@ public class LoginScreenTest {
 
         solo.clickOnButton("Login");
 
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
+        // Asserts that the current activity is the RootActivity.
         solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
 
         // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
@@ -60,7 +60,7 @@ public class LoginScreenTest {
      */
     @Test
     public void failedLoginTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
+        // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
         // Get view for EditText and enter a city name

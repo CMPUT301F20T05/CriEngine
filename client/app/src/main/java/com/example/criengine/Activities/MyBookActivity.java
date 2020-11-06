@@ -9,13 +9,22 @@ import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 
+/**
+ * Handles displaying information about a book. Items such as the title, author, description etc.
+ * Outstanding Issues:
+ * - Does not push changes to database.
+ */
 public class MyBookActivity extends BookActivity {
     private Button editCancelBookButton;
     private Button seeRequestsButton;
     private Button deleteSaveBookButton;
+
+    DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
     String prevTitle;
     String prevDetail;
@@ -105,7 +114,8 @@ public class MyBookActivity extends BookActivity {
     }
 
     /**
-     * A custom OnCreate method which will
+     * A custom onCreate() method. Allows for the usage for fragments in the activity.
+     * Without this method, there is the possible issue of the fragment being null when it is called
      */
     @Override
     protected void customOnCreate() {
@@ -155,7 +165,10 @@ public class MyBookActivity extends BookActivity {
                 if (editMode) {
                     setPageViewOnly();
                     editMode = !editMode;
-                    // TODO: send data to db
+                    book.setTitle(bookTitle.getText().toString());
+                    book.setDescription(bookDetail.getText().toString());
+                    book.setAuthor(bookAuthor.getText().toString());
+                    dbw.addBook(book);
                 } else {
                     confirmDialog.show();
                 }
@@ -177,7 +190,7 @@ public class MyBookActivity extends BookActivity {
         bookAuthor.setText(book.getAuthor());
         bookISBN.setText(book.getIsbn());
         bookStatus.setText(book.getStatus());
-        bookOwner.setText(book.getOwner());
+        bookOwner.setText(book.getOwnerUsername());
         if (book.getBorrower() != null) {
             bookBorrower.setText(book.getBorrower());
         } else {
@@ -190,7 +203,12 @@ public class MyBookActivity extends BookActivity {
         setPageViewOnly();
     }
 
-    // code from: https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+    /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to delete the book, then redirect to
+     *          the main activity.
+     */
     private AlertDialog confirmDelete()
     {
         return new AlertDialog.Builder(this)
@@ -199,7 +217,7 @@ public class MyBookActivity extends BookActivity {
                 .setMessage("Are you sure you want to delete this book?")
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // TODO: remove book from database
+                        dbw.deleteBook(book);
                         dialog.dismiss();
                         onBackPressed();
                     }

@@ -11,7 +11,9 @@ import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
- * A person's own profile activity where they can edit their profile.
+ * A person's personal profile activity where they can edit their profile.
+ * Outstanding Issues:
+ * - Does not push changes to the database.
  */
 public class MyProfileActivity extends ProfileActivity {
     private Button cancelButton;
@@ -74,6 +76,12 @@ public class MyProfileActivity extends ProfileActivity {
         }
     }
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_my_profile);
@@ -129,7 +137,7 @@ public class MyProfileActivity extends ProfileActivity {
                         userTextView.setText(getString(R.string.user_profile_text, profile.getUsername()));
                         bioEditText.setText(profile.getBio());
                         phoneEditText.setText(profile.getPhone());
-                        addressEditText.setText(profile.getEmail());
+                        addressEditText.setText(profile.getAddress());
                         System.out.println(profile);
                     }
                 }

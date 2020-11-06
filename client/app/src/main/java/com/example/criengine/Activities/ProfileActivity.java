@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.criengine.R;
 
 /**
- * General ProfileActivity class that sets up common features.
+ * Generalized ProfileActivity class that sets up common features.
  */
 public abstract class ProfileActivity extends AppCompatActivity {
 
