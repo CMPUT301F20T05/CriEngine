@@ -101,10 +101,10 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/save_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
         app:layout_constraintEnd_toStartOf="@+id/newBookCancelButton"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textAllCaps="false" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/newBookCancelButton"
@@ -115,10 +115,20 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
         android:text="@string/cancel_button"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newBookSaveButton" />
+
+    <LinearLayout
+        android:id="@+id/popupMessage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newBookSaveButton"
-        android:textAllCaps="false" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/newBookWarning"
@@ -134,11 +144,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newBookImageURL" />
 
-    <LinearLayout
-        android:id="@+id/popupMessage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
+    <fragment
+        android:id="@+id/bottom_navigation_frag"
+        android:name="com.example.criengine.Fragments.BottomNavFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

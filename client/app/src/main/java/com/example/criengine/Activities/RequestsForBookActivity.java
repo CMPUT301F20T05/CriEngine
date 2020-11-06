@@ -1,5 +1,6 @@
 package com.example.criengine.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,8 +14,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Requests for Book Activity. Displays all users who have requested an available book & allows for
- * the owner to reject / accept a borrower.
+ * Requests for Book Activity. Displays all users who have requested your available book & allows
+ * for the owner to reject / accept a requester.
+ * Outstanding Issues:
+ * - Does not notify the users. (Database not setup)
+ * - Does not push the book status/properties to the database.
  */
 public class RequestsForBookActivity extends AppCompatActivity implements Serializable {
     private RequestsForBookAdapter userListAdapter;
@@ -22,12 +26,18 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
     private TextView header;
     private Book book;
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests_for_book);
 
-        // Grabs the gears object from DisplayGearListActivity.java
+        // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
         } else {
@@ -50,5 +60,15 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
                 // TODO: redirect to view the user profile.
             }
         });
+    }
+
+    /**
+     * Overrides the back button so it returns to the main activity.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+        startActivity(intent);
     }
 }

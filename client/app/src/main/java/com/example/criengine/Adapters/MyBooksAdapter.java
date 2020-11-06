@@ -2,8 +2,6 @@ package com.example.criengine.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import java.io.Serializable;
-
 import com.example.criengine.Activities.RequestsForBookActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
-
 import java.util.ArrayList;
 
 /*
- * MyBooksAdapter is custom ArrayAdapter that can be used to show Book instances in
- * a ListView
- * @version 1.0
+ * MyBooksAdapter is custom ArrayAdapter that can be used to owned books in a list view.
+ * Outstanding Issues:
+ * - Does not redirect to scanning/location activities. (Need to implement)
  */
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
@@ -41,13 +35,21 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         this.bookItems = bookItems;
     }
 
+    /**
+     * Returns a view with the properly formatted information.
+     * @param position The position from the list.
+     * @param convertView The old view to reuse (if possible).
+     * @param parent The parent view group.
+     * @return The view that displays the formatted data at the specified position in the data set.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Get Item Data
         View view = convertView;
 
-        if( view == null ) {
+        // Setup the inflater and view if there was none given.
+        if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.list_format, parent, false);
         }
@@ -69,6 +71,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setText("See Requests");
                 statusText.setText("Has Requests");
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setEnabled(true); // Enable the button.
                 actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -82,19 +85,40 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 actionButton.setText("Scan");
                 statusText.setText("Borrowed");
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setEnabled(false); // Temp disable the button.
+                actionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: Redirect to Scan activity.
+                    }
+                });
                 break;
             case "accepted":
                 statusText.setText("Accepted");
-                if (!book.getPotentialBorrower().getHandOffCompelte()) {
+                if (book.getGeolocation() == null) {
                     actionButton.setText("Location");
+                    actionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO: Redirect to Geo-Location page.
+                        }
+                    });
                 } else {
                     actionButton.setText("Scan");
+                    actionButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO: Redirect to Scan activity.
+                        }
+                    });
                 }
                 actionButton.setVisibility(View.VISIBLE);
+                actionButton.setEnabled(false); // Temp disable the button.
                 break;
             default:
                 statusText.setText("Available");
                 actionButton.setVisibility(View.GONE);
+                actionButton.setEnabled(false); // Temp disable the button.
                 break;
         }
 

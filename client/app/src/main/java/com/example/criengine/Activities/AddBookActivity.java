@@ -1,14 +1,12 @@
 package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
@@ -16,10 +14,22 @@ import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
+/**
+ * Allows for the addition of a new book to the database through either manual entries or through
+ * the scanning feature.
+ * Outstanding Issues:
+ * - Implement the scanning feature.
+ * - Implement the addition of images.
+ */
 public class AddBookActivity extends AppCompatActivity {
-
     private Profile bookProfile;
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,11 +99,20 @@ public class AddBookActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
-                v.getContext().startActivity(intent);
+                onBackPressed();
             }
         });
 
+    }
+
+    /**
+     * Overrides the back button so it returns to the main activity.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+        startActivity(intent);
     }
 
 }

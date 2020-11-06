@@ -2,19 +2,22 @@ package com.example.criengine.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 
+/**
+ * Handles displaying information about a book. Items such as the title, author, description etc.
+ * Outstanding Issues:
+ * - Does not push changes to database.
+ */
 public class MyBookActivity extends BookActivity {
-
     private Button editCancelBookButton;
     private Button seeRequestsButton;
     private Button deleteSaveBookButton;
@@ -22,6 +25,8 @@ public class MyBookActivity extends BookActivity {
     String prevTitle;
     String prevDetail;
     String prevAuthor;
+
+    private Book book;
 
     AlertDialog confirmDialog;
 
@@ -51,7 +56,10 @@ public class MyBookActivity extends BookActivity {
      */
     private void setPageViewOnly() {
         editCancelBookButton.setText(R.string.edit_book);
-        seeRequestsButton.setVisibility(View.VISIBLE);
+        if (book.getRequesters().size() == 0) {
+            // Only allow the user to see requests if there are requests.
+            seeRequestsButton.setVisibility(View.GONE);
+        }
         deleteSaveBookButton.setText(R.string.delete_book);
 
         disableEditText(bookTitle);
@@ -87,14 +95,32 @@ public class MyBookActivity extends BookActivity {
             editMode = false;
         } else {
             // go back to previous activity
-            super.onBackPressed();
+            Intent intent = new Intent(this, RootActivity.class);
+            intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+            startActivity(intent);
         }
     }
 
+    /**
+     * Set the layout.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void inflate() {
         setContentView(R.layout.activity_my_book);
-        super.onCreate(savedInstanceState);
+    }
+
+    /**
+     * A custom onCreate() method. Allows for the usage for fragments in the activity.
+     * Without this method, there is the possible issue of the fragment being null when it is called
+     */
+    @Override
+    protected void customOnCreate() {
+        // Grabs the book.
+        if (getIntent().getExtras() != null) {
+            book = (Book) getIntent().getSerializableExtra("Book");
+        } else {
+            // TODO: If the intent fails to send, then redirect user to Error Screen. (in general this should not fail)
+        }
 
         // my book exclusive UI component
         editCancelBookButton = findViewById(R.id.edit_book_button);
@@ -123,7 +149,9 @@ public class MyBookActivity extends BookActivity {
         seeRequestsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: redirect to requests for that book
+                Intent intent = new Intent(view.getContext(), RequestsForBookActivity.class);
+                intent.putExtra("Book", book);
+                view.getContext().startActivity(intent);
             }
         });
 
@@ -145,22 +173,35 @@ public class MyBookActivity extends BookActivity {
         bookISBN.setBackgroundResource(android.R.color.transparent);
         bookStatus.setInputType(InputType.TYPE_NULL);
         bookStatus.setBackgroundResource(android.R.color.transparent);
+        bookOwner.setInputType(InputType.TYPE_NULL);
+        bookOwner.setBackgroundResource(android.R.color.transparent);
+        bookBorrower.setInputType(InputType.TYPE_NULL);
+        bookBorrower.setBackgroundResource(android.R.color.transparent);
 
-        Book mockBook = new Book("Cynthia", "The hungry caterpillar", "Not Cynthia", "A very hungry caterpillar", "123abc", "Available");
-
-        // TODO: set book data
-        bookTitle.setText(mockBook.getTitle());
-        bookDetail.setText(mockBook.getDescription());
-        bookAuthor.setText(mockBook.getAuthor());
-        bookISBN.setText(mockBook.getIsbn());
-        bookStatus.setText(mockBook.getStatus());
+        bookTitle.setText(book.getTitle());
+        bookDetail.setText(book.getDescription());
+        bookAuthor.setText(book.getAuthor());
+        bookISBN.setText(book.getIsbn());
+        bookStatus.setText(book.getStatus());
+        bookOwner.setText(book.getOwner());
+        if (book.getBorrower() != null) {
+            bookBorrower.setText(book.getBorrower());
+        } else {
+            bookBorrowerLabel.setVisibility(View.GONE);
+            bookBorrower.setVisibility(View.GONE);
+        }
 //        bookImage.setImageURI(mockBook.getImageURL());
 
         editMode = false;
         setPageViewOnly();
     }
 
-    // code from: https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+    /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to delete the book, then redirect to
+     *          the main activity.
+     */
     private AlertDialog confirmDelete()
     {
         return new AlertDialog.Builder(this)
@@ -171,7 +212,7 @@ public class MyBookActivity extends BookActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // TODO: remove book from database
                         dialog.dismiss();
-                        MyBookActivity.super.onBackPressed();
+                        onBackPressed();
                     }
 
                 })

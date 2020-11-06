@@ -16,10 +16,10 @@ public class Book implements Serializable {
     private String isbn;
     private String status;
     private String borrower;
+    private boolean confirmationNeeded;
     private ArrayList<String> requesters;
     private String geolocation;
     private String imageURL;
-    private PotentialBorrower potential;
 
     /**
      * Constructor 1.
@@ -53,6 +53,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.status = status;
         this.borrower = borrower;
+        this.confirmationNeeded = false;
         this.requesters = (ArrayList<String>) requesters;
         this.geolocation = geolocation;
         this.imageURL = imageURL;
@@ -80,6 +81,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.status = status;
         this.borrower = borrower;
+        this.confirmationNeeded = false;
         this.requesters = (ArrayList<String>) requesters;
         this.geolocation = geolocation;
         this.imageURL = imageURL;
@@ -103,6 +105,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
         this.status = status;
         this.borrower = null;
+        this.confirmationNeeded = false;
         this.requesters = new ArrayList<>();
         this.geolocation = null;
         this.imageURL = null;
@@ -173,6 +176,14 @@ public class Book implements Serializable {
     }
 
     /**
+     * Get whether the current transaction the book is in needs confirmation.
+     * @return true if the action needs to be confirmed
+     */
+    public boolean isConfirmationNeeded() {
+        return confirmationNeeded;
+    }
+
+    /**
      * Get the list of people requesting a book.
      * @return The list of requesters.
      */
@@ -209,31 +220,6 @@ public class Book implements Serializable {
      */
     public String getGeolocation() {
         return geolocation;
-    }
-
-    /**
-     * Get a potential borrower.
-     * This is someone who requested a book + was accepted, but the hand-off has yet to occur.
-     * @return The potential borrower.
-     */
-    public PotentialBorrower getPotentialBorrower() {
-        return potential;
-    }
-
-    /**
-     * Set a potential borrower.
-     * This is someone who requested a book + was accepted, but the hand-off has yet to occur.
-     * @param name The name of the person to be added.
-     */
-    public void setPotentialBorrower(String name) {
-        potential = new PotentialBorrower(name);
-    }
-
-    /**
-     * Wipe the potential borrower.
-     */
-    public void removePotentialBorrower() {
-        potential = null;
     }
 
     /**
@@ -306,6 +292,14 @@ public class Book implements Serializable {
      */
     public void setBorrower(String borrower) {
         this.borrower = borrower;
+    }
+
+    /**
+     * Set whether the current transaction has been confirmed
+     * @param confirmationNeeded whether the book needs confirmation
+     */
+    public void setConfirmationNeeded(boolean confirmationNeeded) {
+        this.confirmationNeeded = confirmationNeeded;
     }
 
     /**

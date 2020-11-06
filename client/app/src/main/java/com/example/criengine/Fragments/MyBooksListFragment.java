@@ -1,60 +1,65 @@
-package com.example.criengine.Activities;
+package com.example.criengine.Fragments;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-
-import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Activities.AddBookActivity;
+import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * My Books Activity. Displays all owned books and their status's.
- * Navigation to:
- *  - Add-A-Book activity
- *  - View book information activity
- *  - See-Requests activity
- *  - Scan-Book activity
- *  - See-Location activity
+ * My Books List Fragment.
+ * Displays all owned books and their status's.
  */
-public class MyBooksActivity extends AppCompatActivity implements FilterFragmentActivity.OnFragmentInteractionListener {
+public class MyBooksListFragment extends RootFragment implements MyBooksListFilterFragment.OnFragmentInteractionListener {
     private MyBooksAdapter myBooksListAdapter;
     private ArrayList<Book> myBooks;
     private ArrayList<Book> displayBooks;
     private Button addBookButton;
     private Button filterButton;
-    ListView headerText;
-    private ArrayList<String> filterStatus = new ArrayList<String>();
+    private ListView headerText;
+    private ArrayList<String> filterStatus = new ArrayList<>();
 
-    DatabaseWrapper dbw;
-
+    /**
+     * Returns the layout.
+     * @return The layout.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public int getFragmentLayout() {
+        return R.layout.activity_my_books;
+    }
+
+    /**
+     * Called when creating the fragment.
+     * @param view The view.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently
+     *                           supplied.
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_books);
 
         // Contains the books that will be displayed on the screen.
         displayBooks = new ArrayList<>();
         myBooks = new ArrayList<>();
 
-        dbw = DatabaseWrapper.getWrapper();
-
         // Set the adapter.
-        myBooksListAdapter = new MyBooksAdapter(this, displayBooks);
+        myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks);
 
         // Setup the adapter.
-        headerText = findViewById(R.id.bookListView);
+        headerText = getView().findViewById(R.id.bookListView);
         headerText.setAdapter(myBooksListAdapter);
 
         // TODO: please pass this activity a profile object somehow, so we dont need to do this nightmare double call
@@ -80,12 +85,14 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         headerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // FIXME: redirect to view-book activity.
+                Intent intent = new Intent(view.getContext(), MyBookActivity.class);
+                intent.putExtra("Book", displayBooks.get(position));
+                view.getContext().startActivity(intent);
             }
         });
 
         // Opens to the add-a-book screen when you click the button.
-        addBookButton = findViewById(R.id.add_a_book);
+        addBookButton = getView().findViewById(R.id.add_a_book);
         addBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,22 +102,22 @@ public class MyBooksActivity extends AppCompatActivity implements FilterFragment
         });
 
         // Opens the filter fragment where you can filter information.
-        filterButton = findViewById(R.id.filter_button);
+        filterButton = getView().findViewById(R.id.filter_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new FilterFragmentActivity(filterStatus).show(getSupportFragmentManager(), "Filter_Status");
+                new MyBooksListFilterFragment(filterStatus).show(getChildFragmentManager(), "Filter_Status");
             }
         });
     }
 
     /**
      * Handles modifying what is displayed on the screen if the user chooses to filter the info.
-     * @param filterStatus Contains the different status' that the user wants to display.
+     * @param newStatus Contains the different status' that the user wants to display.
      */
     @Override
-    public void onConfirmPressed(ArrayList<String> filterStatus) {
-        this.filterStatus = filterStatus;
+    public void onConfirmPressed(ArrayList<String> newStatus) {
+        filterStatus = newStatus;
 
         // Wipe the array so we can start anew.
         displayBooks.clear();

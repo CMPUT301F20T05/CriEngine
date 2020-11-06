@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.example.criengine.Activities.MyBooksActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.R;
@@ -18,8 +18,9 @@ import java.util.ArrayList;
 
 /*
  * RequestsForBookAdapter is custom ArrayAdapter that can be used to show User profiles that have
- * requested a book in a ListView
- * @version 1.0
+ * requested a book in a ListView.
+ * Outstanding Issues:
+ * - Does not retrieve nor push changes to the database.
  */
 public class RequestsForBookAdapter extends ArrayAdapter<String> {
     private ArrayList<String> userRequests;
@@ -38,6 +39,13 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         this.book = book;
     }
 
+    /**
+     * Returns a view with the properly formatted information.
+     * @param position The position from the list.
+     * @param convertView The old view to reuse (if possible).
+     * @param parent The parent view group.
+     * @return The view that displays the formatted data at the specified position in the data set.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -59,7 +67,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         // Set the text for names / buttons.
         username.setText(name);
         acceptUser.setText("✔");
-        rejectUser.setText("❌");
+        rejectUser.setText("✖");
 
         // Notifications to be sent to the appropriate users.
         Notification rejectedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was refused.");
@@ -74,13 +82,15 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                     for (int i = 0; i < userRequests.size(); i++) {
                         if (userRequests.get(i).equals(name)) {
                             // TODO: Notify the accepted user + push changes to db.
+                        } else {
+                            // TODO: Notify the rejected user(s) + push changes to db.
                         }
-                        // TODO: Notify the rejected user(s) + push changes to db.
                     }
                     userRequests.clear();
                     // TODO: Push changes to database.
 
-                    Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                    Intent intent = new Intent(v.getContext(), RootActivity.class);
+                    intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
                     v.getContext().startActivity(intent);
                 }
             }
@@ -99,7 +109,8 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                         // TODO: Push changes to database.
 
                         // Return to previous activity automatically.
-                        Intent intent = new Intent(v.getContext(), MyBooksActivity.class);
+                        Intent intent = new Intent(v.getContext(), RootActivity.class);
+                        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
                         v.getContext().startActivity(intent);
                     }
 
@@ -107,6 +118,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                 }
             }
         );
+
         return view;
     }
 }

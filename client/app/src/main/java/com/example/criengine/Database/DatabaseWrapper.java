@@ -29,6 +29,10 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * A wrapper class for the database. This is where the front end is capable of communicating with
+ * the back end database.
+ */
 public class DatabaseWrapper {
 
     private static DatabaseWrapper dbw = null;
@@ -38,8 +42,31 @@ public class DatabaseWrapper {
     public FirebaseUser user;
     public String userId;
     private FirebaseFirestore db;
+    private Boolean debug = false;
 
+    // Constructor for tests
+    public DatabaseWrapper(DatabaseWrapper dbw) {
+        DatabaseWrapper.dbw = dbw;
+        this.user = dbw.user;
+        this.userId = null;
+        db = null;
+        users = null;
+        books = null;
+    }
 
+    public DatabaseWrapper(FirebaseFirestore dbw, FirebaseUser user) {
+        this.user = user;
+        this.userId = null;
+        this.db = null;
+        this.users = dbw.collection("users");
+        this.books = dbw.collection("books");
+        DatabaseWrapper.dbw = this;
+    }
+
+    /**
+     * Constructor for the wrapper.
+     * @param user The firebase user.
+     */
     public DatabaseWrapper(FirebaseUser user) {
         this.user = user;
         this.userId = user.getUid();
@@ -49,11 +76,16 @@ public class DatabaseWrapper {
         dbw = this;
     }
 
-    //public singleton pattern
+    // public singleton pattern
     public static DatabaseWrapper getWrapper() {
         return dbw;
     }
 
+    /**
+     * Gets the profile from the databse.
+     * @param userId The id of the user to get the profile from.
+     * @return The user profile.
+     */
     public Task<Profile> getProfile(String userId) {
         return users
                 .document(userId)
@@ -79,11 +111,21 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Add a profile to the database.
+     * @param profile The profile to add.
+     * @return The user profile added into the database.
+     */
     public Task<Void> addProfile(Profile profile) {
         // otherwise use the bookID
         return users.document(profile.getUserID()).set(profile, SetOptions.merge());
     }
 
+    /**
+     * Get a book from the database.
+     * @param bookID The ID fo the book.
+     * @return The book object.
+     */
     public Task<Book> getBook(String bookID) {
         return books
                 .document(bookID)
@@ -101,7 +143,6 @@ public class DatabaseWrapper {
                                 Log.e(TAG, e.getMessage());
                                 return null;
                             }
-//                            return new Book(document.getData());
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
                             return null;
@@ -110,6 +151,11 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Add a book to the database.
+     * @param book The book to be added.
+     * @return The book added into the database.
+     */
     public Task<Void> addBook(final Book book) {
         // if book doesn't exist
         if (book.getBookID() == null) {
@@ -132,10 +178,21 @@ public class DatabaseWrapper {
         }
     }
 
+
+    /**
+     * Delete a book from the database.
+     * @param BookID The ID of the book.
+     * @return The book deleted from the database.
+     */
     public Task<Void> deleteBook(String BookID) {
         return books.document(BookID).delete();
     }
 
+    /**
+     * Get all books owned by a profile.
+     * @param owner The owner of the account.
+     * @return The list of books owned by that account.
+     */
     public Task<List<Book>> getOwnedBooks(Profile owner) {
         ArrayList<String> ownedBooks = owner.getBooksOwned();
         // TODO see if we can get away without owner (make the database get ownedbooks from uid)
@@ -144,7 +201,7 @@ public class DatabaseWrapper {
             return Tasks.forResult(books);
         }
         return books
-                .whereIn("bookID", ownedBooks)
+                .whereEqualTo("owner", owner.getUserID())
                 .get()
                 .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
                     @Override
@@ -167,14 +224,14 @@ public class DatabaseWrapper {
                 });
     }
 
-    public Task<List<Book>> getBorrowedOrRequestedBooks(Profile user) {
-        ArrayList<String> requestedBooks = user.getBooksBorrowedOrRequested();
-        if (requestedBooks.isEmpty()) {
-            List<Book> books = new ArrayList<Book>();
-            return Tasks.forResult(books);
-        }
+    /**
+     * Get a list of Borrowed or Requested book from a user.
+     * @param userID The profile of interest.
+     * @return The list of borrowed of requested books.
+     */
+    public Task<List<Book>> getBorrowedOrRequestedBooks(String userID) {
         return books
-                .whereIn("bookID", requestedBooks)
+                .whereArrayContains("requesters", userID)
                 .get()
                 .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
                     @Override
