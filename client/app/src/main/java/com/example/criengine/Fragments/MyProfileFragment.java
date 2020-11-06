@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
  * - Does not push changes to the database.
  */
 public class MyProfileFragment extends ProfileFragment implements IOnBackPressed {
+    private Profile myProfile;
+
     private Button cancelButton;
     private Button editSaveButton;
 
@@ -111,7 +113,10 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
             public void onClick(View v) {
                 if (editing) {
                     // pressing save on data
-                    // TODO: update database with new modified info
+                    myProfile.setBio(bioEditText.getText().toString());
+                    myProfile.setPhone(phoneEditText.getText().toString());
+                    myProfile.setAddress(addressEditText.getText().toString());
+                    dbw.addProfile(myProfile);
                     setPageViewOnly();
                 } else {
                     // pressing edit data
@@ -144,11 +149,11 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
                 new OnSuccessListener<Profile>() {
                     @Override
                     public void onSuccess(Profile profile) {
+                        myProfile = profile;
                         userTextView.setText(getString(R.string.user_profile_text, profile.getUsername()));
                         bioEditText.setText(profile.getBio());
                         phoneEditText.setText(profile.getPhone());
-                        addressEditText.setText(profile.getEmail());
-                        System.out.println(profile);
+                        addressEditText.setText(profile.getAddress());
                     }
                 }
         );

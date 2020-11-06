@@ -44,11 +44,12 @@ public class ProfileUnitTest {
      */
     @Test
     public void testConstructorTwo() {
-        Profile mock = new Profile("UserID", "newEmail@email.com", "UserName", "780-780-7800", "John", "Doe", "Bio");
+        Profile mock = new Profile("UserID", "newEmail@email.com", "UserName", "address", "780-780-7800", "John", "Doe", "Bio");
 
         assertEquals(mock.getUserID(), "UserID");
         assertEquals(mock.getEmail(), "newEmail@email.com");
         assertEquals(mock.getUsername(), "UserName");
+        assertEquals(mock.getAddress(), "address");
         assertEquals(mock.getPhone(), "780-780-7800");
         assertEquals(mock.getFirstname(), "John");
         assertEquals(mock.getLastname(), "Doe");
@@ -63,11 +64,12 @@ public class ProfileUnitTest {
      */
     @Test
     public void testConstructorThree() {
-        Profile mock = new Profile("UserID", "newEmail@email.com", "UserName", "780-780-7800", "John", "Doe");
+        Profile mock = new Profile("UserID", "newEmail@email.com", "UserName","address", "780-780-7800", "John", "Doe");
 
         assertEquals(mock.getUserID(), "UserID");
         assertEquals(mock.getEmail(), "newEmail@email.com");
         assertEquals(mock.getUsername(), "UserName");
+        assertEquals(mock.getAddress(), "address");
         assertEquals(mock.getPhone(), "780-780-7800");
         assertEquals(mock.getFirstname(), "John");
         assertEquals(mock.getLastname(), "Doe");

@@ -10,6 +10,7 @@ import java.util.List;
 public class Book implements Serializable {
     private String bookID;
     private String owner;
+    private String ownerUsername;
     private String title;
     private String author;
     private String description;
@@ -33,7 +34,8 @@ public class Book implements Serializable {
      * Constructor 2.
      * BOOKS WITH A BOOK ID WILL BE SAVED UNDER THAT ID. BOOKS WITHOUT AN ID WILL BE ASSIGNED A RANDOM ID.
      * @param bookID The book ID
-     * @param owner The owner of the book.
+     * @param owner The owner of the book's ID.
+     * @param ownerUsername The owner of the book's username.
      * @param title The title of the book.
      * @param author The author of the book.
      * @param description The description of the book.
@@ -44,10 +46,11 @@ public class Book implements Serializable {
      * @param geolocation The current location of the book.
      * @param imageURL The image URL.
      */
-    public Book(String bookID, String owner, String title, String author, String description, String isbn, String status, String borrower, List<String> requesters, String geolocation, String imageURL) {
+    public Book(String bookID, String owner, String ownerUsername, String title,  String author, String description, String isbn, String status, String borrower, List<String> requesters, String geolocation, String imageURL) {
         this.bookID = bookID;
         this.owner = owner;
         this.title = title;
+        this.ownerUsername = ownerUsername;
         this.author = author;
         this.description = description;
         this.isbn = isbn;
@@ -61,7 +64,8 @@ public class Book implements Serializable {
 
     /**
      * Constructor 3.
-     * @param owner The owner of the book.
+     * @param owner The owner of the book's ID.
+     * @param ownerUsername The owner of the book's username.
      * @param title The title of the book.
      * @param author The author of the book.
      * @param description The description of the book.
@@ -72,9 +76,10 @@ public class Book implements Serializable {
      * @param geolocation The current location of the book.
      * @param imageURL The image URL.
      */
-    public Book(String owner, String title, String author, String description, String isbn, String status, String borrower, List<String> requesters, String geolocation, String imageURL) {
+    public Book(String owner, String ownerUsername, String title, String author, String description, String isbn, String status, String borrower, List<String> requesters, String geolocation, String imageURL) {
         this.bookID = null;
         this.owner = owner;
+        this.ownerUsername = ownerUsername;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -89,16 +94,18 @@ public class Book implements Serializable {
 
     /**
      * Constructor 4.
-     * @param owner The owner of the book.
+     * @param owner The owner of the book's ID.
+     * @param ownerUsername The owner of the book's username.
      * @param title The title of the book.
      * @param author The author of the book.
      * @param description The description of the book.
      * @param isbn The isbn code of the book.
      * @param status The status of the book.
      */
-    public Book(String owner, String title, String author, String description, String isbn, String status) {
+    public Book(String owner, String ownerUsername, String title, String author, String description, String isbn, String status) {
         this.bookID = null;
         this.owner = owner;
+        this.ownerUsername = ownerUsername;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -120,11 +127,19 @@ public class Book implements Serializable {
     }
 
     /**
-     * Get the owner of the book.
-     * @return The owner of the book.
+     * Get the ID of the book's owner.
+     * @return The ID of the book's owner.
      */
     public String getOwner() {
         return owner;
+    }
+
+    /**
+     * Get the username of the book's owner.
+     * @return The username of the book's owner.
+     */
+    public String getOwnerUsername() {
+        return ownerUsername;
     }
 
     /**
@@ -193,18 +208,18 @@ public class Book implements Serializable {
 
     /**
      * Add a person to list of requesters.
-     * @param name The name of the person requesting the book.
+     * @param userID The userID of the person requesting the book.
      */
-    public void addRequesters(String name) {
-        requesters.add(name);
+    public void addRequesters(String userID) {
+        requesters.add(userID);
     }
 
     /**
      * Remove a requester from the list.
-     * @param name The name of the person to be removed.
+     * @param userID The userID of the person to be removed.
      */
-    public void removeRequesters(String name) {
-        requesters.remove(name);
+    public void removeRequesters(String userID) {
+        requesters.remove(userID);
     }
 
     /**
@@ -240,10 +255,18 @@ public class Book implements Serializable {
 
     /**
      * Set the new owner of the book.
-     * @param owner The name of the new owner.
+     * @param owner The userID of the new owner.
      */
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    /**
+     * Set the username of the book's owner
+     * @param ownerUsername The username of the new owner.
+     */
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
     }
 
     /**
@@ -288,7 +311,7 @@ public class Book implements Serializable {
 
     /**
      * Set a borrower for the book.
-     * @param borrower The name of the person borrowing the book.
+     * @param borrower The userID of the person borrowing the book.
      */
     public void setBorrower(String borrower) {
         this.borrower = borrower;
