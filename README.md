@@ -21,7 +21,7 @@ Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
 - If adding a WIP, add the `WIP` and `DO NOT MERGE` labels
 - Request reviews from any two members of the team
 
-### User Test Account Login Credentials
+## User Test Account Login Credentials
 - To log into an existing account, please use one of the following two accounts:
   - Account 1:
     - Username: user1@email.com
@@ -29,3 +29,6 @@ Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
   - Account 2:
     - Username: user2@email.com
     - Password: password
+    
+## Potential Test Issues
+- If your network connection is slow or disconnected, the intent tests will fail. This is because they need to connect to the database within a certain timeframe in order to pass.
