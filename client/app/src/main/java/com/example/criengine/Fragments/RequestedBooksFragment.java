@@ -1,7 +1,9 @@
 package com.example.criengine.Fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -58,7 +60,7 @@ public class RequestedBooksFragment extends RootFragment {
         // TODO: Enable button when functionality is here.
         filterButton.setEnabled(false);
 
-        ListView bookNameTextView = getView().findViewById(R.id.bookListView);
+        final ListView bookNameTextView = getView().findViewById(R.id.bookListView);
         bookNameTextView.setAdapter(borrowerBooksListAdapter);
 
         dbw.getBorrowedOrRequestedBooks(dbw.userId).addOnSuccessListener(
@@ -66,7 +68,8 @@ public class RequestedBooksFragment extends RootFragment {
                     @Override
                     public void onSuccess(List<Book> books) {
                         borrowerBooks.addAll(books);
-                        borrowerBooksListAdapter.notifyDataSetChanged();
+                        bookNameTextView.setAdapter(borrowerBooksListAdapter);
+//                        borrowerBooksListAdapter.notifyDataSetChanged();
                     }
                 }
         );
