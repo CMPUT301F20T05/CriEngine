@@ -72,6 +72,18 @@ public class MyProfileFragmentTest {
     }
 
     /**
+     * Test to see if the static texts on screen are all there
+     */
+    @Test
+    public void areStaticTextsVisibleTest() {
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_profile));
+        assertTrue(solo.waitForText("Profile", 1, 2000));
+        assertTrue(solo.waitForText("Bio", 1, 2000));
+        assertTrue(solo.waitForText("Phone:", 1, 2000));
+        assertTrue(solo.waitForText("Address:", 1, 2000));
+    }
+
+    /**
      * Test to see if the bio text is editable
      */
     @Test
