@@ -21,8 +21,11 @@ import com.example.criengine.R;
 public class ErrorFragment extends RootFragment {
 
     /**
-     * Returns the layout.
-     * @return The layout.
+     * Called when creating the fragment.
+     * @param view The view.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently
+     *                           supplied.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
