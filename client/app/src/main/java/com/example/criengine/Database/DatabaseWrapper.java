@@ -79,11 +79,21 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Add a profile to the database.
+     * @param profile The profile to add.
+     * @return The user profile added into the database.
+     */
     public Task<Void> addProfile(Profile profile) {
         // otherwise use the bookID
         return users.document(profile.getUserID()).set(profile, SetOptions.merge());
     }
 
+    /**
+     * Get a book from the database.
+     * @param bookID The ID fo the book.
+     * @return The book object.
+     */
     public Task<Book> getBook(String bookID) {
         return books
                 .document(bookID)
@@ -104,6 +114,11 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Add a book to the database.
+     * @param book The book to be added.
+     * @return The book added into the database.
+     */
     public Task<Void> addBook(final Book book) {
         // if book doesn't exist
         if (book.getBookID() == null) {
@@ -126,10 +141,20 @@ public class DatabaseWrapper {
         }
     }
 
+    /**
+     * Delete a book from the database.
+     * @param BookID The ID of the book.
+     * @return The book deleted from the database.
+     */
     public Task<Void> deleteBook(String BookID) {
         return books.document(BookID).delete();
     }
 
+    /**
+     * Get all books owned by a profile.
+     * @param owner The owner of the account.
+     * @return The list of books owned by that account.
+     */
     public Task<List<Book>> getOwnedBooks(Profile owner) {
         ArrayList<String> ownedBooks = owner.getBooksOwned();
         // TODO see if we can get away without owner (make the database get ownedbooks from uid)
@@ -155,6 +180,11 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Get a list of Borrowed or Requested book from a user.
+     * @param user The profile of interest.
+     * @return The list of borrowed of requested books.
+     */
     public Task<List<Book>> getBorrowedOrRequestedBooks(Profile user) {
         ArrayList<String> requestedBooks = user.getBooksBorrowedOrRequested();
         if (requestedBooks.isEmpty()) {
