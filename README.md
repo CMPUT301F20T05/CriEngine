@@ -29,6 +29,7 @@ Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
   - Account 2:
     - Username: user2@email.com
     - Password: password
+- Please note that authentication the first time logging in might take some time as it is synchronous .
     
 ## Potential Test Issues
 - If your network connection is slow or disconnected, the intent tests will fail. This is because they need to connect to the database within a certain timeframe in order to pass.
