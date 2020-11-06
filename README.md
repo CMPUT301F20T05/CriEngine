@@ -34,3 +34,6 @@ Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
 - If your network connection is slow or disconnected, the intent tests will fail. This is because they need to connect to the database within a certain timeframe in order to pass.
 - To avoid tests from failing due to network issues, ensure you have the emulator started prior to starting the test.
   - In addition, try logging in manually to a test account to test the response time for the database.
+
+## Documentation
+- JavaDocs HTML sources can be found in client/app/javadocs.
