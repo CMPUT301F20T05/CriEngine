@@ -5,10 +5,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.criengine.R;
 
 /**
@@ -22,11 +20,23 @@ public abstract class ProfileFragment extends RootFragment {
     EditText phoneEditText;
     EditText addressEditText;
 
+    /**
+     * Get the layout associated with the fragment.
+     * @return The layout.
+     */
     @Override
     public int getFragmentLayout() {
         return R.layout.component_profile;
     }
 
+    /**
+     * Called immediately after onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+     * android.os.Bundle) has returned, but before any saved state has been restored in to the view.
+     * @param view The view.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Must setContentView(layoutID) in child before calling this super method.

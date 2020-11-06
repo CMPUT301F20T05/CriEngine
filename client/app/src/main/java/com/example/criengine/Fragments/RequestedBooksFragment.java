@@ -1,42 +1,47 @@
 package com.example.criengine.Fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
-import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Requested Books Fragment
- *
- * @version 1.0
+ * Requested Books Fragment. Handles displaying information about all requested books.
+ * Outstanding Issues:
+ * - Does not retrieve the information from the database.
  */
 public class RequestedBooksFragment extends RootFragment {
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     ArrayList<Book> borrowerBooks;
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
+    /**
+     * Get the layout associated with the fragment.
+     * @return The layout associated with the fragment.
+     */
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_request;
     }
 
+    /**
+     * Called immediately after onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
+     * android.os.Bundle) has returned, but before any saved state has been restored in to the view.
+     * @param view The view.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

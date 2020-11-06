@@ -18,7 +18,9 @@ import java.util.ArrayList;
 
 /*
  * RequestsForBookAdapter is custom ArrayAdapter that can be used to show User profiles that have
- * requested a book in a ListView
+ * requested a book in a ListView.
+ * Outstanding Issues:
+ * - Does not retrieve nor push changes to the database.
  */
 public class RequestsForBookAdapter extends ArrayAdapter<String> {
     private ArrayList<String> userRequests;
@@ -37,6 +39,13 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         this.book = book;
     }
 
+    /**
+     * Returns a view with the properly formatted information.
+     * @param position The position from the list.
+     * @param convertView The old view to reuse (if possible).
+     * @param parent The parent view group.
+     * @return The view that displays the formatted data at the specified position in the data set.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -58,7 +67,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         // Set the text for names / buttons.
         username.setText(name);
         acceptUser.setText("✔");
-        rejectUser.setText("❌");
+        rejectUser.setText("✖");
 
         // Notifications to be sent to the appropriate users.
         Notification rejectedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was refused.");
@@ -109,6 +118,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                 }
             }
         );
+
         return view;
     }
 }
