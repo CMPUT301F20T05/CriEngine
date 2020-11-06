@@ -6,14 +6,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
-import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Requested Books Fragment. Handles displaying information about all requested books.
