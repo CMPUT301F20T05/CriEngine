@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">CriEngine</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris consectetur rutrum enim, finibus consectetur ex pharetra a. Donec tellus massa, iaculis facilisis laoreet et, condimentum vitae mauris. Fusce et neque eu dolor commodo sollicitudin. Duis vel viverra tellus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus est tellus, molestie sed eros in, bibendum pulvinar lectus. Vestibulum fringilla euismod lorem in imperdiet. Vivamus venenatis ante lobortis mollis mattis. Curabitur pulvinar elit at venenatis porta. Etiam et scelerisque justo, vitae dignissim leo. Donec elementum mi sit amet ante aliquet varius. Proin pretium lacus a nibh sodales aliquam.</string>
 
     <!-- Profile Component -->
     <string name="user_profile_text">%1$s\'s Profile</string>
     <string name="bio_header">Bio</string>
+    <string name="bio_text">Edit your bio here</string>
     <string name="contact_info">Contact Information</string>
     <string name="phone_header">Phone:</string>
     <string name="address_header">Address:</string>
