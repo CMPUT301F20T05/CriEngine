@@ -38,7 +38,7 @@ public class MyProfileFragmentTest {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        // Get view for EditText and enter a city name
+        // Input username and password
         solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
         solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
 
