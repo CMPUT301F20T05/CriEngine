@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.criengine.Fragments.ErrorFragment;
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
@@ -91,7 +93,7 @@ public class RootActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new RequestedBooksFragment();
+                    return new ErrorFragment();
                 case 1:
                     return new NotificationFragment();
                 case 2:

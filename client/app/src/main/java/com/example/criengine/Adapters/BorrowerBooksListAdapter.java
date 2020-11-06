@@ -72,6 +72,8 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
         if (book.getRequesters().contains(dbw.userId)) {
             actionButton.setText("Cancel");
+            // todo: remove once implemented functionality
+            actionButton.setEnabled(false);
             actionButton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
@@ -84,6 +86,8 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         } else if (book.getBorrower() == dbw.userId) {
             statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
             actionButton.setText("Scan");
+            // todo: remove once implemented functionality
+            actionButton.setEnabled(false);
             actionButton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
@@ -96,6 +100,8 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
             statusText.setText("Rejected");
             statusText.setTextColor(view.getResources().getColor(R.color.status_rejected));
             actionButton.setText("Ok");
+            // todo: remove once implemented functionality
+            actionButton.setEnabled(false);
             actionButton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
