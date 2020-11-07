@@ -2,32 +2,37 @@ package com.example.criengine.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.R;
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Arrays;
-import java.util.List;
-
+/**
+ * Handles the user login and password validation.
+ * Outstanding issues:
+ * - Implement registration ability.
+ */
 public class LoginActivity extends AppCompatActivity {
     EditText loginEmail;
     EditText loginPassword;
     Button loginButton;
     DatabaseWrapper dbw;
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
+        // Assigns the view objects.
         loginEmail = findViewById(R.id.loginEditTextEmail);
         loginPassword = findViewById(R.id.loginEditTextPassword);
         loginButton = findViewById(R.id.loginButton);
@@ -49,15 +55,16 @@ public class LoginActivity extends AppCompatActivity {
                     String email = loginEmail.getText().toString();
                     String password = loginPassword.getText().toString();
 
-                    if (email.isEmpty() && password.isEmpty()) {
-                        email = "user2@email.com";
-                        password = "password";
-                    }
+//                    if (email.isEmpty() && password.isEmpty()) {
+//                        email = "user2@email.com";
+//                        password = "password";
+//                    }
                     if ((email.isEmpty() || password.isEmpty())) {
                         loginEmail.setError("Login Failed");
                         return;
                     }
 
+                    // Validates the user-password combo and then enters the app if successful.
                     mAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
