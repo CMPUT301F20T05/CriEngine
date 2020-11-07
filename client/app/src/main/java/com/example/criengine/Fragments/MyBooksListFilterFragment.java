@@ -71,6 +71,8 @@ public class MyBooksListFilterFragment extends DialogFragment implements Seriali
         acceptedCheckBox = view.findViewById(R.id.checkbox_accepted_filter);
         borrowedCheckBox = view.findViewById(R.id.checkbox_borrowed_filter);
 
+        this.setCancelable(false);
+
         avaliableCheckBox.setText("Available");
         requestsCheckBox.setText("Has Requests");
         acceptedCheckBox.setText("Accepted");
