@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.criengine.R;
 import android.os.Bundle;
 
+/**
+ * An all purpose error screen.
+ */
 public class SomethingWentWrong extends AppCompatActivity {
 
     @Override
