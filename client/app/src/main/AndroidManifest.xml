@@ -19,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.RegisterAccount" />
         <activity android:name=".Activities.AddBookActivity" />
         <activity android:name=".Activities.RequestsForBookActivity" />
         <activity
