@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
  */
 public class RegisterAccount extends AppCompatActivity {
     DatabaseWrapper dbw;
-    Button returnButton;
     Button submitButton;
     EditText emailField;
     EditText passwordField;
@@ -80,7 +79,6 @@ public class RegisterAccount extends AppCompatActivity {
         }
 
         // Assign the view objects.
-        returnButton = findViewById(R.id.returnToLogin);
         submitButton = findViewById(R.id.submitAccount);
         emailField = findViewById(R.id.editTextTextEmailAddress);
         passwordField = findViewById(R.id.editTextTextPassword);
@@ -99,14 +97,6 @@ public class RegisterAccount extends AppCompatActivity {
         firstnameField.addTextChangedListener(fieldTextWatcher);
         lastnameField.addTextChangedListener(fieldTextWatcher);
 
-        returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), LoginActivity.class);
-                v.getContext().startActivity(intent);
-            }
-        });
-
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +105,7 @@ public class RegisterAccount extends AppCompatActivity {
                 firstName = firstnameField.getText().toString();
                 lastName = lastnameField.getText().toString();
 
-                // TODO: Create new account.
+                // TODO: Create new account in database and log into it.
 
                 // Proceed into the app.
                 Intent intent = new Intent(v.getContext(), RootActivity.class);

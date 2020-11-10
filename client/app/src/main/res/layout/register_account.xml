@@ -71,37 +71,29 @@
 
     <Button
         android:id="@+id/submitAccount"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/rounded_button"
         android:text="@string/registerConfirm"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/returnToLogin"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/danger_see_through_button"
-        android:text="@string/back_to_login"
-        android:textColor="@color/danger_seeThrough_button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/accountWarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="21dp"
         android:text="@string/account_warning"
         android:textColor="@color/red_text"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/submitAccount"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
