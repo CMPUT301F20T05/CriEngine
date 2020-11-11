@@ -55,7 +55,7 @@
         android:layout_below="@id/bio_header"
         android:background="@null"
         android:breakStrategy="simple"
-        android:text="@string/lorem_ipsum"
+        android:hint="@string/bio_text"
         android:textSize="14sp" />
 
     <TextView

@@ -31,11 +31,22 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
     private ListView headerText;
     private ArrayList<String> filterStatus = new ArrayList<>();
 
+    /**
+     * Returns the layout.
+     * @return The layout.
+     */
     @Override
-    public int initRootFrag() {
+    public int getFragmentLayout() {
         return R.layout.activity_my_books;
     }
 
+    /**
+     * Called when creating the fragment.
+     * @param view The view.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently
+     *                           supplied.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

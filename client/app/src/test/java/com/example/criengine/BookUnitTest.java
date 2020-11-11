@@ -18,12 +18,18 @@ public class BookUnitTest {
     Book mockBook;
     ArrayList<String> newRequesterList;
 
+    /**
+     * Run before every test case.
+     */
     @Before
     public void init() {
         newRequesterList = new ArrayList<>();
-        mockBook = new Book("ID 1", "New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
+        mockBook = new Book("ID 1", "New Owner","New Owner Username", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
     }
 
+    /**
+     * Test the first constructor.
+     */
     @Test
     public void testBookConstructorOne() {
         Book mockBook = new Book();
@@ -41,10 +47,14 @@ public class BookUnitTest {
         assertNull(mockBook.getImageURL());
     }
 
+    /**
+     * Test for the second constructor.
+     */
     @Test
     public void testBookConstructorTwo() {
         assertEquals(mockBook.getBookID(), "ID 1");
         assertEquals(mockBook.getOwner(), "New Owner");
+        assertEquals(mockBook.getOwnerUsername(), "New Owner Username");
         assertEquals(mockBook.getTitle(), "New Title");
         assertEquals(mockBook.getAuthor(), "New Author");
         assertEquals(mockBook.getDescription(), "New Description");
@@ -56,12 +66,16 @@ public class BookUnitTest {
         assertEquals(mockBook.getImageURL(), "New Image");
     }
 
+    /**
+     * Test for the third constructor.
+     */
     @Test
     public void testBookConstructorThree() {
-        Book mockBook = new Book("New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
+        Book mockBook = new Book("New Owner", "New Owner Username", "New Title", "New Author", "New Description", "New ISBN", "New Status", "New Borrower", newRequesterList, "New Geolocation", "New Image");
 
         assertNull(mockBook.getBookID());
         assertEquals(mockBook.getOwner(), "New Owner");
+        assertEquals(mockBook.getOwnerUsername(), "New Owner Username");
         assertEquals(mockBook.getTitle(), "New Title");
         assertEquals(mockBook.getAuthor(), "New Author");
         assertEquals(mockBook.getDescription(), "New Description");
@@ -73,12 +87,16 @@ public class BookUnitTest {
         assertEquals(mockBook.getImageURL(), "New Image");
     }
 
+    /**
+     * Test for the fourth constructor.
+     */
     @Test
     public void testBookConstructorFour() {
-        Book mockBook = new Book("New Owner", "New Title", "New Author", "New Description", "New ISBN", "New Status");
+        Book mockBook = new Book("New Owner", "New Owner Username", "New Title", "New Author", "New Description", "New ISBN", "New Status");
 
         assertNull(mockBook.getBookID());
         assertEquals(mockBook.getOwner(), "New Owner");
+        assertEquals(mockBook.getOwnerUsername(), "New Owner Username");
         assertEquals(mockBook.getTitle(), "New Title");
         assertEquals(mockBook.getAuthor(), "New Author");
         assertEquals(mockBook.getDescription(), "New Description");
@@ -90,6 +108,9 @@ public class BookUnitTest {
         assertNull(mockBook.getImageURL());
     }
 
+    /**
+     * Test getter/setters for the requester attribute.
+     */
     @Test
     public void testRequesterMethods() {
         mockBook.addRequesters("A new Requester");
@@ -105,6 +126,9 @@ public class BookUnitTest {
         assertEquals(mockBook.getRequesters(), newRequesterList);
     }
 
+    /**
+     * Test getter/setters for the borrower attribute.
+     */
     @Test
     public void testBorrowerMethods() {
         mockBook.setBorrower("A new Borrower");
@@ -114,6 +138,9 @@ public class BookUnitTest {
         assertNull(mockBook.getBorrower());
     }
 
+    /**
+     * Test getter/setters for the confirmationNeeded attribute.
+     */
     @Test
     public void testConfirmationNeededMethods() {
         assertEquals(mockBook.isConfirmationNeeded(), false);
@@ -121,48 +148,81 @@ public class BookUnitTest {
         assertEquals(mockBook.isConfirmationNeeded(), true);
     }
 
+    /**
+     * Test getter/setters for the Owner attribute.
+     */
     @Test
     public void testOwnerMethods() {
         mockBook.setOwner("A new Owner");
         assertEquals(mockBook.getOwner(), "A new Owner");
     }
 
+    /**
+     * Test getter/setters for the Owner Username attribute.
+     */
+    @Test
+    public void testOwnerUsernameMethods() {
+        mockBook.setOwner("A new Owner Username");
+        assertEquals(mockBook.getOwner(), "A new Owner Username");
+    }
+
+    /**
+     * Test getter/setters for the title attribute.
+     */
     @Test
     public void testTitleMethods() {
         mockBook.setTitle("A new Title");
         assertEquals(mockBook.getTitle(), "A new Title");
     }
 
+    /**
+     * Test getter/setters for the author attribute.
+     */
     @Test
     public void testAuthorMethods() {
         mockBook.setAuthor("A new Author");
         assertEquals(mockBook.getAuthor(), "A new Author");
     }
 
+    /**
+     * Test getter/setters for the description attribute.
+     */
     @Test
     public void testDescriptionMethods() {
         mockBook.setDescription("A new Description");
         assertEquals(mockBook.getDescription(), "A new Description");
     }
 
+    /**
+     * Test getter/setters for the ISBN attribute.
+     */
     @Test
     public void testISBNMethods() {
         mockBook.setIsbn("A new ISBN");
         assertEquals(mockBook.getIsbn(), "A new ISBN");
     }
 
+    /**
+     * Test getter/setters for the Status attribute.
+     */
     @Test
     public void testStatusMethods() {
         mockBook.setStatus("A new Status");
         assertEquals(mockBook.getStatus(), "A new Status");
     }
 
+    /**
+     * Test getter/setters for the Location attribute.
+     */
     @Test
     public void testLocationMethods() {
         mockBook.setGeolocation("A new Location");
         assertEquals(mockBook.getGeolocation(), "A new Location");
     }
 
+    /**
+     * Test getter/setters for the Image attribute.
+     */
     @Test
     public void testImageMethods() {
         mockBook.setImageURL("A new Image");

@@ -8,17 +8,36 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
 import com.example.criengine.Database.DatabaseWrapper;
+
+import com.example.criengine.Fragments.ErrorFragment;
+
 import com.example.criengine.Fragments.MyBooksListFragment;
+import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
+
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
+
+import com.example.criengine.Interfaces.IOnBackPressed;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+/**
+ * The central navigation activity. Handles creating the following fragments:
+ * - Search fragment
+ * - Notifications fragment
+ * - Outgoing Requests fragment
+ * - My Books fragment
+ * - My Profile fragment
+ *
+ * Outstanding Issues:
+ * - Does not refresh information on page swipe.
+ */
 public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
@@ -43,6 +62,12 @@ public class RootActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +116,7 @@ public class RootActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new RequestedBooksFragment();
+                    return new ErrorFragment();
                 case 1:
                     return new NotificationFragment();
                 case 2:
@@ -99,7 +124,7 @@ public class RootActivity extends AppCompatActivity {
                 case 3:
                     return new MyBooksListFragment();
                 case 4:
-                    return new RequestedBooksFragment();
+                    return new MyProfileFragment();
             }
 
             return null;
@@ -159,15 +184,24 @@ public class RootActivity extends AppCompatActivity {
 
     /**
      * Changes the viewPager page to the given page
-     * @ param id: page index
+     * @param index page index
      */
     public void goToPage(int index) {
         viewPager.setCurrentItem(index);
     }
 
     /**
-     * Overrides the back button so it does not return to the previous screen.
+     * Overrides the back button so it does not return to the previous screen unless
+     * a fragment implements the IOnBackPressed interface.
      */
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("f" + viewPager.getCurrentItem());
+
+        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+            // TODO: ideally this should take you back to the previous screen
+//            super.onBackPressed();
+        }
+        return;
+    }
 }

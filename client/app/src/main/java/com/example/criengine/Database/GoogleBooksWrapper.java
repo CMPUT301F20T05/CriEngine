@@ -1,13 +1,10 @@
 package com.example.criengine.Database;
 
 import android.os.AsyncTask;
-
 import com.example.criengine.Objects.Book;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,10 +14,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * A wrapper for the google API allowing the processing of ISBN codes to result in books.
+ */
 public class GoogleBooksWrapper {
     String API_KEY = "AIzaSyBtcP5fFkabwkm66RkqF3PnSToFNAw0cdY";
 
 
+    /**
+     * Instance of AsyncTask which retrieves a book object from an ISBN using the google books API.
+     */
     class getBookTask extends AsyncTask<String, Integer, Book> {
 
         @Override
@@ -81,7 +84,7 @@ public class GoogleBooksWrapper {
                     }
                 }
 
-                Book book = new Book(null, title, authorsString, description, null, "Available");
+                Book book = new Book(null, null, title, authorsString, description, null, "available");
 
                 return book;
 
@@ -92,6 +95,14 @@ public class GoogleBooksWrapper {
         }
     }
 
+    /**
+     * Synchonizes the request and returns a regular book.
+     * @param isbn The isbn code.
+     * @return A book retrieved from the code.
+     * @throws IOException
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     public Book getBook(String isbn) throws IOException, ExecutionException, InterruptedException {
 
         URL url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:9780156012195");
