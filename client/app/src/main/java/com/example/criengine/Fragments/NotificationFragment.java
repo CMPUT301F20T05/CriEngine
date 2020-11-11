@@ -1,41 +1,31 @@
 package com.example.criengine.Fragments;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Adapters.NotificationAdapter;
-import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.R;
 
 /**
  * Notification Fragment.
  * Displays all current notifications for the user.
  */
-public class NotificationFragment extends Fragment {
+public class NotificationFragment extends RootFragment {
     private NotificationAdapter notificationAdapter;
     private ListView notificationListView;
-    private DatabaseWrapper dbw;
 
     /**
-     * Creates and returns the view hierarchy associated with the fragment.
-     * @param inflater The inflater.
-     * @param container The container.
-     * @param savedInstanceState If the activity is being re-initialized after previously being
-     *                            shut down then this Bundle contains the data it most recently
-     *                            supplied. Note: Otherwise it is null. This value may be null.
-     * @return The view hierarchy associated with the fragment.
+     * Get the layout associated with the fragment.
+     * @return The layout.
      */
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_notification, container, false);
+    public int getFragmentLayout() {
+        return R.layout.activity_notification;
     }
 
     /**
@@ -53,7 +43,9 @@ public class NotificationFragment extends Fragment {
         // Set the adapter.
         notificationAdapter = new NotificationAdapter(getContext(),
                 RootActivity.dummyProfile.getNotifications(),
-                RootActivity.dummyProfile);
+                RootActivity.dummyProfile,
+                dbw
+            );
 
         // Assign the view object.
         notificationListView = getView().findViewById(R.id.notificationsListView);

@@ -88,6 +88,13 @@ public class RootActivity extends AppCompatActivity {
         viewPager.setAdapter(new RootPagerFragmentAdapter(this));
         viewPager.registerOnPageChangeCallback(new onPageChange());
 
+        dbw.addOnChangeListener(new DatabaseWrapper.OnChangeListener () {
+            @Override
+            public void onChange() {
+                updateNotificationBadge();
+            }
+        });
+
         // If returning from another activity, this can control which screen to navigate to.
         if (getIntent().getExtras() != null) {
             int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
