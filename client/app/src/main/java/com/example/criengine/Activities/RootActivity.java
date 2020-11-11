@@ -39,6 +39,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * - Does not refresh information on page swipe.
  */
 public class RootActivity extends AppCompatActivity {
+    private static final int PAGE_COUNT = 5;
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
     private DatabaseWrapper dbw;
@@ -115,7 +116,7 @@ public class RootActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 5;
+            return PAGE_COUNT;
         }
 
         @NonNull
