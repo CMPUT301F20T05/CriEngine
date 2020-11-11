@@ -9,13 +9,22 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.criengine.Database.DatabaseWrapper;
+
 import com.example.criengine.Fragments.ErrorFragment;
+
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
+
+import com.example.criengine.Objects.Notification;
+import com.example.criengine.Objects.Profile;
+
 import com.example.criengine.Interfaces.IOnBackPressed;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
@@ -30,10 +39,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * - Does not refresh information on page swipe.
  */
 public class RootActivity extends AppCompatActivity {
+    private static final int PAGE_COUNT = 5;
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
+    private DatabaseWrapper dbw;
+    static public Profile dummyProfile;
 
-    public static enum PAGE {
+    public enum PAGE {
         SEARCH(0),
         NOTIFICATIONS(1),
         REQUESTS(2),
@@ -62,6 +74,14 @@ public class RootActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
 
+        dbw = DatabaseWrapper.getWrapper();
+
+        // Dummy Code starts here.
+        dummyProfile = new Profile();
+        dummyProfile.addNotification(new Notification("Your request for \"Book 1\" was rejected."));
+        dummyProfile.addNotification(new Notification("You got a new request for \"Book 2\"."));
+        // Dummy code ends here.
+
         navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new onNavItemSelect());
 
@@ -69,13 +89,20 @@ public class RootActivity extends AppCompatActivity {
         viewPager.setAdapter(new RootPagerFragmentAdapter(this));
         viewPager.registerOnPageChangeCallback(new onPageChange());
 
+        dbw.addOnChangeListener(new DatabaseWrapper.OnChangeListener () {
+            @Override
+            public void onChange() {
+                updateNotificationBadge();
+            }
+        });
+
         // If returning from another activity, this can control which screen to navigate to.
         if (getIntent().getExtras() != null) {
             int index = ((PAGE) getIntent().getSerializableExtra("Index")).getValue();
-            viewPager.setCurrentItem(index);
+            viewPager.setCurrentItem(index, false);
         } else {
             // Returns to my books. This will be the home screen.
-            viewPager.setCurrentItem(PAGE.MY_BOOKS.getValue());
+            viewPager.setCurrentItem(PAGE.MY_BOOKS.getValue(), false);
         }
     }
 
@@ -83,10 +110,14 @@ public class RootActivity extends AppCompatActivity {
      * FragmentStateAdapter for the ViewPager
      */
     private class RootPagerFragmentAdapter extends FragmentStateAdapter {
-        public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) { super(fa); }
+        public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) {
+            super(fa);
+        }
 
         @Override
-        public int getItemCount() { return 5; }
+        public int getItemCount() {
+            return PAGE_COUNT;
+        }
 
         @NonNull
         @Override
@@ -118,8 +149,27 @@ public class RootActivity extends AppCompatActivity {
             super.onPageSelected(position);
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
-            // TODO: Refresh stuff goes here.
+            // TODO: More refresh stuff goes here.
+            updateNotificationBadge();
         }
+    }
+
+    /**
+     * Updates the Notification menu item badge to show the number of notifications
+     */
+    private void updateNotificationBadge() {
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        int notificationCount = dummyProfile.getNotifications().size();
+                        BadgeDrawable badge = navigation
+                                .getOrCreateBadge(R.id.bottom_navigation_item_notifications);
+                        badge.setVisible(notificationCount > 0);
+                        badge.setNumber(notificationCount);
+                    }
+                }
+        );
     }
 
     /**
