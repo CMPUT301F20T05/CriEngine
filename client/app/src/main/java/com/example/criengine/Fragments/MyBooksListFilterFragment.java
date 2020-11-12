@@ -52,7 +52,7 @@ public class MyBooksListFilterFragment extends DialogFragment implements Seriali
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-            listener = (MyBooksListFragment) getParentFragment();
+        listener = (MyBooksListFragment) getParentFragment();
     }
 
     /**
