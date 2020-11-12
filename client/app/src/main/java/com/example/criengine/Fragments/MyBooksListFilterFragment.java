@@ -71,10 +71,12 @@ public class MyBooksListFilterFragment extends DialogFragment implements Seriali
         acceptedCheckBox = view.findViewById(R.id.checkbox_accepted_filter);
         borrowedCheckBox = view.findViewById(R.id.checkbox_borrowed_filter);
 
+        this.setCancelable(false);
+
         avaliableCheckBox.setText("Available");
-        requestsCheckBox.setText("Requested");
+        requestsCheckBox.setText("Has Requests");
         acceptedCheckBox.setText("Accepted");
-        borrowedCheckBox.setText("Borrowed");
+        borrowedCheckBox.setText("Borrowed Out");
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder
@@ -119,10 +121,32 @@ public class MyBooksListFilterFragment extends DialogFragment implements Seriali
      */
     @Override
     public void onCheckedChanged(CompoundButton checkBox, boolean isChecked) {
-        if (isChecked) {
-            filterStatus.add(checkBox.getText().toString().toLowerCase());
+        switch (checkBox.getId()) {
+            case R.id.checkbox_available_filter:
+                modifyStatusArray(checkBox, "available");
+                break;
+            case R.id.checkbox_requests_filter:
+                modifyStatusArray(checkBox, "requested");
+                break;
+            case R.id.checkbox_accepted_filter:
+                modifyStatusArray(checkBox, "accepted");
+                break;
+            default:
+                modifyStatusArray(checkBox, "borrowed");
+                break;
+        }
+    }
+
+    /**
+     * Adds or removes a status from the filter array based on the state of the checkbox.
+     * @param checkBox The checkbox.
+     * @param status The status to add.
+     */
+    public void modifyStatusArray(CompoundButton checkBox, String status) {
+        if (checkBox.isChecked()) {
+            filterStatus.add(status);
         } else {
-            filterStatus.remove(checkBox.getText().toString().toLowerCase());
+            filterStatus.remove(status);
         }
     }
 }
