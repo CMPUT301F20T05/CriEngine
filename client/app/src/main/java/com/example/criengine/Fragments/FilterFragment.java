@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains the fragment that appears if a user wants to filter information when viewing books they
- * own.
+ * A generic fragment for the purpose of managing a list of filters
  */
 public class FilterFragment extends DialogFragment implements Serializable {
     private String title;
@@ -75,7 +74,7 @@ public class FilterFragment extends DialogFragment implements Serializable {
         this.setCancelable(false);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(view).setTitle("Filter By Status");
+        builder.setView(view).setTitle(title);
 
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
@@ -94,7 +93,7 @@ public class FilterFragment extends DialogFragment implements Serializable {
         return builder.create();
     }
 
-    // Contains the method that the MyBooksActivity needs to implement.
+    // Contains the onConfirm method that has to be passed to the constructor
     public interface OnFragmentInteractionListener {
         void onConfirmPressed(List<String> activeFilters);
     }
