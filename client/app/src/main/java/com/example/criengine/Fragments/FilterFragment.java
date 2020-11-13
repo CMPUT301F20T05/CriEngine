@@ -31,7 +31,7 @@ public class FilterFragment extends DialogFragment implements Serializable {
     private OnFragmentInteractionListener listener;
 
     /**
-     * Constructor 2. Initializes all required properties
+     * Constructor Initializes all required properties
      *
      * @param filters The List of all possible filters
      * @param activeFilters The List containing only the enabled filters.

@@ -1,6 +1,5 @@
 package com.example.criengine.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,7 +9,6 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
 import com.example.criengine.Fragments.FilterFragment.OnFragmentInteractionListener;
 import com.example.criengine.Objects.Book;
@@ -87,13 +85,16 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
         bookNameTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), MyBookActivity.class);
-                intent.putExtra("Book", displayBooks.get(position));
-                view.getContext().startActivity(intent);
+                // TODO: Navigate to book-view (non owner view)
             }
         });
     }
 
+    /**
+     * Updates the list of books to be displayed depending on the active filters received from
+     * the filter fragment
+     * @param activeFilters
+     */
     @Override
     public void onConfirmPressed(List<String> activeFilters) {
         this.activeFilters = activeFilters;
