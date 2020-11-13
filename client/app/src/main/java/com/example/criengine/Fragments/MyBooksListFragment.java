@@ -81,16 +81,6 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
                 }
         );
 
-        // Opens to the book information screen when you click on a specific book.
-        headerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), MyBookActivity.class);
-                intent.putExtra("Book", displayBooks.get(position));
-                view.getContext().startActivity(intent);
-            }
-        });
-
         // Opens to the add-a-book screen when you click the button.
         addBookButton = getView().findViewById(R.id.add_a_book);
         addBookButton.setOnClickListener(new View.OnClickListener() {
