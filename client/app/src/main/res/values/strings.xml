@@ -61,6 +61,13 @@
 
     <!-- Login Activity -->
     <string name="login_header">Login</string>
+    <string name="register">Register an Account</string>
+    <string name="registerConfirm">Submit</string>
+    <string name="email_hint">Email Address</string>
+    <string name="password_hint">Password</string>
+    <string name="firstname_hint">First Name</string>
+    <string name="lastname_hint">Last Name</string>
+    <string name="account_warning">A field is missing or entered incorrectly</string>
 
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
