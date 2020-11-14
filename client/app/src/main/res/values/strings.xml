@@ -67,8 +67,7 @@
     <string name="title_my_books">My Books</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_my_profile">My Profile</string>
-    <string name="title_my_requests">My Requests</string>
 
     <!-- Outgoing Requests Fragment -->
-    <string name="requests_header">My Requests</string>
+    <string name="title_my_requests">My Requests</string>
 </resources>

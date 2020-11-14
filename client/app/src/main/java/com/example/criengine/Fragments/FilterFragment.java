@@ -93,8 +93,15 @@ public class FilterFragment extends DialogFragment implements Serializable {
         return builder.create();
     }
 
-    // Contains the onConfirm method that has to be passed to the constructor
+    /**
+     * Contains the event listener methods for the FilterFragment
+     * The user must implement and pass an object of this interface to the constructor
+     */
     public interface OnFragmentInteractionListener {
+        /**
+         * The method that is run when the confirm button is pressed
+         * @param activeFilters the list of all enabled filters when confirm is pressed
+         */
         void onConfirmPressed(List<String> activeFilters);
     }
 }

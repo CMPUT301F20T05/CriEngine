@@ -53,6 +53,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setTitle(getString(R.string.title_my_requests));
+
         // Opens the filter fragment where you can filter information.
         filterButton = getView().findViewById(R.id.requests_filter_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +95,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
     /**
      * Updates the list of books to be displayed depending on the active filters received from
      * the filter fragment
-     * @param activeFilters
+     * @param activeFilters the list of filters enabled when the FilterFragment confirm button
+     *                      is pressed
      */
     @Override
     public void onConfirmPressed(List<String> activeFilters) {
