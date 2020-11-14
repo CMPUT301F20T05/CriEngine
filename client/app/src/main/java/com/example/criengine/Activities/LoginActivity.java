@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText loginPassword;
     Button loginButton;
     DatabaseWrapper dbw;
+    TextView register;
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Assigns the view objects.
+        register = findViewById(R.id.registerAccount);
         loginEmail = findViewById(R.id.loginEditTextEmail);
         loginPassword = findViewById(R.id.loginEditTextPassword);
         loginButton = findViewById(R.id.loginButton);
@@ -55,10 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                     String email = loginEmail.getText().toString();
                     String password = loginPassword.getText().toString();
 
-//                    if (email.isEmpty() && password.isEmpty()) {
-//                        email = "user2@email.com";
-//                        password = "password";
-//                    }
+                    // TODO: Remove the auto login later.
+                    if (email.isEmpty() && password.isEmpty()) {
+                        email = "user2@email.com";
+                        password = "password";
+                    }
                     if ((email.isEmpty() || password.isEmpty())) {
                         loginEmail.setError("Login Failed");
                         return;
@@ -89,5 +93,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         );
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RegisterAccount.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 };

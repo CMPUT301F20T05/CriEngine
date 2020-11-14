@@ -16,4 +16,8 @@
     <color name="item_background">#beeeef</color>
     <color name="status_rejected">#8b0000</color>
     <color name="status_accepted">#008b00</color>
+
+    <!-- Text color -->
+    <color name="red_text">#f55a42</color>
+    <color name="blue_text">#035efc</color>
 </resources>
