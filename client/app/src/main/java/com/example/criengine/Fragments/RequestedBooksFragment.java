@@ -1,9 +1,7 @@
 package com.example.criengine.Fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
-import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Fragments.FilterFragment.OnFragmentInteractionListener;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,11 +24,13 @@ import java.util.List;
  * Outstanding Issues:
  * - Does not navigate to a book if selected (activity not implemented).
  */
-public class RequestedBooksFragment extends RootFragment {
-    BorrowerBooksListAdapter borrowerBooksListAdapter;
+public class RequestedBooksFragment extends RootFragment implements OnFragmentInteractionListener {
     Button filterButton;
-    ArrayList<Book> borrowerBooks;
-    DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
+    List<String> filters = Arrays.asList("Requested", "Watched", "Borrowing", "Accepted");
+    List<String> activeFilters = new ArrayList<>();
+    ArrayList<Book> borrowerBooks = new ArrayList<>();
+    ArrayList<Book> displayBooks = new ArrayList<>();
+    BorrowerBooksListAdapter borrowerBooksListAdapter;
 
     /**
      * Get the layout associated with the fragment.
@@ -52,13 +53,20 @@ public class RequestedBooksFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        borrowerBooks = new ArrayList<>();
-
-        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), borrowerBooks);
-
+        // Opens the filter fragment where you can filter information.
         filterButton = getView().findViewById(R.id.requests_filter_button);
-        // TODO: Enable button when functionality is here.
-        filterButton.setEnabled(false);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new FilterFragment("Filter By Status",
+                        filters,
+                        activeFilters,
+                        RequestedBooksFragment.this
+                ).show(getChildFragmentManager(), "Filter_Status");
+            }
+        });
+
+        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks);
 
         final ListView bookNameTextView = getView().findViewById(R.id.bookListView);
         bookNameTextView.setAdapter(borrowerBooksListAdapter);
@@ -68,8 +76,8 @@ public class RequestedBooksFragment extends RootFragment {
                     @Override
                     public void onSuccess(List<Book> books) {
                         borrowerBooks.addAll(books);
-                        bookNameTextView.setAdapter(borrowerBooksListAdapter);
-//                        borrowerBooksListAdapter.notifyDataSetChanged();
+                        displayBooks.addAll(books);
+                        borrowerBooksListAdapter.notifyDataSetChanged();
                     }
                 }
         );
@@ -80,5 +88,38 @@ public class RequestedBooksFragment extends RootFragment {
                 // TODO: Navigate to book-view (non owner view)
             }
         });
+    }
+
+    /**
+     * Updates the list of books to be displayed depending on the active filters received from
+     * the filter fragment
+     * @param activeFilters the list of filters enabled when the FilterFragment confirm button
+     *                      is pressed
+     */
+    @Override
+    public void onConfirmPressed(List<String> activeFilters) {
+        this.activeFilters = activeFilters;
+
+        // Wipe the array so we can start anew.
+        displayBooks.clear();
+
+        // Modifies the array so that only the filtered status's are displayed.
+        if (activeFilters.size() > 0) {
+            for(Book book: borrowerBooks){
+                boolean isBorrowed = book.getStatus().equals("borrowed") && book.getBorrower() == dbw.userId;
+                boolean isAccepted = book.getStatus().equals("accepted") && book.getBorrower() == dbw.userId;
+                boolean isRequested = book.getStatus().equals("requested");
+                if((activeFilters.contains("Requested") && isRequested)
+                        || (activeFilters.contains("Borrowing") && isBorrowed)
+                        || (activeFilters.contains("Accepted") && isAccepted))
+                    displayBooks.add(book);
+            }
+        } else {
+            // If no filter was chosen, then display all the books.
+            // NOTE: We cannot make the displayBooks = myBooks. This assigns a pointer that we don't
+            // want.
+            displayBooks.addAll(borrowerBooks);
+        }
+        borrowerBooksListAdapter.notifyDataSetChanged();
     }
 }
