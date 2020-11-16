@@ -53,8 +53,6 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle(getString(R.string.title_my_requests));
-
         // Opens the filter fragment where you can filter information.
         filterButton = getView().findViewById(R.id.requests_filter_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
