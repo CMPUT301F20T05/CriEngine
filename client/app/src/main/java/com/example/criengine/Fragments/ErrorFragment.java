@@ -1,16 +1,9 @@
 package com.example.criengine.Fragments;
 
+import android.os.Bundle;
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.criengine.Fragments.ProfileFragment;
-import com.example.criengine.Interfaces.IOnBackPressed;
 import com.example.criengine.R;
 
 /**

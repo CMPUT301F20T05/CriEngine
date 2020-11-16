@@ -123,7 +123,9 @@ public class MyBookActivity extends BookActivity {
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
         } else {
-            // TODO: If the intent fails to send, then redirect user to Error Screen. (in general this should not fail)
+            Intent intent = new Intent(this, SomethingWentWrong.class);
+            startActivity(intent);
+            return;
         }
 
         // my book exclusive UI component
