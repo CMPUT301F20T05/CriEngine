@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.example.criengine.R;
 
 /**
- * Abstract book class. Main purpose is to set up the view objects.
+ * Abstract book activity class. Main purpose is to set up the view objects.
  */
 public abstract class BookActivity extends AppCompatActivity {
     EditText bookTitle;
