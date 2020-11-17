@@ -81,7 +81,6 @@
     <!-- Something Went Wrong Activity -->
     <string name="apology">Sorry! Something went wrong.</string>
     <string name="apologySubHeader">Navigate away by using the nav-bar</string>
-    <string name="requests_header">My Requests</string>
 
     <!-- Non Owner Book View Activity -->
     <string name="request_book_button">Request This Book</string>

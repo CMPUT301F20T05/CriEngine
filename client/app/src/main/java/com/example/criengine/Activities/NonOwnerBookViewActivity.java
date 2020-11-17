@@ -1,12 +1,13 @@
 package com.example.criengine.Activities;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
@@ -18,15 +19,15 @@ import com.example.criengine.R;
  */
 public class NonOwnerBookViewActivity extends AppCompatActivity {
     private Button requestBookButton;
-    private TextView bookTitle;
-    private TextView bookAuthor;
-    private TextView bookDetail;
-    private TextView bookISBN;
-    private TextView bookStatus;
-    private TextView bookOwner;
-    private TextView bookBorrower;
+    private EditText bookTitle;
+    private EditText bookAuthor;
+    private EditText bookDetail;
+    private EditText bookISBN;
+    private EditText bookStatus;
+    private EditText bookOwner;
+    private EditText bookBorrower;
     private TextView bookBorrowerLabel;
-    DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
+    private DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
     private Book book;
 
     /**
@@ -36,16 +37,19 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
         } else {
-            // TODO: If the intent fails to send, then redirect user to Error Screen. (in general this should not fail)
+            Intent intent = new Intent(this, SomethingWentWrong.class);
+            startActivity(intent);
+            return;
         }
 
         setContentView(R.layout.activity_non_owner_book_view);
 
-        // my book exclusive UI component
+        // My book UI components.
         requestBookButton = findViewById(R.id.request_book_button);
         bookTitle = findViewById(R.id.bookView_title);
         bookDetail = findViewById(R.id.bookView_detail);
@@ -55,6 +59,14 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         bookOwner = findViewById(R.id.bookView_owner);
         bookBorrower = findViewById(R.id.bookView_borrower);
         bookBorrowerLabel = findViewById(R.id.bookView_borrower_label);
+
+        disableEditText(bookTitle);
+        disableEditText(bookDetail);
+        disableEditText(bookAuthor);
+        disableEditText(bookISBN);
+        disableEditText(bookStatus);
+        disableEditText(bookOwner);
+        disableEditText(bookBorrower);
 
         checkIfAvailable();
 
@@ -78,18 +90,35 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
      * Check if the book can be requested. Sets the button to the appropriate text.
      */
     public void checkIfAvailable() {
-        if (!book.getStatus().equals("available")) {
+        // TODO: Need to retrieve user profile & check if it already exists in list of requesters.
+        if (!book.getStatus().equals("borrowed") && !book.getStatus().equals("accepted")) {
             requestBookButton.setEnabled(true);
             requestBookButton.setText("Request This Book");
             requestBookButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // TODO: Add the user as a requester.
+                    // TODO: Add the user as a requester in the database.
+                    requestBookButton.setEnabled(false);
+                    requestBookButton.setText("Request Sent");
                 }
             });
         } else {
             requestBookButton.setEnabled(false);
-            requestBookButton.setText("Book is not available");
+            requestBookButton.setText("Cannot Request This Book");
         }
+    }
+
+    /**
+     * Allows for incorporating the "Component_book.xml" file into this activity.
+     * Treats the EditText as a TextView but keeps the formatting the same.
+     * @param editText The view object.
+     */
+    public void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        editText.setBackgroundColor(Color.TRANSPARENT);
+        editText.setTextColor(Color.BLACK);
     }
 }
