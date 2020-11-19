@@ -229,4 +229,17 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+    <TextView
+        android:id="@+id/click_to_edit_image"
+        android:layout_width="0dp"
+        android:layout_height="19dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:textColor="@color/blue_text"
+        android:text="@string/click_to_edit_image"
+        app:layout_constraintBottom_toTopOf="@+id/bookView_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

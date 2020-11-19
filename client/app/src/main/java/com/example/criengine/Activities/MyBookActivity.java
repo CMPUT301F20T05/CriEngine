@@ -3,15 +3,22 @@ package com.example.criengine.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.method.KeyListener;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.UtilityMethods;
 import com.example.criengine.R;
 
 /**
@@ -23,6 +30,8 @@ public class MyBookActivity extends BookActivity {
     private Button editCancelBookButton;
     private Button seeRequestsButton;
     private Button deleteSaveBookButton;
+    private ImageView image;
+    private TextView imageInfo;
 
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
@@ -60,6 +69,7 @@ public class MyBookActivity extends BookActivity {
      */
     private void setPageViewOnly() {
         editCancelBookButton.setText(R.string.edit_book);
+        imageInfo.setVisibility(View.GONE);
         if (book.getRequesters().size() == 0) {
             // Only allow the user to see requests if there are requests.
             seeRequestsButton.setVisibility(View.GONE);
@@ -69,6 +79,14 @@ public class MyBookActivity extends BookActivity {
         disableEditText(bookTitle);
         disableEditText(bookDetail);
         disableEditText(bookAuthor);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Intentionally disabled. Clicking the image while not in editing mode should
+                // do nothing.
+            }
+        });
     }
 
     /**
@@ -77,11 +95,21 @@ public class MyBookActivity extends BookActivity {
     private void setPageEditable() {
         deleteSaveBookButton.setText(R.string.save_button);
         seeRequestsButton.setVisibility(View.INVISIBLE);
+        imageInfo.setVisibility(View.VISIBLE);
         editCancelBookButton.setText(R.string.cancel_button);
 
         enableEditText(bookTitle);
         enableEditText(bookDetail);
         enableEditText(bookAuthor);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CameraActivity.class);
+                intent.putExtra("Book", book);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -129,10 +157,18 @@ public class MyBookActivity extends BookActivity {
         }
 
         // my book exclusive UI component
+        image = findViewById(R.id.bookView_image);
+        imageInfo = findViewById(R.id.click_to_edit_image);
         editCancelBookButton = findViewById(R.id.edit_book_button);
         seeRequestsButton = findViewById(R.id.see_requests_button);
         deleteSaveBookButton = findViewById(R.id.delete_book_button);
         confirmDialog = confirmDelete();
+
+        if (book.getImageURL() == null) {
+            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
+        } else {
+            image.setImageBitmap(UtilityMethods.stringToBitMap(book.getImageURL()));
+        }
 
         editCancelBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
