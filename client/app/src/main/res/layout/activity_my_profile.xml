@@ -18,7 +18,8 @@
         android:text="@string/edit_button"
         android:background="@drawable/rounded_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/logout_cancel_button"
@@ -29,6 +30,7 @@
         android:background="@drawable/rounded_button"
         android:text="@string/logout_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
