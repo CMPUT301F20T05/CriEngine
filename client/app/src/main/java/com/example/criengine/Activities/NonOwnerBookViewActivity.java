@@ -6,16 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.UtilityMethods;
 import com.example.criengine.R;
 
 /**
  * Handles displaying information about a book. Items such as the title, author, description etc.
- * Outstanding Issues:
- * - Does not retrieve all information from the database.
  */
 public class NonOwnerBookViewActivity extends AppCompatActivity {
     private Button requestBookButton;
@@ -29,6 +29,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     private TextView bookBorrowerLabel;
     private DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
     private Book book;
+    private ImageView image;
 
     /**
      * A custom onCreate() method. Allows for the usage for fragments in the activity.
@@ -59,6 +60,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         bookOwner = findViewById(R.id.bookView_owner);
         bookBorrower = findViewById(R.id.bookView_borrower);
         bookBorrowerLabel = findViewById(R.id.bookView_borrower_label);
+        image = findViewById(R.id.bookView_image);
 
         disableEditText(bookTitle);
         disableEditText(bookDetail);
@@ -82,8 +84,13 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
             bookBorrowerLabel.setVisibility(View.GONE);
             bookBorrower.setVisibility(View.GONE);
         }
-        // TODO: Get the book image from the database.
-//        bookImage.setImageURI(book.getImageURL());
+
+        // Set the image to a default icon if there is no URL stored in the database.
+        if (book.getImageURL() == null) {
+            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
+        } else {
+            image.setImageBitmap(UtilityMethods.stringToBitMap(book.getImageURL()));
+        }
     }
 
     /**

@@ -110,7 +110,7 @@ public class CameraActivity extends AppCompatActivity {
                 if (photo != null) {
                     String newPhoto = UtilityMethods.bitmapToString(photo);
                     book.setImageURL(newPhoto);
-                    // TODO: ^^Save Bitmap "photo" into the database.
+                    // TODO: ^^Save String "newPhoto" into the database.
                 }
 
                 goBack();
@@ -126,7 +126,7 @@ public class CameraActivity extends AppCompatActivity {
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == pic_id) {
+        if (requestCode == pic_id && data.getExtras() != null) {
             photo = (Bitmap) data.getExtras().get("data");
             newImage.setImageBitmap(photo);
         }
@@ -146,7 +146,7 @@ public class CameraActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to delete this image?")
                 .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // TODO: Delete the image from the database for this specific book.
+                        // TODO: Image for this book has already been set to null. Push changes to db.
                         dialog.dismiss();
                         goBack();
                     }
