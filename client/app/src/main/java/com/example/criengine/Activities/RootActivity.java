@@ -16,6 +16,7 @@ import com.example.criengine.Fragments.ErrorFragment;
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
+import com.example.criengine.Fragments.PlaceholderSearchFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 
 import com.example.criengine.Objects.Notification;
@@ -124,7 +125,7 @@ public class RootActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new ErrorFragment();
+                    return new PlaceholderSearchFragment();
                 case 1:
                     return new NotificationFragment();
                 case 2:
