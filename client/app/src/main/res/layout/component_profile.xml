@@ -29,7 +29,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:text="@string/user_profile_text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"

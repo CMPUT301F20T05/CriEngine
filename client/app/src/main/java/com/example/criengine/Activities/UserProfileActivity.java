@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class UserProfileActivity extends ProfileActivity {
 
     private String userId;
     private Profile userProfile;
+    private TextView userBooksTextView;
+    private ListView userBooksListView;
     private ArrayList<Book> userBooks;
 
     /**
@@ -48,7 +51,6 @@ public class UserProfileActivity extends ProfileActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // new UI components
         if (getIntent().getExtras() != null) {
             userId = getIntent().getStringExtra("userId");
         } else {
@@ -56,8 +58,11 @@ public class UserProfileActivity extends ProfileActivity {
             startActivity(intent);
             return;
         }
+
+        userBooksTextView = findViewById(R.id.user_books_text);
+        userBooksListView = findViewById(R.id.user_books_listview);
         userBooks = new ArrayList<>();
-        
+
         dbw = DatabaseWrapper.getWrapper();
         dbw.getProfile(userId).addOnSuccessListener(new OnSuccessListener<Profile>() {
             @Override
@@ -67,6 +72,7 @@ public class UserProfileActivity extends ProfileActivity {
                 bioEditText.setText(profile.getBio());
                 phoneEditText.setText(profile.getPhone());
                 addressEditText.setText(profile.getAddress());
+                userBooksTextView.setText(getString(R.string.user_books_text, profile.getUsername()));
 
                 dbw.getOwnedBooks(profile).addOnSuccessListener(new OnSuccessListener<List<Book>>() {
                     @Override
@@ -76,5 +82,8 @@ public class UserProfileActivity extends ProfileActivity {
                 });
             }
         });
+
+        // TODO: set the userBooksListView once the adapter is created from search
+        // TODO: write integration tests once the search is in place
     }
 }
