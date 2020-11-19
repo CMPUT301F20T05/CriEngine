@@ -20,10 +20,16 @@ public abstract class ProfileActivity extends AppCompatActivity {
     EditText phoneEditText;
     EditText addressEditText;
 
+    /**
+     * Get the layout from inherited class
+     * @return the inherited activity's layout
+     */
+    abstract public int getFragmentLayout();
+
     protected void onCreate(Bundle savedInstanceState) {
         // Must setContentView(layoutID) in child before calling this super method.
         super.onCreate(savedInstanceState);
-
+        setContentView(this.getFragmentLayout());
         // get all the UI components
         userImageButton = findViewById(R.id.user_image);
         userTextView = findViewById(R.id.user_profile_text);

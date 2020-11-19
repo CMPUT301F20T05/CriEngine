@@ -7,10 +7,8 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.criengine.Activities.UserProfileActivity;
 import com.example.criengine.R;
 
 /**
@@ -44,15 +42,9 @@ public class PlaceholderSearchFragment extends RootFragment {
         testUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString(testUID, "userId");
-                UserProfileFragment frag = new UserProfileFragment();
-                frag.setArguments(bundle);
-
-                // TODO: currently doesn't work
-//                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.addToBackStack(null);
-//                transaction.replace(R.id.view_pager, frag).commit();
+                Intent intent = new Intent(view.getContext(), UserProfileActivity.class);
+                intent.putExtra("userId", testUID);
+                view.getContext().startActivity(intent);
             }
         });
     }
