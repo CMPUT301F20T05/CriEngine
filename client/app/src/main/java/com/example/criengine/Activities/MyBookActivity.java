@@ -330,11 +330,9 @@ public class MyBookActivity extends BookActivity {
      * @return True if changes were made. False otherwise.
      */
     private boolean checkForChanges() {
-        if (!prevAuthor.equals(bookAuthor.getText().toString())) {
-            return true;
-        } else if (!prevDetail.equals(bookDetail.getText().toString())) {
-            return true;
-        } else if (!prevTitle.equals(bookTitle.getText().toString())) {
+        if (!prevAuthor.equals(bookAuthor.getText().toString())
+                || !prevDetail.equals(bookDetail.getText().toString())
+                || !prevTitle.equals(bookTitle.getText().toString())) {
             return true;
         }
         return false;
