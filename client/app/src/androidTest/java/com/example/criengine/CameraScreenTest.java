@@ -73,7 +73,7 @@ public class CameraScreenTest {
     }
 
     /**
-     * Test to see if a user can edit the fields of a new book before creating it.
+     * Test to see if the cancel button works and takes the user back to the edit screen.
      */
     @Test
     public void clickOnCancelButtonTest() {
@@ -84,21 +84,10 @@ public class CameraScreenTest {
     }
 
     /**
-     * Test to see if a user can edit the fields of a new book before creating it.
+     * Test to see if the save button works.
      */
     @Test
     public void clickOnSaveButtonTest() {
-        solo.clickOnButton("Save");
-
-        // Asserts that the current activity is the My Book activity.
-        solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
-    }
-
-    /**
-     * Test to see if a user can edit the fields of a new book before creating it.
-     */
-    @Test
-    public void clickOnImageTest() {
         solo.clickOnButton("Save");
 
         // Asserts that the current activity is the My Book activity.
