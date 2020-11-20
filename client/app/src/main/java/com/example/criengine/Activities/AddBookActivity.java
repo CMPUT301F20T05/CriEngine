@@ -14,6 +14,9 @@ import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 /**
  * Allows for the addition of a new book to the database through either manual entries or through
  * the scanning feature.
@@ -23,6 +26,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
  */
 public class AddBookActivity extends AppCompatActivity {
     private Profile bookProfile;
+
+    EditText bookTitle;
+    EditText bookDesc;
+    EditText bookAuthor;
+    EditText bookISBN;
+
+    final int SCAN_RESULT_CODE = 0;
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -41,6 +51,7 @@ public class AddBookActivity extends AppCompatActivity {
         final Button cancelButton = findViewById(R.id.newBookCancelButton);
         final Button saveButton = findViewById(R.id.newBookSaveButton);
         final Button scanButton = findViewById(R.id.newBookScanButton);
+
 
         // The fields of the book
         final EditText bookTitle = findViewById(R.id.newBookTitle);
