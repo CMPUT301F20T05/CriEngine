@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RequestsForBookActivity;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
@@ -61,6 +63,16 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
 
         // Get the book to be displayed.
         final Book book = bookItems.get(position);
+
+        // Opens to the book information screen when you click on a specific book.
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MyBookActivity.class);
+                intent.putExtra("Book", book);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         // Set the text for the header and status.
         headerText.setText(book.getTitle());

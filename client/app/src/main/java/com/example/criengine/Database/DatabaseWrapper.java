@@ -43,6 +43,7 @@ public class DatabaseWrapper {
     public String userId;
     private FirebaseFirestore db;
     private Boolean debug = false;
+    private ArrayList<OnChangeListener> onChangeListeners;
 
     // Constructor for tests
     public DatabaseWrapper(DatabaseWrapper dbw) {
@@ -73,6 +74,7 @@ public class DatabaseWrapper {
         db = FirebaseFirestore.getInstance();
         users = db.collection("users");
         books = db.collection("books");
+        onChangeListeners = new ArrayList<>();
         dbw = this;
     }
 
@@ -486,4 +488,21 @@ public class DatabaseWrapper {
         return null;
     }
 
+    public abstract static class OnChangeListener {
+        public abstract void onChange();
+    }
+
+    public void addOnChangeListener(OnChangeListener listener) {
+        onChangeListeners.add(listener);
+    }
+
+    public void removeOnChangeListener(OnChangeListener listener) {
+        onChangeListeners.remove(listener);
+    }
+
+    public void notifyChanged() {
+        for(int i = 0; i < onChangeListeners.size(); i++) {
+            onChangeListeners.get(i).onChange();
+        }
+    }
 }
