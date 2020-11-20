@@ -148,7 +148,7 @@ public class CameraActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == pic_id && data.getExtras() != null) {
             // BitMap is data structure of image file which store the image in memory.
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            photo = (Bitmap) data.getExtras().get("data");
 
             // Set the image in imageview for display
             newImage.setImageBitmap(photo);
