@@ -41,7 +41,8 @@
         <activity
             android:name=".Activities.MyProfileActivity"
             android:parentActivityName=".Activities.RootActivity" />
-        <activity android:name=".Activities.MyBookActivity" />
+        <activity android:name=".Activities.MyBookActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activities.BookActivity" />
     </application>
 
