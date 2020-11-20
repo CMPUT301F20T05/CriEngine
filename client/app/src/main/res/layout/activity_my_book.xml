@@ -36,6 +36,16 @@
                 android:textAllCaps="false" />
 
             <Button
+                android:id="@+id/see_requests_button"
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:text="@string/see_requests"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/edit_book_button"
                 android:layout_width="fill_parent"
                 android:layout_height="40sp"
@@ -45,15 +55,6 @@
                 android:text="@string/edit_book"
                 android:textAllCaps="false" />
 
-            <Button
-                android:id="@+id/see_requests_button"
-                android:layout_width="fill_parent"
-                android:layout_height="40sp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button"
-                android:text="@string/see_requests"
-                android:textAllCaps="false" />
         </LinearLayout>
 
         <fragment
