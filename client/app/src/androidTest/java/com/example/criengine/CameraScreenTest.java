@@ -95,6 +95,19 @@ public class CameraScreenTest {
     }
 
     /**
+     * Test to see if the user cannot edit an image while not in editing mode.
+     */
+    @Test
+    public void clickImageWithoutBeingInEditTest() {
+        solo.clickOnButton("Cancel");
+        solo.clickOnButton("Cancel");
+        solo.clickOnView(solo.getView("bookView_image"));
+
+        // Make sure that the user is still in the same activity.
+        solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
+    }
+
+    /**
      * Closes the activity after each test
      * @throws Exception
      */
