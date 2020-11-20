@@ -1,5 +1,6 @@
 package com.example.criengine;
 
+import android.graphics.Camera;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -68,8 +69,6 @@ public class CameraScreenTest {
 
         solo.clickOnView(solo.getView("bookView_image"));
 
-        solo.clickOnText("DISCARD & GO");
-
         // Asserts that the current activity is the Camera activity.
         solo.assertCurrentActivity("Wrong Activity", CameraActivity.class);
     }
@@ -106,6 +105,53 @@ public class CameraScreenTest {
 
         // Make sure that the user is still in the same activity.
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
+    }
+
+    /**
+     * Test to see if the confirmation dialog opens up in the right circumstances
+     * (ie. when a change is made)
+     * Also tests the button functionality for the dialong.
+     */
+    @Test
+    public void checkConfirmationDialog() {
+        solo.clickOnButton("Cancel");
+        solo.clickOnButton("Edit Book");
+
+        // Enter a new title.
+        solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
+        solo.enterText((EditText) solo.getView(R.id.bookView_title), "This is a better title.");
+
+        // Test if discarding the changes reverts to the old title.
+        solo.clickOnView(solo.getView("bookView_image"));
+        solo.clickOnText("DISCARD & GO");
+
+        solo.assertCurrentActivity("Wrong Activity", CameraActivity.class);
+
+        solo.clickOnButton("Cancel");
+
+        solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
+        assertTrue(solo.waitForText("Mock Title", 1, 2000));
+
+        // Modify the title again but this time we will save the changes with the dialog.
+        solo.clickOnButton("Edit Book");
+
+        solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
+        solo.enterText((EditText) solo.getView(R.id.bookView_title), "This is a better title.");
+
+        solo.clickOnView(solo.getView("bookView_image"));
+        solo.clickOnText("SAVE & GO");
+        solo.assertCurrentActivity("Wrong Activity", CameraActivity.class);
+
+        // Make sure the new title is saved.
+        solo.clickOnButton("Cancel");
+        solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
+        assertTrue(solo.waitForText("This is a better title.", 1, 2000));
+
+        // Clean up after the test. Revert the title back to its original.
+        solo.clickOnButton("Edit Book");
+        solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
+        solo.enterText((EditText) solo.getView(R.id.bookView_title), "Mock Title");
+        solo.clickOnButton("Save");
     }
 
     /**

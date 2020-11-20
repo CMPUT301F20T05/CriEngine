@@ -115,8 +115,7 @@ public class CameraActivity extends AppCompatActivity {
      * @return The confirmation dialog. If user selects to delete the book, then redirect to
      *          the main activity.
      */
-    private AlertDialog confirmDelete()
-    {
+    private AlertDialog confirmDelete() {
         return new AlertDialog.Builder(this)
                 // set title and message and button behaviors
                 .setTitle("Delete Book")
@@ -162,6 +161,7 @@ public class CameraActivity extends AppCompatActivity {
     private void goBack() {
         Intent intent = new Intent(this, MyBookActivity.class);
         intent.putExtra("Book", book);
+        intent.putExtra("photo", photo);
         startActivity(intent);
     }
 

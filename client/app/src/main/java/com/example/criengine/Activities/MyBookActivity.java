@@ -132,6 +132,7 @@ public class MyBookActivity extends BookActivity {
         // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
+            transferImage = (Bitmap) getIntent().getParcelableExtra("photo");
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
@@ -149,12 +150,15 @@ public class MyBookActivity extends BookActivity {
 
         image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
 
-
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (editMode) {
-                    confirmNavigate.show();
+                    if (checkForChanges()) {
+                        confirmNavigate.show();
+                    } else {
+                        navigateToCamera();
+                    }
                 }
             }
         });
@@ -222,10 +226,18 @@ public class MyBookActivity extends BookActivity {
             bookBorrower.setVisibility(View.GONE);
         }
 
+        prevAuthor = bookAuthor.getText().toString();
+        prevDetail = bookDetail.getText().toString();
+        prevTitle = bookTitle.getText().toString();
+
         editMode = false;
         setPageViewOnly();
 
-        if (book.getImageURL() != null) {
+        // If an image is passed in (ie. we just took a picture and are returning to this screen,
+        // then display that image without needing to make a db call. Otherwise make the call.
+        if (transferImage != null) {
+            image.setImageBitmap(transferImage);
+        } else if (book.getImageURL() != null) {
             dbw.downloadBookImage(book).addOnSuccessListener(new OnSuccessListener<Bitmap>() {
                 @Override
                 public void onSuccess(Bitmap bitmap) {
@@ -236,7 +248,6 @@ public class MyBookActivity extends BookActivity {
                 }
             });
         }
-
     }
 
     /**
@@ -245,8 +256,7 @@ public class MyBookActivity extends BookActivity {
      * @return The confirmation dialog. If user selects to delete the book, then redirect to
      *          the main activity.
      */
-    private AlertDialog confirmDelete()
-    {
+    private AlertDialog confirmDelete() {
         return new AlertDialog.Builder(this)
                 // set title and message and button behaviors
                 .setTitle("Delete Book")
@@ -273,8 +283,7 @@ public class MyBookActivity extends BookActivity {
      * @return The confirmation dialog. If user selects to delete the book, then redirect to
      *          the main activity.
      */
-    private AlertDialog confirmNavigateToCamera()
-    {
+    private AlertDialog confirmNavigateToCamera() {
         return new AlertDialog.Builder(this)
                 // set title and message and button behaviors
                 .setTitle("Before you go...")
@@ -306,10 +315,28 @@ public class MyBookActivity extends BookActivity {
         startActivity(intent);
     }
 
+    /**
+     * Saves to book to the database.
+     */
     private void saveBook() {
         book.setTitle(bookTitle.getText().toString());
         book.setDescription(bookDetail.getText().toString());
         book.setAuthor(bookAuthor.getText().toString());
         dbw.addBook(book);
+    }
+
+    /**
+     * Check if any changes were made
+     * @return True if changes were made. False otherwise.
+     */
+    private boolean checkForChanges() {
+        if (!prevAuthor.equals(bookAuthor.getText().toString())) {
+            return true;
+        } else if (!prevDetail.equals(bookDetail.getText().toString())) {
+            return true;
+        } else if (!prevTitle.equals(bookTitle.getText().toString())) {
+            return true;
+        }
+        return false;
     }
 }
