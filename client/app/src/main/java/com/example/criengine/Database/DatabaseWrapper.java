@@ -1,5 +1,6 @@
 package com.example.criengine.Database;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +47,12 @@ public class DatabaseWrapper {
     public FirebaseUser user;
     public String userId;
     private FirebaseFirestore db;
+    private FirebaseStorage storage;
     private Boolean debug = false;
     private ArrayList<OnChangeListener> onChangeListeners;
 
-    // Constructor for tests
+
+    // Constructors for tests
     public DatabaseWrapper(DatabaseWrapper dbw) {
         DatabaseWrapper.dbw = dbw;
         this.user = dbw.user;
@@ -59,6 +66,7 @@ public class DatabaseWrapper {
         this.user = user;
         this.userId = null;
         this.db = null;
+        this.storage = null;
         this.users = dbw.collection("users");
         this.books = dbw.collection("books");
         DatabaseWrapper.dbw = this;
@@ -72,6 +80,7 @@ public class DatabaseWrapper {
         this.user = user;
         this.userId = user.getUid();
         db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
         users = db.collection("users");
         books = db.collection("books");
         onChangeListeners = new ArrayList<>();
@@ -487,6 +496,41 @@ public class DatabaseWrapper {
     public Task<Void> confrimReturnBook (String borrowerUid, String ISBN) {
         return null;
     }
+
+    public Task<Boolean> uploadBookImage (Book book, Bitmap bitmap) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference mountainsRef = storageRef.child("mountains.jpg");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        book.setImageURL(mountainsRef.getPath());
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+
+        return uploadTask.continueWith(new Continuation<UploadTask.TaskSnapshot, Boolean>() {
+                                    @Override
+                                    public Boolean then(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            UploadTask.TaskSnapshot result = task.getResult();
+                                            assert result != null;
+                                            try {
+                                                return true;
+                                            }
+                                            catch(Exception e) {
+                                                Log.e(TAG, e.getMessage());
+                                                return null;
+                                            }
+                                        } else {
+                                            Log.d(TAG, "Get Failure: " + task.getException());
+                                            return null;
+                                        }
+                                    }
+                                }
+
+        );
+
+    }
+
 
     public abstract static class OnChangeListener {
         public abstract void onChange();
