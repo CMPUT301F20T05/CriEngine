@@ -68,6 +68,8 @@ public class CameraScreenTest {
 
         solo.clickOnView(solo.getView("bookView_image"));
 
+        solo.clickOnText("DISCARD & GO");
+
         // Asserts that the current activity is the Camera activity.
         solo.assertCurrentActivity("Wrong Activity", CameraActivity.class);
     }
@@ -99,7 +101,6 @@ public class CameraScreenTest {
      */
     @Test
     public void clickImageWithoutBeingInEditTest() {
-        solo.clickOnButton("Cancel");
         solo.clickOnButton("Cancel");
         solo.clickOnView(solo.getView("bookView_image"));
 

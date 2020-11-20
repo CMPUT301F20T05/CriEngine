@@ -4,12 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
-import com.example.criengine.Objects.UtilityMethods;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -31,6 +28,7 @@ public class MyBookActivity extends BookActivity {
     private Button seeRequestsButton;
     private Button deleteSaveBookButton;
     private ImageView image;
+    public Bitmap transferImage;
     private TextView imageInfo;
 
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
@@ -233,6 +231,7 @@ public class MyBookActivity extends BookActivity {
                 public void onSuccess(Bitmap bitmap) {
                     if (bitmap != null) {
                         image.setImageBitmap(bitmap);
+                        transferImage = bitmap;
                     }
                 }
             });
@@ -280,7 +279,7 @@ public class MyBookActivity extends BookActivity {
                 // set title and message and button behaviors
                 .setTitle("Before you go...")
                 .setMessage("Do you want to save your changes?")
-                .setPositiveButton("Save & Continue", new DialogInterface.OnClickListener() {
+                .setPositiveButton("SAVE & GO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                         saveBook();
@@ -288,7 +287,7 @@ public class MyBookActivity extends BookActivity {
                     }
 
                 })
-                .setNegativeButton("Cancel & Continue", new DialogInterface.OnClickListener() {
+                .setNegativeButton("DISCARD & GO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         navigateToCamera();
@@ -303,6 +302,7 @@ public class MyBookActivity extends BookActivity {
     private void navigateToCamera() {
         Intent intent = new Intent(this, CameraActivity.class);
         intent.putExtra("Book", book);
+        intent.putExtra("photo", transferImage);
         startActivity(intent);
     }
 

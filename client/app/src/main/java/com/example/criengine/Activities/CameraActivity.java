@@ -2,26 +2,19 @@ package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
-import com.example.criengine.Objects.UtilityMethods;
 import com.example.criengine.R;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 
 /**
  * This class is used to open a camera to take a photo. That image will be used for a book.
@@ -54,6 +47,7 @@ public class CameraActivity extends AppCompatActivity {
         // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
+            photo = (Bitmap) getIntent().getParcelableExtra("photo");
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
@@ -68,8 +62,8 @@ public class CameraActivity extends AppCompatActivity {
         confirmDialog = confirmDelete();
 
         // If the book already has an image, then use that. Otherwise set a default image.
-        if (book.getImageURL() != null) {
-            newImage.setImageBitmap(UtilityMethods.stringToBitMap(book.getImageURL()));
+        if (photo != null) {
+            newImage.setImageBitmap(photo);
             deleteButton.setVisibility(View.VISIBLE);
         } else {
             // Only show the delete button if there is an image.
@@ -109,28 +103,10 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (photo != null) {
                     dbw.uploadBookImage(book, photo);
-//                    String newPhoto = UtilityMethods.bitmapToString(photo);
-//                    book.setImageURL(newPhoto);
-                    // TODO: ^^Save String "newPhoto" into the database.
                 }
-
                 goBack();
             }
         });
-    }
-
-    /**
-     * Sets the photo on the screen.
-     * @param requestCode The request code.
-     * @param resultCode The result code.
-     * @param data The data from the camera.
-     */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == pic_id && data.getExtras() != null) {
-            photo = (Bitmap) data.getExtras().get("data");
-            newImage.setImageBitmap(photo);
-        }
     }
 
     /**
@@ -169,5 +145,14 @@ public class CameraActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MyBookActivity.class);
         intent.putExtra("Book", book);
         startActivity(intent);
+    }
+
+    /**
+     * Override the back button so it returns to the previous activity and not in the editing
+     * screen.
+     */
+    @Override
+    public void onBackPressed() {
+        goBack();
     }
 }
