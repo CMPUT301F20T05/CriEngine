@@ -1,12 +1,8 @@
 # CMPUT 301 FALL 2020 TEAM 05 PROJECT
 
-Scrum board: https://github.com/CMPUT301F20T05/CriEngine/projects/1
+Scrum Board: https://github.com/CMPUT301F20T05/CriEngine/projects/1
 
-Storyboard: https://www.figma.com/file/xWCfwk9TEcrVrdWKLAF8a3/Story-Board?node-id=0%3A1
-- May need to request access (email rjmah1@ualberta.ca with your email) and follow figma instructions to setup education account
-- To show the arrows between each storyboard, click "Protoype" on top right corner
-
-UML Diagram: https://drive.google.com/file/d/12ylFdqLmNpfJBcltwtfXFMmdWR25Zls9/view?usp=sharing
+Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
 
 ----
 
@@ -24,3 +20,21 @@ UML Diagram: https://drive.google.com/file/d/12ylFdqLmNpfJBcltwtfXFMmdWR25Zls9/v
 ### PR Creation
 - If adding a WIP, add the `WIP` and `DO NOT MERGE` labels
 - Request reviews from any two members of the team
+
+## User Test Account Login Credentials
+- To log into an existing account, please use one of the following two accounts:
+  - Account 1:
+    - Username: user1@email.com
+    - Password: password
+  - Account 2:
+    - Username: user2@email.com
+    - Password: password
+- Please note that authentication the first time logging in might take some time as it is synchronous .
+    
+## Potential Test Issues
+- If your network connection is slow or disconnected, the intent tests will fail. This is because they need to connect to the database within a certain timeframe in order to pass.
+- To avoid tests from failing due to network issues, ensure you have the emulator started prior to starting the test.
+  - In addition, try logging in manually to a test account to test the response time for the database.
+
+## Documentation
+- JavaDocs HTML sources can be found in client/app/javadocs.

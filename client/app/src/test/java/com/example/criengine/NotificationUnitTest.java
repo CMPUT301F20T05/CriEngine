@@ -12,11 +12,17 @@ import static org.junit.Assert.*;
 public class NotificationUnitTest {
     Notification notification;
 
+    /**
+     * Run before every test case.
+     */
     @Before
     public void init() {
         notification = new Notification("This is a mock notification");
     }
 
+    /**
+     * Test the getter methods for the date and description.
+     */
     @Test
     public void testGetterMethods() {
         assertEquals(notification.getDescription(), "This is a mock notification");

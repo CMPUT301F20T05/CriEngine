@@ -1,27 +1,30 @@
 package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Database.GoogleBooksWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Allows for the addition of a new book to the database through either manual entries or through
+ * the scanning feature.
+ * Outstanding Issues:
+ * - Implement the scanning feature.
+ * - Implement the addition of images.
+ */
 public class AddBookActivity extends AppCompatActivity {
-
     private Profile bookProfile;
 
     EditText bookTitle;
@@ -31,6 +34,12 @@ public class AddBookActivity extends AppCompatActivity {
 
     final int SCAN_RESULT_CODE = 0;
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +50,8 @@ public class AddBookActivity extends AppCompatActivity {
         // Set buttons and warning field to views
         final Button cancelButton = findViewById(R.id.newBookCancelButton);
         final Button saveButton = findViewById(R.id.newBookSaveButton);
-        final Button newBookScanButton = findViewById(R.id.newBookScanButton);
+        final Button scanButton = findViewById(R.id.newBookScanButton);
+
 
         // The fields of the book
         final EditText bookTitle = findViewById(R.id.newBookTitle);
@@ -61,6 +71,9 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
 
+        // disable button until feature is implemented
+        scanButton.setEnabled(false);
+
         // Save button is clicked
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +89,7 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Create the book
                 Book newBook = new Book(bookProfile.getUserID(),
+                        bookProfile.getUsername(),
                         bookTitle.getText().toString(),
                         bookAuthor.getText().toString(),
                         bookDesc.getText().toString(),
@@ -89,12 +103,8 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Adds new book to database
                 dbw.addBook(newBook);
-                // Go back to my books
-                Snackbar.make(findViewById(R.id.popupMessage), R.string.popup_confirm, Snackbar.LENGTH_SHORT).show();
-                bookTitle.setText("");
-                bookAuthor.setText("");
-                bookDesc.setText("");
-                bookISBN.setText("");
+                // Go back to my-books
+                onBackPressed();
             }
         });
 

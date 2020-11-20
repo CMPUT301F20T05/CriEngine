@@ -1,12 +1,10 @@
 package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.criengine.R;
 
 /**
@@ -23,12 +21,19 @@ public abstract class BookActivity extends AppCompatActivity {
     EditText bookBorrower;
     ImageView bookImage;
 
+    /**
+     * Called upon the creation of the activity. (Initializes the activity)
+     * @param savedInstanceState  If the activity is being re-initialized after previously being
+     *                            shut down then this Bundle contains the data it most recently
+     *                            supplied. Note: Otherwise it is null. This value may be null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Must setContentView(layoutID) in child activity before calling super method
         super.onCreate(savedInstanceState);
         inflate();
 
+        // Set the view object for each attribute.
         bookTitle = findViewById(R.id.bookView_title);
         bookDetail = findViewById(R.id.bookView_detail);
         bookAuthor = findViewById(R.id.bookView_author);
@@ -45,7 +50,14 @@ public abstract class BookActivity extends AppCompatActivity {
         customOnCreate();
     }
 
+    /**
+     * A custom onCreate() method. Allows for the usage for fragments in the activity.
+     * Without this method, there is the possible issue of the fragment being null when it is called
+     */
     abstract protected void customOnCreate();
 
+    /**
+     * Allows for inflating of the activity and assigning it a layout.
+     */
     abstract protected void inflate();
 }

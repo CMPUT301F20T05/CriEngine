@@ -57,8 +57,10 @@ public class MyBooksListFilterFragment extends DialogFragment implements Seriali
 
     /**
      * Creates the fragment.
-     * @param savedInstanceState
-     * @return The ArrayList containing the filter status information.
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently
+     *                           supplied.
+     * @return The dialog allowing the user to select a filer(s).
      */
     @NonNull
     @Override
