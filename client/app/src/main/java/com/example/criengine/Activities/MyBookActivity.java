@@ -42,6 +42,7 @@ public class MyBookActivity extends BookActivity {
     private Book book;
 
     AlertDialog confirmDialog;
+    AlertDialog confirmNavigate;
 
     private boolean editMode;
 
@@ -79,14 +80,6 @@ public class MyBookActivity extends BookActivity {
         disableEditText(bookTitle);
         disableEditText(bookDetail);
         disableEditText(bookAuthor);
-
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Intentionally disabled. Clicking the image while not in editing mode should
-                // do nothing.
-            }
-        });
     }
 
     /**
@@ -101,15 +94,6 @@ public class MyBookActivity extends BookActivity {
         enableEditText(bookTitle);
         enableEditText(bookDetail);
         enableEditText(bookAuthor);
-
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CameraActivity.class);
-                intent.putExtra("Book", book);
-                v.getContext().startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -163,12 +147,22 @@ public class MyBookActivity extends BookActivity {
         seeRequestsButton = findViewById(R.id.see_requests_button);
         deleteSaveBookButton = findViewById(R.id.delete_book_button);
         confirmDialog = confirmDelete();
+        confirmNavigate = confirmNavigateToCamera();
 
         if (book.getImageURL() == null) {
             image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
         } else {
             image.setImageBitmap(UtilityMethods.stringToBitMap(book.getImageURL()));
         }
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editMode) {
+                    confirmNavigate.show();
+                }
+            }
+        });
 
         editCancelBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,10 +197,7 @@ public class MyBookActivity extends BookActivity {
                 if (editMode) {
                     setPageViewOnly();
                     editMode = !editMode;
-                    book.setTitle(bookTitle.getText().toString());
-                    book.setDescription(bookDetail.getText().toString());
-                    book.setAuthor(bookAuthor.getText().toString());
-                    dbw.addBook(book);
+                    saveBook();
                 } else {
                     confirmDialog.show();
                 }
@@ -235,7 +226,6 @@ public class MyBookActivity extends BookActivity {
             bookBorrowerLabel.setVisibility(View.GONE);
             bookBorrower.setVisibility(View.GONE);
         }
-//        bookImage.setImageURI(mockBook.getImageURL());
 
         editMode = false;
         setPageViewOnly();
@@ -267,5 +257,50 @@ public class MyBookActivity extends BookActivity {
                     }
                 })
                 .create();
+    }
+
+    /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to delete the book, then redirect to
+     *          the main activity.
+     */
+    private AlertDialog confirmNavigateToCamera()
+    {
+        return new AlertDialog.Builder(this)
+                // set title and message and button behaviors
+                .setTitle("Before you go...")
+                .setMessage("Do you want to save your changes?")
+                .setPositiveButton("Save & Continue", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                        saveBook();
+                        navigateToCamera();
+                    }
+
+                })
+                .setNegativeButton("Cancel & Continue", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        navigateToCamera();
+                    }
+                })
+                .create();
+    }
+
+    /**
+     * Starts the camera activity.
+     */
+    private void navigateToCamera() {
+        Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra("Book", book);
+        startActivity(intent);
+    }
+
+    private void saveBook() {
+        book.setTitle(bookTitle.getText().toString());
+        book.setDescription(bookDetail.getText().toString());
+        book.setAuthor(bookAuthor.getText().toString());
+        dbw.addBook(book);
     }
 }
