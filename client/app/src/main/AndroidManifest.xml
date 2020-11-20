@@ -21,6 +21,8 @@
             android:value="barcode" />
 
         <activity android:name=".Activities.ScanActivity" />
+        <activity android:name=".Activities.SomethingWentWrong" />
+        <activity android:name=".Activities.NonOwnerBookViewActivity"></activity>
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.RegisterAccount" />
         <activity android:name=".Activities.AddBookActivity" />
         <activity android:name=".Activities.RequestsForBookActivity" />
         <activity

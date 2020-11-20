@@ -13,6 +13,7 @@
 
     <!--  My Profile Activity  -->
     <string name="cancel_button">Cancel</string>
+    <string name="logout_button">Logout</string>
     <string name="edit_button">Edit</string>
     <string name="save_button">Save</string>
 
@@ -61,13 +62,19 @@
 
     <!-- Login Activity -->
     <string name="login_header">Login</string>
+    <string name="register">Register an Account</string>
+    <string name="registerConfirm">Submit</string>
+    <string name="email_hint">Email Address</string>
+    <string name="password_hint">Password</string>
+    <string name="firstname_hint">First Name</string>
+    <string name="lastname_hint">Last Name</string>
+    <string name="account_warning">A field is missing or entered incorrectly</string>
 
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
     <string name="title_my_books">My Books</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_my_profile">My Profile</string>
-    <string name="title_my_requests">My Requests</string>
 
     <!--    Scan Activity    -->
     <string name="scan_prompt">Please scan the barcode</string>
@@ -76,5 +83,12 @@
 
     <!-- Outgoing Requests Fragment -->
     <string name="requests_header">My Requests</string>
+    <string name="title_my_requests">My Requests</string>
 
+    <!-- Something Went Wrong Activity -->
+    <string name="apology">Sorry! Something went wrong.</string>
+    <string name="apologySubHeader">Navigate away by using the nav-bar</string>
+
+    <!-- Non Owner Book View Activity -->
+    <string name="request_book_button">Request This Book</string>
 </resources>
