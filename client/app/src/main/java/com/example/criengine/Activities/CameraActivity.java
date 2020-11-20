@@ -138,6 +138,24 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     /**
+     * Sets the image to the newly generated one.
+     * @param requestCode The request code.
+     * @param resultCode The result code.
+     * @param data The data sent from the camera.
+     */
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Match the request 'pic id with requestCode
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == pic_id && data.getExtras() != null) {
+            // BitMap is data structure of image file which store the image in memory.
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+
+            // Set the image in imageview for display
+            newImage.setImageBitmap(photo);
+        }
+    }
+
+    /**
      * Returns to the previous screen and prevents the need to load the database when we land.
      * All information about the book is contained in the "Extra".
      */
