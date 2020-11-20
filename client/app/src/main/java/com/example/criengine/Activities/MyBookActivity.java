@@ -20,11 +20,11 @@ import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.UtilityMethods;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * Handles displaying information about a book. Items such as the title, author, description etc.
  * Outstanding Issues:
- * - Does not push changes to database.
  */
 public class MyBookActivity extends BookActivity {
     private Button editCancelBookButton;
@@ -149,11 +149,8 @@ public class MyBookActivity extends BookActivity {
         confirmDialog = confirmDelete();
         confirmNavigate = confirmNavigateToCamera();
 
-        if (book.getImageURL() == null) {
-            image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
-        } else {
-            image.setImageBitmap(UtilityMethods.stringToBitMap(book.getImageURL()));
-        }
+        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
+
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,6 +226,18 @@ public class MyBookActivity extends BookActivity {
 
         editMode = false;
         setPageViewOnly();
+
+        if (book.getImageURL() != null) {
+            dbw.downloadBookImage(book).addOnSuccessListener(new OnSuccessListener<Bitmap>() {
+                @Override
+                public void onSuccess(Bitmap bitmap) {
+                    if (bitmap != null) {
+                        image.setImageBitmap(bitmap);
+                    }
+                }
+            });
+        }
+
     }
 
     /**

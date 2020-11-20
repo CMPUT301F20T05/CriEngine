@@ -1,6 +1,7 @@
 package com.example.criengine.Database;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,7 +9,6 @@ import androidx.annotation.Nullable;
 
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -22,11 +22,14 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -499,13 +502,14 @@ public class DatabaseWrapper {
 
     public Task<Boolean> uploadBookImage (Book book, Bitmap bitmap) {
         StorageReference storageRef = storage.getReference();
-        StorageReference mountainsRef = storageRef.child("mountains.jpg");
+        StorageReference imageRef = storageRef.child(book.getBookID() + "_image");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        book.setImageURL(mountainsRef.getPath());
-        UploadTask uploadTask = mountainsRef.putBytes(data);
+        book.setImageURL(imageRef.getPath());
+        this.addBook(book);
+        UploadTask uploadTask = imageRef.putBytes(data);
 
         return uploadTask.continueWith(new Continuation<UploadTask.TaskSnapshot, Boolean>() {
                                     @Override
@@ -530,6 +534,42 @@ public class DatabaseWrapper {
         );
 
     }
+
+    public Task<Bitmap> downloadBookImage (Book book) {
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child(book.getImageURL());
+        try {
+            final File localFile = File.createTempFile("Images", "bmp");
+            return imageRef.getFile(localFile).continueWith(new Continuation<FileDownloadTask.TaskSnapshot, Bitmap>() {
+
+                @Override
+                public Bitmap then(@NonNull Task<FileDownloadTask.TaskSnapshot> task) throws Exception {
+                    if (task.isSuccessful()) {
+                        FileDownloadTask.TaskSnapshot result = task.getResult();
+                        assert result != null;
+                        try {
+                            Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                            return bitmap;
+                        }
+                        catch(Exception e) {
+                            Log.e(TAG, e.getMessage());
+                            return null;
+                        }
+                    } else {
+                        Log.d(TAG, "Get Failure: " + task.getException());
+                        return null;
+                    }
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
+
 
 
     public abstract static class OnChangeListener {

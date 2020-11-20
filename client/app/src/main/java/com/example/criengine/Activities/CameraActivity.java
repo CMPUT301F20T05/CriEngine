@@ -108,8 +108,9 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (photo != null) {
-                    String newPhoto = UtilityMethods.bitmapToString(photo);
-                    book.setImageURL(newPhoto);
+                    dbw.uploadBookImage(book, photo);
+//                    String newPhoto = UtilityMethods.bitmapToString(photo);
+//                    book.setImageURL(newPhoto);
                     // TODO: ^^Save String "newPhoto" into the database.
                 }
 
