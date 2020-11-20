@@ -41,5 +41,13 @@ public abstract class ProfileActivity extends AppCompatActivity {
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
+
+        // default not editable
+        bioEditText.setKeyListener(null);
+        phoneEditText.setKeyListener(null);
+        addressEditText.setKeyListener(null);
+        bioEditText.setBackground(null);
+        phoneEditText.setBackground(null);
+        addressEditText.setBackground(null);
     }
 }
