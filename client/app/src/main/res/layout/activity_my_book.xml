@@ -6,64 +6,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/id"
-        layout="@layout/component_book"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="58dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/edit_book_button"
-        android:layout_width="120sp"
-        android:layout_height="40sp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/edit_book"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <include
+            android:id="@+id/id"
+            layout="@layout/component_book"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/see_requests_button"
-        android:layout_width="0dp"
-        android:layout_height="40sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/see_requests"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintEnd_toStartOf="@+id/edit_book_button"
-        app:layout_constraintHorizontal_bias="0.538"
-        app:layout_constraintStart_toEndOf="@+id/delete_book_button" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal"
+            android:padding="4dp">
 
-    <Button
-        android:id="@+id/delete_book_button"
-        android:layout_width="120sp"
-        android:layout_height="40sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/delete_book"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/delete_book_button"
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:text="@string/delete_book"
+                android:textAllCaps="false" />
 
-    <fragment
-        android:id="@+id/bottom_navigation_frag"
-        android:name="com.example.criengine.Fragments.BottomNavFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_bottom_nav" />
+            <Button
+                android:id="@+id/edit_book_button"
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:text="@string/edit_book"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/see_requests_button"
+                android:layout_width="fill_parent"
+                android:layout_height="40sp"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_button"
+                android:text="@string/see_requests"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <fragment
+            android:id="@+id/bottom_navigation_frag"
+            android:name="com.example.criengine.Fragments.BottomNavFragment"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="0"
+            tools:layout="@layout/fragment_bottom_nav" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
