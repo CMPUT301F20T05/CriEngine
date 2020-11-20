@@ -102,4 +102,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Overrides the back button so that after logout you can't return to the previous screen
+     */
+    @Override
+    public void onBackPressed() {}
 };

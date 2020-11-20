@@ -88,7 +88,7 @@ public class MyProfileActivity extends ProfileActivity {
         super.onCreate(savedInstanceState);
 
         // new UI components
-        cancelButton = findViewById(R.id.cancel_button);
+        cancelButton = findViewById(R.id.logout_cancel_button);
         editSaveButton = findViewById(R.id.edit_save_button);
 
         // save the key listeners
