@@ -8,7 +8,14 @@
 
     <include
         android:id="@+id/id"
-        layout="@layout/component_book" />
+        layout="@layout/component_book"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="58dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/edit_book_button"
