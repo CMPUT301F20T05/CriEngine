@@ -3,6 +3,7 @@ package com.example.criengine.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,7 +73,7 @@ public class AddBookActivity extends AppCompatActivity {
         });
 
         // disable button until feature is implemented
-        scanButton.setEnabled(false);
+//        scanButton.setEnabled(false);
 
         // Save button is clicked
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +110,7 @@ public class AddBookActivity extends AppCompatActivity {
         });
 
         // Goes to scan activity
-        newBookScanButton.setOnClickListener(new View.OnClickListener() {
+        scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddBookActivity.this, ScanActivity.class);
@@ -147,6 +148,7 @@ public class AddBookActivity extends AppCompatActivity {
 
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
+                Log.d("testing", "barcode data=" + barcodeData);
 
                 // todo: get info from  barcode
                 try {
