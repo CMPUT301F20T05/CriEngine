@@ -53,7 +53,6 @@ public class AddBookActivity extends AppCompatActivity {
         final Button saveButton = findViewById(R.id.newBookSaveButton);
         final Button scanButton = findViewById(R.id.newBookScanButton);
 
-
         // The fields of the book
         bookTitle = findViewById(R.id.newBookTitle);
         bookDesc = findViewById(R.id.newBookDesc);
@@ -159,11 +158,7 @@ public class AddBookActivity extends AppCompatActivity {
                     bookAuthor.setText(book.getAuthor());
                     bookDesc.setText(book.getDescription());
                     bookISBN.setText(book.getIsbn());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
