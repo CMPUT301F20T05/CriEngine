@@ -119,9 +119,11 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     // Add the user ID to the list of requesters and update it in the database.
                     book.addRequesters(userProfile.getUserID());
+                    userProfile.addBooksBorrowedOrRequested(book.getBookID());
                     requestBookButton.setEnabled(false);
                     requestBookButton.setText("Request Sent");
                     dbw.addBook(book);
+                    dbw.addProfile(userProfile);
                 }
             });
         } else {
