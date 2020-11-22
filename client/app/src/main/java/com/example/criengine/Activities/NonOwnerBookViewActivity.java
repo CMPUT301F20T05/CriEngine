@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.util.List;
 
 /**
  * Handles displaying information about a book. Items such as the title, author, description etc.
