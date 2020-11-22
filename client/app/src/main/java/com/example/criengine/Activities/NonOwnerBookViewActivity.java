@@ -121,7 +121,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
                     book.addRequesters(userProfile.getUserID());
                     requestBookButton.setEnabled(false);
                     requestBookButton.setText("Request Sent");
-                    dbw.addProfile(userProfile);
+                    dbw.addBook(book);
                 }
             });
         } else {
