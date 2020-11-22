@@ -1,11 +1,15 @@
 package com.example.criengine.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
@@ -22,6 +26,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
  */
 public class AddBookActivity extends AppCompatActivity {
     private Profile bookProfile;
+    private DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
+    private Book newBook;
+    private AlertDialog checkForImage;
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -33,11 +40,8 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
-        // Get database for profile
-        final DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
         // Set buttons and warning field to views
-        final Button cancelButton = findViewById(R.id.newBookCancelButton);
         final Button saveButton = findViewById(R.id.newBookSaveButton);
         final Button scanButton = findViewById(R.id.newBookScanButton);
 
@@ -46,9 +50,11 @@ public class AddBookActivity extends AppCompatActivity {
         final EditText bookDesc = findViewById(R.id.newBookDesc);
         final EditText bookAuthor = findViewById(R.id.newBookAuthor);
         final EditText bookISBN = findViewById(R.id.newBookISBN);
-        // TODO: replace editTExt with an actual image
-        final EditText bookImageURL = findViewById(R.id.newBookImageURL);
         final TextView warning = findViewById(R.id.newBookWarning);
+        ImageView image = findViewById(R.id.newBookImage);
+        checkForImage = askForImage();
+
+        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
 
         // Get the current profile
         dbw.getProfile(dbw.userId).addOnSuccessListener(new OnSuccessListener<Profile>() {
@@ -75,7 +81,7 @@ public class AddBookActivity extends AppCompatActivity {
                 }
 
                 // Create the book
-                Book newBook = new Book(bookProfile.getUserID(),
+                newBook = new Book(bookProfile.getUserID(),
                         bookProfile.getUsername(),
                         bookTitle.getText().toString(),
                         bookAuthor.getText().toString(),
@@ -83,26 +89,11 @@ public class AddBookActivity extends AppCompatActivity {
                         bookISBN.getText().toString(),
                         "available");
 
-                // Adds in image url if present
-                if (!bookImageURL.getText().toString().isEmpty()) {
-                    newBook.setImageURL(bookImageURL.getText().toString());
-                }
-
                 // Adds new book to database
                 dbw.addBook(newBook);
-                // Go back to my-books
-                onBackPressed();
+                checkForImage.show();
             }
         });
-
-        // Goes back to my book activity
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
     }
 
     /**
@@ -115,4 +106,31 @@ public class AddBookActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to delete the book, then redirect to
+     *          the main activity.
+     */
+    private AlertDialog askForImage()
+    {
+        return new AlertDialog.Builder(this)
+                // set title and message and button behaviors
+                .setTitle("Before you go...")
+                .setMessage("Did you want to add an image for the book?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                        // TODO: Navigate to the camera screen.
+                    }
+
+                })
+                .setNegativeButton("NOT NOW", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        onBackPressed();
+                    }
+                })
+                .create();
+    }
 }
