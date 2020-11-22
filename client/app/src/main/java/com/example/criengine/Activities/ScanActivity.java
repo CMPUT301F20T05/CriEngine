@@ -171,7 +171,6 @@ public class ScanActivity extends AppCompatActivity {
                             confirmScanButton.setEnabled(true);
                         }
                     });
-
                 }
             }
         });
