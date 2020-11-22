@@ -101,6 +101,19 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         }
         // TODO: Get the book image from the database.
 //        bookImage.setImageURI(book.getImageURL());
+
+        // Add the user ID to the list of requesters and update it in the database.
+        requestBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                book.addRequesters(userProfile.getUserID());
+                userProfile.addBooksBorrowedOrRequested(book.getBookID());
+                requestBookButton.setEnabled(false);
+                requestBookButton.setText("Request Sent");
+                dbw.addBook(book);
+                dbw.addProfile(userProfile);
+            }
+        });
     }
 
     /**
@@ -114,18 +127,6 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         } else if (!book.getStatus().equals("borrowed") && !book.getStatus().equals("accepted")) {
             requestBookButton.setEnabled(true);
             requestBookButton.setText("Request This Book");
-            requestBookButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Add the user ID to the list of requesters and update it in the database.
-                    book.addRequesters(userProfile.getUserID());
-                    userProfile.addBooksBorrowedOrRequested(book.getBookID());
-                    requestBookButton.setEnabled(false);
-                    requestBookButton.setText("Request Sent");
-                    dbw.addBook(book);
-                    dbw.addProfile(userProfile);
-                }
-            });
         } else {
             // The book is not available for being requested.
             requestBookButton.setEnabled(false);
