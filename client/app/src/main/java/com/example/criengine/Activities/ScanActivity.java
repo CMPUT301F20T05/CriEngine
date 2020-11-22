@@ -63,7 +63,7 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     /**
-     *  Once the user clicks yes or no on granting the app camera access, process the result here.
+     * Once the user clicks yes or no on granting the app camera access, process the result here.
      * @param requestCode   what kind of request was asked
      * @param permissions   the permission(s)
      * @param grantResults  whether the permission(s) was granted
