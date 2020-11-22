@@ -55,10 +55,10 @@ public class AddBookActivity extends AppCompatActivity {
 
 
         // The fields of the book
-        final EditText bookTitle = findViewById(R.id.newBookTitle);
-        final EditText bookDesc = findViewById(R.id.newBookDesc);
-        final EditText bookAuthor = findViewById(R.id.newBookAuthor);
-        final EditText bookISBN = findViewById(R.id.newBookISBN);
+        bookTitle = findViewById(R.id.newBookTitle);
+        bookDesc = findViewById(R.id.newBookDesc);
+        bookAuthor = findViewById(R.id.newBookAuthor);
+        bookISBN = findViewById(R.id.newBookISBN);
         // TODO: replace editTExt with an actual image
         final EditText bookImageURL = findViewById(R.id.newBookImageURL);
         final TextView warning = findViewById(R.id.newBookWarning);
@@ -71,9 +71,6 @@ public class AddBookActivity extends AppCompatActivity {
                 bookProfile = profile;
             }
         });
-
-        // disable button until feature is implemented
-//        scanButton.setEnabled(false);
 
         // Save button is clicked
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +135,12 @@ public class AddBookActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * On return from the scan activity, look up book corresponding to ISBN code and fill data
+     * @param requestCode: the request code corresponding to the scan activity
+     * @param resultCode: the result code of if the activity was successful
+     * @param data: payload of intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -145,14 +148,13 @@ public class AddBookActivity extends AppCompatActivity {
         // Check that it is the SecondActivity with an OK result
         if (requestCode == SCAN_RESULT_CODE) {
             if (resultCode == RESULT_OK) {
-
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
                 Log.d("testing", "barcode data=" + barcodeData);
 
-                // todo: get info from  barcode
                 try {
                     Book book = new GoogleBooksWrapper().getBook(barcodeData);
+                    Log.d("testing book", "title");
                     bookTitle.setText(book.getTitle());
                     bookAuthor.setText(book.getAuthor());
                     bookDesc.setText(book.getDescription());
