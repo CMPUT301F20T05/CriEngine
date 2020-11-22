@@ -16,6 +16,9 @@ import com.example.criengine.R;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for search fragment
+ */
 public class SearchBooksListAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> items;
     private Context context;
@@ -38,7 +41,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
         // Get the object from the xml file.
         TextView searchTitle = view.findViewById(R.id.search_book_title);
         TextView searchDesc = view.findViewById(R.id.search_book_desc);
-        Button searchStatus = view.findViewById(R.id.search_book_status);
+        TextView searchStatus = view.findViewById(R.id.search_book_status);
 
         Book book = items.get(position);
 

@@ -323,6 +323,10 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Get a list of all books in the database
+     * @return list of all books
+     */
     public Task<List<Book>> searchBooks() {
         return books
             .get()
