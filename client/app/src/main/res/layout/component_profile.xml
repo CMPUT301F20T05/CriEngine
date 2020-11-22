@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16sp">
@@ -31,7 +32,10 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@string/user_profile_text"
+            android:textColor="@color/sky_blue"
+            android:textColorHint="@color/sky_blue"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_image"
@@ -43,6 +47,8 @@
         android:id="@+id/bio_header"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:layout_below="@id/header_wrapper"
         android:layout_marginTop="16sp"
         android:text="@string/bio_header"
@@ -54,6 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bio_header"
         android:background="@null"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:breakStrategy="simple"
         android:hint="@string/bio_text"
         android:textSize="14sp" />
@@ -62,6 +70,8 @@
         android:id="@+id/contact_info_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:layout_below="@id/bio_text"
         android:layout_marginTop="16sp"
         android:text="@string/contact_info"
@@ -70,6 +80,8 @@
     <LinearLayout
         android:id="@+id/phone_wrapper"
         android:layout_width="wrap_content"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:layout_height="wrap_content"
         android:layout_below="@id/contact_info_text"
         android:orientation="horizontal">
@@ -79,6 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:textColor="@color/sky_blue"
+            android:textColorHint="@color/sky_blue"
             android:text="@string/phone_header"
             android:textSize="18sp" />
 
@@ -87,6 +101,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:textColor="@color/sky_blue"
+            android:textColorHint="@color/sky_blue"
             android:hint="@string/phone_text_hint"
             android:textSize="18sp" />
 
@@ -105,6 +121,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:text="@string/address_header"
+            android:textColor="@color/sky_blue"
+            android:textColorHint="@color/sky_blue"
             android:textSize="18sp" />
 
         <EditText
@@ -112,6 +130,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:textColor="@color/sky_blue"
+            android:textColorHint="@color/sky_blue"
             android:hint="@string/address_text_hint"
             android:textSize="18sp" />
 

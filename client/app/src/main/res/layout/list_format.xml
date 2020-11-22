@@ -11,11 +11,12 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/item_background"
+        android:background="@color/list_background"
         android:orientation="vertical"
         tools:layout_conversion_absoluteHeight="78dp"
         tools:layout_conversion_absoluteWidth="379dp"
         tools:layout_editor_absoluteX="16dp"
+        android:backgroundTint="@color/sky_blue"
         tools:layout_editor_absoluteY="16dp">
 
         <TextView

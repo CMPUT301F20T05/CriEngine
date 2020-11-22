@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
     android:layout_height="match_parent">
 
     <TextView
@@ -13,13 +14,17 @@
         android:gravity="center"
         android:text="@string/register"
         android:textAlignment="center"
+        android:textColor="@color/colorAccent"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/email_hint"
@@ -33,6 +38,8 @@
         android:id="@+id/editTextTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/password_hint"
@@ -47,6 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:autofillHints="@string/firstname_hint"
         android:ems="10"
         android:hint="@string/firstname_hint"
@@ -60,6 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:textColor="@color/sky_blue"
+        android:textColorHint="@color/sky_blue"
         android:autofillHints="@string/firstname_hint"
         android:ems="10"
         android:hint="@string/lastname_hint"
@@ -78,6 +89,8 @@
         android:layout_marginBottom="50dp"
         android:background="@drawable/rounded_button"
         android:text="@string/registerConfirm"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -90,7 +103,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="21dp"
         android:text="@string/account_warning"
-        android:textColor="@color/red_text"
+        android:textColor="@color/warning_text"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/submitAccount"
         app:layout_constraintEnd_toEndOf="parent"

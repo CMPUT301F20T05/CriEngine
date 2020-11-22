@@ -37,7 +37,6 @@ public class AddBookActivity extends AppCompatActivity {
         final DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
         // Set buttons and warning field to views
-        final Button cancelButton = findViewById(R.id.newBookCancelButton);
         final Button saveButton = findViewById(R.id.newBookSaveButton);
         final Button scanButton = findViewById(R.id.newBookScanButton);
 
@@ -94,15 +93,6 @@ public class AddBookActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
-        // Goes back to my book activity
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
     }
 
     /**
