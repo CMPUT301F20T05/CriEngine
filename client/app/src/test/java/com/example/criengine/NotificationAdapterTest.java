@@ -70,7 +70,7 @@ public class NotificationAdapterTest {
         notificationList = new ArrayList<>();
         notificationList.add(notification);
         NotificationAdapter NotificationAdapter =
-                new NotificationAdapter(context, notificationList, profile);
+                new NotificationAdapter(context, notificationList, profile, dbw);
         View itemView = View.inflate(context, R.layout.list_format, null);
         adaptedView = NotificationAdapter.getView(0, itemView, null);
         actionButton = adaptedView.findViewById(R.id.actionButton);
@@ -84,7 +84,7 @@ public class NotificationAdapterTest {
     @Test
     public void NotificationAdapterConstructorTest() {
         NotificationAdapter NotificationAdapter =
-                new NotificationAdapter(context, notificationList, profile);
+                new NotificationAdapter(context, notificationList, profile, dbw);
         Assert.assertNotNull(NotificationAdapter);
     }
 

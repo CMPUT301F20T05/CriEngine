@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
@@ -23,17 +25,23 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
     private ArrayList<Notification> notificationItems;
     private Context context;
     private Profile profile;
+    private DatabaseWrapper dbw;
 
     /**
      * Constructor. Extends off of the array adapter.
      * @param context The context of the activity.
      * @param notificationItems The ArrayList of notifications.
      */
-    public NotificationAdapter(@NonNull Context context, @NonNull ArrayList<Notification> notificationItems, Profile profile) {
+    public NotificationAdapter(@NonNull Context context,
+                               @NonNull ArrayList<Notification> notificationItems,
+                               Profile profile,
+                               DatabaseWrapper dbw
+                               ) {
         super(context, 0, notificationItems);
         this.context = context;
         this.notificationItems = notificationItems;
         this.profile = profile;
+        this.dbw = dbw;
     }
 
     /**
@@ -80,6 +88,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
                 // TODO: push changes to database.
 
                 notifyDataSetChanged();
+                dbw.notifyChanged();
             }
         });
 
