@@ -27,7 +27,6 @@
         <activity
             android:name=".Fragments.MyBooksListFilterFragment"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activities.RequestActivity" />
         <activity
             android:name=".Activities.RootActivity"
             android:windowSoftInputMode="adjustPan">
