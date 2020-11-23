@@ -171,6 +171,17 @@ public class MyProfileFragmentTest {
     }
 
     /**
+     * Test to see if the logout button allows the user to logout
+     */
+    @Test
+    public void logoutTest() {
+        solo.scrollToSide(Solo.RIGHT);
+        assertTrue(solo.waitForText("Profile", 1, 2000));
+        solo.clickOnButton("Logout");
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
+    }
+
+    /**
      * Closes the activity after each test
      */
     @After

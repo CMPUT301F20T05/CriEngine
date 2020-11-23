@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * A {@link Fragment} subclass.
  */
 public class BottomNavFragment extends Fragment {
+    static private int initialSelectedItemId = R.id.bottom_navigation_item_my_requests;
     /**
      * Creates and returns the view hierarchy associated with the fragment.
      * @param inflater The inflater.
@@ -50,8 +50,16 @@ public class BottomNavFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BottomNavigationView bottomNav = view.findViewById(R.id.bottom_navigation);
+        bottomNav.setSelectedItemId(initialSelectedItemId);
         bottomNav.setOnNavigationItemSelectedListener(new onNavItemSelect());
-        final Menu menu = bottomNav.getMenu();
+    }
+
+    /**
+     * Setter for the static initialSelectedItemId property
+     * @param id id of the menu item to be selected when the fragment starts up
+     */
+    static public void setInitialSelectedItemId(int id) {
+        initialSelectedItemId = id;
     }
 
     /**

@@ -9,9 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -31,6 +34,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     private DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
     private Book book;
     private ImageView image;
+    private Profile userProfile;
 
     /**
      * A custom onCreate() method. Allows for the usage for fragments in the activity.
@@ -63,6 +67,9 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         bookBorrowerLabel = findViewById(R.id.bookView_borrower_label);
         image = findViewById(R.id.bookView_image);
 
+        // Initially set the button to be false.
+        requestBookButton.setEnabled(false);
+
         disableEditText(bookTitle);
         disableEditText(bookDetail);
         disableEditText(bookAuthor);
@@ -71,7 +78,16 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         disableEditText(bookOwner);
         disableEditText(bookBorrower);
 
-        checkIfAvailable();
+        // Get the user profile and set the status of the button.
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        userProfile = profile;
+                        checkIfAvailable();
+                    }
+                }
+        );
 
         bookTitle.setText(book.getTitle());
         bookDetail.setText(book.getDescription());
@@ -85,7 +101,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
             bookBorrowerLabel.setVisibility(View.GONE);
             bookBorrower.setVisibility(View.GONE);
         }
-
+        
         // Set the image to a default icon if there is no URL stored in the database.
         image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
         if (book.getImageURL() != null) {
@@ -98,25 +114,34 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
                 }
             });
         }
+      
+        // Add the user ID to the list of requesters and update it in the database.
+        requestBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                book.addRequesters(userProfile.getUserID());
+                userProfile.addBooksBorrowedOrRequested(book.getBookID());
+                requestBookButton.setEnabled(false);
+                requestBookButton.setText("Request Sent");
+                dbw.addBook(book);
+                dbw.addProfile(userProfile);
+            }
+        });
     }
 
     /**
      * Check if the book can be requested. Sets the button to the appropriate text.
      */
     public void checkIfAvailable() {
-        // TODO: Need to retrieve user profile & check if it already exists in list of requesters.
-        if (!book.getStatus().equals("borrowed") && !book.getStatus().equals("accepted")) {
+        if (book.getRequesters().contains(userProfile.getUserID())) {
+            // The user has already requested this book.
+            requestBookButton.setEnabled(false);
+            requestBookButton.setText("Request Sent");
+        } else if (!book.getStatus().equals("borrowed") && !book.getStatus().equals("accepted")) {
             requestBookButton.setEnabled(true);
             requestBookButton.setText("Request This Book");
-            requestBookButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // TODO: Add the user as a requester in the database.
-                    requestBookButton.setEnabled(false);
-                    requestBookButton.setText("Request Sent");
-                }
-            });
         } else {
+            // The book is not available for being requested.
             requestBookButton.setEnabled(false);
             requestBookButton.setText("Cannot Request This Book");
         }

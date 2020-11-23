@@ -5,8 +5,7 @@
     android:id="@+id/my_requests_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Activities.RequestActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/header_layout"
@@ -25,7 +24,7 @@
             android:layout_height="wrap_content"
             android:height="100dp"
             android:gravity="center"
-            android:text="@string/title_my_requests"
+            android:text="@string/requests_header"
             android:textAlignment="center"
             android:textSize="30sp" />
 
