@@ -27,7 +27,7 @@ public class CameraActivity extends AppCompatActivity {
     private Button cancelButton;
     private Button deleteButton;
     private ImageView newImage;
-    private static final int pic_id = 123;
+    private static final int pic_id = 1888;
     private Bitmap photo;
     private Book book;
     private AlertDialog confirmDialog;
@@ -65,6 +65,7 @@ public class CameraActivity extends AppCompatActivity {
         if (photo != null) {
             newImage.setImageBitmap(photo);
             deleteButton.setVisibility(View.VISIBLE);
+            photo = null;
         } else {
             // Only show the delete button if there is an image.
             newImage.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
@@ -92,8 +93,12 @@ public class CameraActivity extends AppCompatActivity {
         newImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(camera_intent, pic_id);
+                Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(camera_intent, pic_id);
+                } catch (Exception e) {
+                    System.out.println("Unable to access Camera");
+                }
             }
         });
 
@@ -145,7 +150,7 @@ public class CameraActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Match the request 'pic id with requestCode
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == pic_id && data.getExtras() != null) {
+        if (requestCode == pic_id && data != null && data.getExtras() != null) {
             // BitMap is data structure of image file which store the image in memory.
             photo = (Bitmap) data.getExtras().get("data");
 
