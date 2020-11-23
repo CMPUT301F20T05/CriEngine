@@ -6,33 +6,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/id"
-        layout="@layout/component_book" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/bottom_navigation_frag"
-        android:name="com.example.criengine.Fragments.BottomNavFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_bottom_nav" />
+        <include
+            android:id="@+id/id"
+            layout="@layout/component_book"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/request_book_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/request_book_button"
-        android:background="@drawable/rounded_button"
-        android:textAllCaps="false"
-        android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/request_book_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0"
+            android:background="@drawable/rounded_button"
+            android:text="@string/request_book_button"
+            android:textAllCaps="false"
+            android:textSize="17sp" />
+
+        <fragment
+            android:id="@+id/bottom_navigation_frag"
+            android:name="com.example.criengine.Fragments.BottomNavFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            tools:layout="@layout/fragment_bottom_nav" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,15 +20,17 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activities.NonOwnerBookViewActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".Activities.LoginActivity"
-            android:windowSoftInputMode="adjustPan">
-
+        
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
         <activity android:name=".Activities.ScanActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.CameraActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
