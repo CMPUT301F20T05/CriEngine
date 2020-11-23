@@ -1,13 +1,18 @@
 package com.example.criengine.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Database.GoogleBooksWrapper;
 import com.example.criengine.Objects.Book;
@@ -15,18 +20,15 @@ import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 /**
  * Allows for the addition of a new book to the database through either manual entries or through
  * the scanning feature.
- * Outstanding Issues:
- * - Implement the scanning feature.
- * - Implement the addition of images.
  */
 public class AddBookActivity extends AppCompatActivity {
     private Profile bookProfile;
+    private DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
+    private Book newBook;
+    private AlertDialog checkForImage;
 
     EditText bookTitle;
     EditText bookDesc;
@@ -45,11 +47,8 @@ public class AddBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
-        // Get database for profile
-        final DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
         // Set buttons and warning field to views
-        final Button cancelButton = findViewById(R.id.newBookCancelButton);
         final Button saveButton = findViewById(R.id.newBookSaveButton);
         final Button scanButton = findViewById(R.id.newBookScanButton);
 
@@ -58,9 +57,11 @@ public class AddBookActivity extends AppCompatActivity {
         bookDesc = findViewById(R.id.newBookDesc);
         bookAuthor = findViewById(R.id.newBookAuthor);
         bookISBN = findViewById(R.id.newBookISBN);
-        // TODO: replace editTExt with an actual image
-        final EditText bookImageURL = findViewById(R.id.newBookImageURL);
         final TextView warning = findViewById(R.id.newBookWarning);
+        ImageView image = findViewById(R.id.newBookImage);
+        checkForImage = askForImage();
+
+        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
 
 
         // Get the current profile
@@ -85,7 +86,7 @@ public class AddBookActivity extends AppCompatActivity {
                 }
 
                 // Create the book
-                Book newBook = new Book(bookProfile.getUserID(),
+                newBook = new Book(bookProfile.getUserID(),
                         bookProfile.getUsername(),
                         bookTitle.getText().toString(),
                         bookAuthor.getText().toString(),
@@ -93,18 +94,12 @@ public class AddBookActivity extends AppCompatActivity {
                         bookISBN.getText().toString(),
                         "available");
 
-                // Adds in image url if present
-                if (!bookImageURL.getText().toString().isEmpty()) {
-                    newBook.setImageURL(bookImageURL.getText().toString());
-                }
-
                 // Adds new book to database
                 dbw.addBook(newBook);
-                // Go back to my-books
-                onBackPressed();
+                checkForImage.show();
             }
         });
-
+      
         // Goes to scan activity
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,15 +108,6 @@ public class AddBookActivity extends AppCompatActivity {
                 startActivityForResult(intent, SCAN_RESULT_CODE);
             }
         });
-
-        // Goes back to my book activity
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
     }
 
     /**
@@ -135,6 +121,33 @@ public class AddBookActivity extends AppCompatActivity {
     }
 
     /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to save the book, then ask if they want
+     *          to attach an image.
+     */
+    private AlertDialog askForImage() {
+        return new AlertDialog.Builder(this)
+                // set title and message and button behaviors
+                .setTitle("Before you go...")
+                .setMessage("Did you want to add an image for the book?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                        navigateToCamera();
+                    }
+
+                })
+                .setNegativeButton("NOT NOW", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        onBackPressed();
+                    }
+                })
+                .create();
+    }
+
+     /**
      * On return from the scan activity, look up book corresponding to ISBN code and fill data
      * @param requestCode: the request code corresponding to the scan activity
      * @param resultCode: the result code of if the activity was successful
@@ -165,4 +178,12 @@ public class AddBookActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Navigates to the camera activity.
+     */
+    public void navigateToCamera() {
+        Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra("Book", newBook);
+        startActivity(intent);
+    }
 }

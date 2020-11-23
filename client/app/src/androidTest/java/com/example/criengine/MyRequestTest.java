@@ -25,10 +25,9 @@ public class MyRequestTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
 
@@ -60,10 +59,9 @@ public class MyRequestTest {
 
     /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
         solo.finishOpenedActivities();
     }
 }

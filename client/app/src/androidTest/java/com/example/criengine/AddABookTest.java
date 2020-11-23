@@ -7,13 +7,13 @@ import androidx.test.rule.ActivityTestRule;
 import com.example.criengine.Activities.AddBookActivity;
 import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.ScanActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
-
 
 /**
  * Test class for the add a book activity. All the UI tests are written here. Robotium test
@@ -30,10 +30,9 @@ public class AddABookTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
         // Asserts that the current activity is the LoginActivity.
@@ -45,6 +44,17 @@ public class AddABookTest {
 
         solo.clickOnButton("Login");
 
+        // Asserts that the current activity is the RootActivity.
+        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
+
+        // Returns True if you can find "My Books" on the screen. Waits 30 seconds to find
+        // at least 1 match.
+        assertTrue(solo.waitForText("My Books", 1, 30000));
+
+        solo.clickOnButton("Add A Book");
+
+        // Asserts that the current activity is the AddBookActivity.
+        solo.assertCurrentActivity("Wrong Activity", AddBookActivity.class);
     }
 
     /**
@@ -52,40 +62,31 @@ public class AddABookTest {
      */
     @Test
     public void editFieldsTest() {
-
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
-        // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
-        solo.clickOnButton("Add A Book");
-
-        // Asserts that the current activity is the AddBookActivity.
-        solo.assertCurrentActivity("Wrong Activity", AddBookActivity.class);
-
-        assertTrue(solo.waitForText("Save", 1, 2000));
-
-        solo.enterText((EditText) solo.getView(R.id.newBookTitle), "This is a new book Title");
+        solo.enterText((EditText) solo.getView(R.id.newBookTitle), "AAA");
         solo.enterText((EditText) solo.getView(R.id.newBookDesc), "This is a new Description");
         solo.enterText((EditText) solo.getView(R.id.newBookAuthor), "This is a new Author");
         solo.enterText((EditText) solo.getView(R.id.newBookISBN), "This is a new ISBN");
-        solo.enterText((EditText) solo.getView(R.id.newBookImageURL), "This is an optional input");
 
-        solo.clickOnButton("Cancel");
+        solo.clickOnButton("Save and Add Photo");
 
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", AddBookActivity.class);
+        assertTrue(solo.waitForText("Before you go...", 1, 1000));
+        // Note: We will not be testing at addition of the book to the database. Confirmed by TA.
+    }
+
+    /**
+     * Test to see if the Scan button takes you to the scan activity.
+     */
+    @Test
+    public void scanButtonTest() {
+        solo.clickOnButton("Scan");
+        solo.assertCurrentActivity("Wrong Activity", ScanActivity.class);
     }
 
     /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
         solo.finishOpenedActivities();
     }
 }
