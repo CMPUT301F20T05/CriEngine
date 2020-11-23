@@ -29,7 +29,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:text="@string/user_profile_text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,6 +64,7 @@
         android:layout_below="@id/bio_text"
         android:layout_marginTop="16sp"
         android:text="@string/contact_info"
+        android:breakStrategy="simple"
         android:textSize="24sp" />
 
     <LinearLayout
@@ -87,6 +87,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:breakStrategy="simple"
+            android:layout_marginStart="8sp"
             android:hint="@string/phone_text_hint"
             android:textSize="18sp" />
 
@@ -112,6 +114,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:breakStrategy="simple"
+            android:layout_marginStart="8sp"
             android:hint="@string/address_text_hint"
             android:textSize="18sp" />
 

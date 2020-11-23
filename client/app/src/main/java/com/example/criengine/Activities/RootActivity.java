@@ -11,13 +11,14 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.criengine.Database.DatabaseWrapper;
 
-import com.example.criengine.Fragments.ErrorFragment;
+import com.example.criengine.Fragments.BottomNavFragment;
 
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 
+import com.example.criengine.Fragments.SearchBooksFragment;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
 
@@ -124,7 +125,7 @@ public class RootActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new ErrorFragment();
+                    return new SearchBooksFragment();
                 case 1:
                     return new NotificationFragment();
                 case 2:
@@ -180,6 +181,7 @@ public class RootActivity extends AppCompatActivity {
     private class onNavItemSelect implements BottomNavigationView.OnNavigationItemSelectedListener {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem selectedItem) {
+            BottomNavFragment.setInitialSelectedItemId(selectedItem.getItemId());
             for (int i = 0; i < navigation.getMenu().size(); i++) {
                 if (navigation.getMenu().getItem(i) == selectedItem) {
                     viewPager.setCurrentItem(i);

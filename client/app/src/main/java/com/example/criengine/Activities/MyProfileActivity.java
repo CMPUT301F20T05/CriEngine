@@ -25,6 +25,10 @@ public class MyProfileActivity extends ProfileActivity {
 
     private boolean editing = false;
 
+    public int getFragmentLayout() {
+        return R.layout.activity_my_profile;
+    }
+
     /**
      * Changes the page to be in "view only" mode meaning edits cannot be made.
      */

@@ -3,15 +3,20 @@ package com.example.criengine.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Database.GoogleBooksWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Allows for the addition of a new book to the database through either manual entries or through
@@ -22,6 +27,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
  */
 public class AddBookActivity extends AppCompatActivity {
     private Profile bookProfile;
+
+    EditText bookTitle;
+    EditText bookDesc;
+    EditText bookAuthor;
+    EditText bookISBN;
+
+    final int SCAN_RESULT_CODE = 0;
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -42,13 +54,14 @@ public class AddBookActivity extends AppCompatActivity {
         final Button scanButton = findViewById(R.id.newBookScanButton);
 
         // The fields of the book
-        final EditText bookTitle = findViewById(R.id.newBookTitle);
-        final EditText bookDesc = findViewById(R.id.newBookDesc);
-        final EditText bookAuthor = findViewById(R.id.newBookAuthor);
-        final EditText bookISBN = findViewById(R.id.newBookISBN);
+        bookTitle = findViewById(R.id.newBookTitle);
+        bookDesc = findViewById(R.id.newBookDesc);
+        bookAuthor = findViewById(R.id.newBookAuthor);
+        bookISBN = findViewById(R.id.newBookISBN);
         // TODO: replace editTExt with an actual image
         final EditText bookImageURL = findViewById(R.id.newBookImageURL);
         final TextView warning = findViewById(R.id.newBookWarning);
+
 
         // Get the current profile
         dbw.getProfile(dbw.userId).addOnSuccessListener(new OnSuccessListener<Profile>() {
@@ -57,9 +70,6 @@ public class AddBookActivity extends AppCompatActivity {
                 bookProfile = profile;
             }
         });
-
-        // disable button until feature is implemented
-        scanButton.setEnabled(false);
 
         // Save button is clicked
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +105,15 @@ public class AddBookActivity extends AppCompatActivity {
             }
         });
 
+        // Goes to scan activity
+        scanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddBookActivity.this, ScanActivity.class);
+                startActivityForResult(intent, SCAN_RESULT_CODE);
+            }
+        });
+
         // Goes back to my book activity
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +132,37 @@ public class AddBookActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RootActivity.class);
         intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
         startActivity(intent);
+    }
+
+    /**
+     * On return from the scan activity, look up book corresponding to ISBN code and fill data
+     * @param requestCode: the request code corresponding to the scan activity
+     * @param resultCode: the result code of if the activity was successful
+     * @param data: payload of intent
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == SCAN_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Get String data from Intent
+                String barcodeData = data.getStringExtra("barcode");
+                Log.d("testing", "barcode data=" + barcodeData);
+
+                try {
+                    Book book = new GoogleBooksWrapper().getBook(barcodeData);
+                    Log.d("testing book", "title");
+                    bookTitle.setText(book.getTitle());
+                    bookAuthor.setText(book.getAuthor());
+                    bookDesc.setText(book.getDescription());
+                    bookISBN.setText(book.getIsbn());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }
