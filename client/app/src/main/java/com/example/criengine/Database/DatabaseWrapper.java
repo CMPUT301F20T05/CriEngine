@@ -323,6 +323,33 @@ public class DatabaseWrapper {
                 });
     }
 
+    /**
+     * Get a list of all books in the database
+     * @return list of all books
+     */
+    public Task<List<Book>> searchBooks() {
+        return books
+            .get()
+            .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+                @Override
+                public List<Book> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot query = task.getResult();
+                        assert query != null;
+                        try {
+                            return query.toObjects(Book.class);
+                        }
+                        catch(Exception e) {
+                            Log.e(TAG, e.getMessage());
+                            return null;
+                        }
+                    } else {
+                        Log.d(TAG, "Get Failure: " + task.getException());
+                        return new ArrayList<Book>();
+                    }
+                }
+            });
+    }
 
     // TODO you cant request your own book
     public Task<Boolean> makeRequest (final String borrowerUid, final String bookID) {
