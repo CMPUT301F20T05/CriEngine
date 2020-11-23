@@ -106,12 +106,9 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         requestBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                book.addRequesters(userProfile.getUserID());
-                userProfile.addBooksBorrowedOrRequested(book.getBookID());
+                dbw.makeRequest(userProfile.getUserID(), book.getBookID());
                 requestBookButton.setEnabled(false);
                 requestBookButton.setText("Request Sent");
-                dbw.addBook(book);
-                dbw.addProfile(userProfile);
             }
         });
     }

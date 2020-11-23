@@ -17,7 +17,7 @@ public class Profile {
     private String bio;
     private ArrayList<String> booksOwned;
     private ArrayList<String> booksBorrowedOrRequested;
-    private ArrayList<Notification> notifications;
+    private ArrayList<String> notifications;
 
     /**
      * Constructor 1. No inputs, simply instantiates the arraylists.
@@ -271,7 +271,7 @@ public class Profile {
      * Add a notification for the user.
      * @param notif The notification to be added.
      */
-    public void addNotification(Notification notif) {
+    public void addNotification(String notif) {
         notifications.add(notif);
     }
 
@@ -279,7 +279,7 @@ public class Profile {
      * Remove a notification from the list.
      * @param notif The notification to remove.
      */
-    public void removeNotification(Notification notif) {
+    public void removeNotification(String notif) {
         notifications.remove(notif);
     }
 
@@ -287,7 +287,7 @@ public class Profile {
      * Get the list of notifications.
      * @return The list of notifications.
      */
-    public ArrayList<Notification> getNotifications() {
+    public ArrayList<String> getNotifications() {
         return notifications;
     }
 
@@ -295,7 +295,7 @@ public class Profile {
      * Set a new list of notifications.
      * @param newList The notification list to be set.
      */
-    public void setNotifications(ArrayList<Notification> newList) {
+    public void setNotifications(ArrayList<String> newList) {
         notifications = newList;
     }
 }

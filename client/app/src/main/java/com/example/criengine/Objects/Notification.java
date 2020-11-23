@@ -1,21 +1,38 @@
 package com.example.criengine.Objects;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Notification class. Creates a notification with a description and a date-of-creation.
  */
 public class Notification {
+    String bookID;
     String description;
     Calendar date;
 
     /**
      * Constructor.
-     * @param description The description to be displayed.
+     * @param notificationString The notification text to be turned into a notification object
      */
-    public Notification(String description) {
-        this.description = description;
-        this.date = Calendar.getInstance();
+    public Notification(String notificationString) {
+        String[] parsedString = notificationString.split(",");
+        this.bookID = parsedString[0];
+        this.description = parsedString[1];
+        //TODO: add date to notifications
+        if (parsedString.length > 2){
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+            try {
+                cal.setTime(sdf.parse(parsedString[3]));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else {
+            this.date = Calendar.getInstance();
+        }
     }
 
     /**
