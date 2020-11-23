@@ -21,8 +21,8 @@ public abstract class ProfileActivity extends AppCompatActivity {
     EditText addressEditText;
 
     /**
-     * Get the layout from inherited class
-     * @return the inherited activity's layout
+     * Returns the activity layout.
+     * @return The activity layout.
      */
     abstract public int getFragmentLayout();
 
