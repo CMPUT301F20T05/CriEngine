@@ -93,7 +93,7 @@ public class CameraActivity extends AppCompatActivity {
         newImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
                     // Need to give permission before being able to access camera.
                     startActivityForResult(camera_intent, pic_id);
