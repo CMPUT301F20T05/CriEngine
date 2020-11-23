@@ -11,13 +11,16 @@
     <string name="phone_text_hint">(XXX) XXX-XXXX</string>
     <string name="address_text_hint">52 Example St</string>
 
-    <!--  My Profile Activity  -->
+    <!-- My Profile Fragment -->
     <string name="cancel_button">Cancel</string>
     <string name="logout_button">Logout</string>
     <string name="edit_button">Edit</string>
     <string name="save_button">Save</string>
 
-    <!-- My Books Activity  -->
+    <!-- User Profile Activity -->
+    <string name="user_books_text">%1$s\'s Books</string>
+
+    <!-- My Books Activity -->
     <string name="add_a_book_button">Add A Book</string>
     <string name="my_books_header">My Books</string>
     <string name="my_books_filter">Filter</string>

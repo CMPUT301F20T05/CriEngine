@@ -20,10 +20,16 @@ public abstract class ProfileActivity extends AppCompatActivity {
     EditText phoneEditText;
     EditText addressEditText;
 
+    /**
+     * Returns the activity layout.
+     * @return The activity layout.
+     */
+    abstract public int getFragmentLayout();
+
     protected void onCreate(Bundle savedInstanceState) {
         // Must setContentView(layoutID) in child before calling this super method.
         super.onCreate(savedInstanceState);
-
+        setContentView(this.getFragmentLayout());
         // get all the UI components
         userImageButton = findViewById(R.id.user_image);
         userTextView = findViewById(R.id.user_profile_text);
@@ -35,5 +41,13 @@ public abstract class ProfileActivity extends AppCompatActivity {
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
+
+        // default not editable
+        bioEditText.setKeyListener(null);
+        phoneEditText.setKeyListener(null);
+        addressEditText.setKeyListener(null);
+        bioEditText.setBackground(null);
+        phoneEditText.setBackground(null);
+        addressEditText.setBackground(null);
     }
 }

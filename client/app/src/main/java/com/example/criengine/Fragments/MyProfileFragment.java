@@ -107,11 +107,6 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
         logoutCancelButton = view.findViewById(R.id.logout_cancel_button);
         editSaveButton = view.findViewById(R.id.edit_save_button);
 
-        // save the key listeners
-        bioEditText.setTag(bioEditText.getKeyListener());
-        phoneEditText.setTag(phoneEditText.getKeyListener());
-        addressEditText.setTag(addressEditText.getKeyListener());
-
         editSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

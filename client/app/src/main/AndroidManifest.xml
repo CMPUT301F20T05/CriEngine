@@ -50,6 +50,8 @@
             android:parentActivityName=".Activities.RootActivity" />
         <activity android:name=".Activities.MyBookActivity" />
         <activity android:name=".Activities.BookActivity" />
+        <activity android:name=".Activities.UserProfileActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
