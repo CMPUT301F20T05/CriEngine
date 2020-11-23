@@ -93,4 +93,13 @@
 
     <!-- Non Owner Book View Activity -->
     <string name="request_book_button">Request This Book</string>
+
+    <!-- Camera Activity  -->
+    <string name="picture_info_text">Click image to open camera</string>
+    <string name="save_picture">Save</string>
+    <string name="cancel_picture">Cancel</string>
+    <string name="delete_picture">Delete</string>
+
+    <!-- Book Component XML  -->
+    <string name="click_to_edit_image">Click image to edit</string>
 </resources>
