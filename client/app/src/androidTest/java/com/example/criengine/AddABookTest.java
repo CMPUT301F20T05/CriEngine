@@ -7,6 +7,7 @@ import androidx.test.rule.ActivityTestRule;
 import com.example.criengine.Activities.AddBookActivity;
 import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.ScanActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
@@ -66,10 +67,19 @@ public class AddABookTest {
         solo.enterText((EditText) solo.getView(R.id.newBookAuthor), "This is a new Author");
         solo.enterText((EditText) solo.getView(R.id.newBookISBN), "This is a new ISBN");
 
-        solo.clickOnButton("Save");
+        solo.clickOnButton("Save and Add Photo");
 
         assertTrue(solo.waitForText("Before you go...", 1, 1000));
         // Note: We will not be testing at addition of the book to the database. Confirmed by TA.
+    }
+
+    /**
+     * Test to see if the Scan button takes you to the scan activity.
+     */
+    @Test
+    public void scanButtonTest() {
+        solo.clickOnButton("Scan");
+        solo.assertCurrentActivity("Wrong Activity", ScanActivity.class);
     }
 
     /**

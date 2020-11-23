@@ -280,8 +280,8 @@ public class MyBookActivity extends BookActivity {
     /**
      * Retrieved from:
      * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
-     * @return The confirmation dialog. If user selects to delete the book, then redirect to
-     *          the main activity.
+     * @return The confirmation dialog. If user selects to edit the image, then redirect to
+     *          the camera activity. Confirm whether they want to save their current changes or not
      */
     private AlertDialog confirmNavigateToCamera() {
         return new AlertDialog.Builder(this)

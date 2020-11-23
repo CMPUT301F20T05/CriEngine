@@ -1,7 +1,5 @@
 package com.example.criengine.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Database.GoogleBooksWrapper;
 import com.example.criengine.Objects.Book;
@@ -19,15 +20,9 @@ import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 /**
  * Allows for the addition of a new book to the database through either manual entries or through
  * the scanning feature.
- * Outstanding Issues:
- * - Implement the scanning feature.
- * - Implement the addition of images.
  */
 public class AddBookActivity extends AppCompatActivity {
     private Profile bookProfile;
@@ -128,11 +123,10 @@ public class AddBookActivity extends AppCompatActivity {
     /**
      * Retrieved from:
      * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
-     * @return The confirmation dialog. If user selects to delete the book, then redirect to
-     *          the main activity.
+     * @return The confirmation dialog. If user selects to save the book, then ask if they want
+     *          to attach an image.
      */
-    private AlertDialog askForImage()
-    {
+    private AlertDialog askForImage() {
         return new AlertDialog.Builder(this)
                 // set title and message and button behaviors
                 .setTitle("Before you go...")
@@ -140,7 +134,7 @@ public class AddBookActivity extends AppCompatActivity {
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
-                        // TODO: Navigate to the camera screen.
+                        navigateToCamera();
                     }
 
                 })
@@ -152,6 +146,8 @@ public class AddBookActivity extends AppCompatActivity {
                 })
                 .create();
     }
+
+     /**
      * On return from the scan activity, look up book corresponding to ISBN code and fill data
      * @param requestCode: the request code corresponding to the scan activity
      * @param resultCode: the result code of if the activity was successful
@@ -180,5 +176,14 @@ public class AddBookActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /**
+     * Navigates to the camera activity.
+     */
+    public void navigateToCamera() {
+        Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra("Book", newBook);
+        startActivity(intent);
     }
 }
