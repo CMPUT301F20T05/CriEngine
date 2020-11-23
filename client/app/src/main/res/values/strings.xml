@@ -13,6 +13,7 @@
 
     <!-- My Profile Fragment -->
     <string name="cancel_button">Cancel</string>
+    <string name="logout_button">Logout</string>
     <string name="edit_button">Edit</string>
     <string name="save_button">Save</string>
 
@@ -78,8 +79,13 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_my_profile">My Profile</string>
 
+    <!--    Scan Activity    -->
+    <string name="scan_prompt">Please scan the barcode</string>
+    <string name="scan_complete">Scan complete, press confirm</string>
+    <string name="scan_confirm">Confirm Scan</string>
+
     <!-- Outgoing Requests Fragment -->
-    <string name="title_my_requests">My Requests</string>
+    <string name="requests_header">My Requests</string>
 
     <!-- Something Went Wrong Activity -->
     <string name="apology">Sorry! Something went wrong.</string>

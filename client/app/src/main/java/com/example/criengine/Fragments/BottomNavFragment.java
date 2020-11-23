@@ -3,14 +3,15 @@ package com.example.criengine.Fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * A {@link Fragment} subclass.
  */
 public class BottomNavFragment extends Fragment {
+    static private int initialSelectedItemId = R.id.bottom_navigation_item_my_requests;
     /**
      * Creates and returns the view hierarchy associated with the fragment.
      * @param inflater The inflater.
@@ -48,8 +50,16 @@ public class BottomNavFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BottomNavigationView bottomNav = view.findViewById(R.id.bottom_navigation);
+        bottomNav.setSelectedItemId(initialSelectedItemId);
         bottomNav.setOnNavigationItemSelectedListener(new onNavItemSelect());
-        final Menu menu = bottomNav.getMenu();
+    }
+
+    /**
+     * Setter for the static initialSelectedItemId property
+     * @param id id of the menu item to be selected when the fragment starts up
+     */
+    static public void setInitialSelectedItemId(int id) {
+        initialSelectedItemId = id;
     }
 
     /**
