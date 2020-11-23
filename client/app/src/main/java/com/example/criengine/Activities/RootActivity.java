@@ -12,12 +12,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.criengine.Database.DatabaseWrapper;
 
 import com.example.criengine.Fragments.BottomNavFragment;
-import com.example.criengine.Fragments.ErrorFragment;
 
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
-import com.example.criengine.Fragments.PlaceholderSearchFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 
 import com.example.criengine.Fragments.SearchBooksFragment;
