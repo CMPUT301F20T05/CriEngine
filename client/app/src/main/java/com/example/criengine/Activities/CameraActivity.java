@@ -95,9 +95,10 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent camera_intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
+                    // Need to give permission before being able to access camera.
                     startActivityForResult(camera_intent, pic_id);
                 } catch (Exception e) {
-                    System.out.println("Unable to access Camera");
+                    e.printStackTrace();
                 }
             }
         });
@@ -127,8 +128,8 @@ public class CameraActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to delete this image?")
                 .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // TODO: Image for this book has already been set to null. Push changes to db.
                         dialog.dismiss();
+                        dbw.addBook(book);
                         goBack();
                     }
 
