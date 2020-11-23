@@ -16,18 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SomethingWentWrong"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".Activities.NonOwnerBookViewActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
         <activity android:name=".Activities.ScanActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.SomethingWentWrong"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activities.CameraActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.NonOwnerBookViewActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activities.LoginActivity"
             android:windowSoftInputMode="adjustPan">
@@ -46,8 +45,6 @@
         <activity
             android:name=".Fragments.MyBooksListFilterFragment"
             tools:ignore="Instantiatable" />
-        <activity android:name=".Activities.RequestActivity"
-            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Activities.RootActivity"
             android:windowSoftInputMode="adjustPan">
@@ -57,10 +54,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.MyProfileActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".Activities.RootActivity" />
         <activity android:name=".Activities.MyBookActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".Activities.BookActivity"
