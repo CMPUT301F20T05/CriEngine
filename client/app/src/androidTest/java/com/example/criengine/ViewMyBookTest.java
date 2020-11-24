@@ -1,18 +1,21 @@
 package com.example.criengine;
 
 import android.widget.EditText;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
 import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
 
 /**
  * Test class for the my book fragment. All the UI tests are written here.
@@ -44,9 +47,11 @@ public class ViewMyBookTest {
         // Asserts that the current activity is the RootActivity.
         solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
 
-        // Returns True if you can find "My Books" on the screen. Waits 30 seconds to find
+        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
         // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 30000));
+        assertTrue(solo.waitForText("My Books", 1, 50000));
+
+        TestUtilityMethods.addBook(solo);
 
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
@@ -58,22 +63,13 @@ public class ViewMyBookTest {
     @Test
     public void editTitleTest() {
         // Enter in a new title and save changes.
-        assertTrue(solo.waitForText("Delete Book", 1, 2000));
         solo.clickOnButton("Edit Book");
-        assertTrue(solo.waitForText("Cancel", 1, 2000));
         solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
         solo.enterText((EditText) solo.getView(R.id.bookView_title), "A good title.");
         solo.clickOnButton("Save");
 
         // Test to see if the changes were acknowledged.
-        assertTrue(solo.waitForText("Delete Book", 1, 2000));
         assertTrue(solo.waitForText("A good title.", 1, 2000));
-
-        // Undo the changes before exiting.
-        solo.clickOnButton("Edit Book");
-        solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
-        solo.enterText((EditText) solo.getView(R.id.bookView_title), "Mock Title");
-        solo.clickOnButton("Save");
     }
 
     /**
@@ -81,16 +77,7 @@ public class ViewMyBookTest {
      */
     @Test
     public void cancelEditTitleTest() {
-        // Ensure the title is initially "Mock Title"
-        assertTrue(solo.waitForText("Delete Book", 1, 2000));
-        solo.clickOnButton("Edit Book");
-        solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
-        solo.enterText((EditText) solo.getView(R.id.bookView_title), "Mock Title");
-        solo.clickOnButton("Save");
-
-
         // Enter in a new book title and cancel changes.
-        assertTrue(solo.waitForText("Delete Book", 1, 2000));
         solo.clickOnButton("Edit Book");
         solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
         solo.enterText((EditText) solo.getView(R.id.bookView_title), "New title.");
@@ -107,7 +94,6 @@ public class ViewMyBookTest {
      */
     @Test
     public void cancelDeleteBookTest() {
-        assertTrue(solo.waitForText("Delete Book", 1, 2000));
         solo.clickOnButton("Delete Book");
 
         assertTrue(solo.waitForText("Are you sure you want to delete this book?", 1, 2000));
@@ -119,10 +105,11 @@ public class ViewMyBookTest {
 
     /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
+        solo.goBack();
+        TestUtilityMethods.cleanup(solo);
         solo.finishOpenedActivities();
     }
 }

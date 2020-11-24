@@ -1,6 +1,5 @@
 package com.example.criengine;
 
-import android.graphics.Camera;
 import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -38,10 +37,9 @@ public class CameraScreenTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
         // Asserts that the current activity is the LoginActivity.
@@ -56,9 +54,11 @@ public class CameraScreenTest {
         // Asserts that the current activity is the RootActivity.
         solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
 
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
-        // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 10000));
+        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
+        // at least 1 match. This is to counter potentially long wait times when logging in.
+        assertTrue(solo.waitForText("My Books", 1, 50000));
+
+        TestUtilityMethods.addBook(solo);
 
         solo.clickInList(0);
 
@@ -74,18 +74,7 @@ public class CameraScreenTest {
     }
 
     /**
-     * Test to see if the cancel button works and takes the user back to the edit screen.
-     */
-    @Test
-    public void clickOnCancelButtonTest() {
-        solo.clickOnButton("Cancel");
-
-        // Asserts that the current activity is the My Book activity.
-        solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
-    }
-
-    /**
-     * Test to see if the save button works.
+     * Test to see if the save button works. Should return user to view the book details.
      */
     @Test
     public void clickOnSaveButtonTest() {
@@ -100,7 +89,7 @@ public class CameraScreenTest {
      */
     @Test
     public void clickImageWithoutBeingInEditTest() {
-        solo.clickOnButton("Cancel");
+        solo.goBack();
         solo.clickOnView(solo.getView("bookView_image"));
 
         // Make sure that the user is still in the same activity.
@@ -114,7 +103,7 @@ public class CameraScreenTest {
      */
     @Test
     public void checkConfirmationDialog() {
-        solo.clickOnButton("Cancel");
+        solo.goBack();
         solo.clickOnButton("Edit Book");
 
         // Enter a new title.
@@ -127,7 +116,7 @@ public class CameraScreenTest {
 
         solo.assertCurrentActivity("Wrong Activity", CameraActivity.class);
 
-        solo.clickOnButton("Cancel");
+        solo.goBack();
 
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
         assertTrue(solo.waitForText("Mock Title", 1, 2000));
@@ -143,23 +132,18 @@ public class CameraScreenTest {
         solo.assertCurrentActivity("Wrong Activity", CameraActivity.class);
 
         // Make sure the new title is saved.
-        solo.clickOnButton("Cancel");
+        solo.goBack();
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
         assertTrue(solo.waitForText("This is a better title.", 1, 2000));
-
-        // Clean up after the test. Revert the title back to its original.
-        solo.clickOnButton("Edit Book");
-        solo.clearEditText((EditText) solo.getView(R.id.bookView_title));
-        solo.enterText((EditText) solo.getView(R.id.bookView_title), "Mock Title");
-        solo.clickOnButton("Save");
     }
 
     /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
+        solo.goBack();
+        TestUtilityMethods.cleanup(solo);
         solo.finishOpenedActivities();
     }
 }
