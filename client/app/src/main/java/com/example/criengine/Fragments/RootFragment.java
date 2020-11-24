@@ -46,7 +46,8 @@ public abstract class RootFragment extends Fragment {
     }
 
     /**
-     *
+     * Default SwipeRefreshLayout listener.
+     * Lasts 1.5 seconds and calls for a RootActivity refresh
      */
     protected class RefreshRootListener implements SwipeRefreshLayout.OnRefreshListener {
         SwipeRefreshLayout layout;
