@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -373,11 +374,16 @@ public class DatabaseWrapper {
                 DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
 
+                String title = (String) bookSnapshot.get("title");
+
                 List<String> bookList = (List<String>) userSnapshot.get("booksBorrowedOrRequested");
                 if (bookList == null) {
                     bookList = new ArrayList<>();
                 }
-
+                List<String> notificationList = (List<String>) userSnapshot.get("notifications");
+                if (notificationList == null) {
+                    notificationList = new ArrayList<>();
+                }
                 List<String> profileList = (List<String>) bookSnapshot.get("requesters");
                 if (profileList == null) {
                     profileList = new ArrayList<>();
@@ -389,7 +395,11 @@ public class DatabaseWrapper {
 
                 bookList.add(bookID);
                 profileList.add(borrowerUid);
+                //TODO: add date to notifications
+                notificationList.add(bookID + ",You got a new request for " + title + "!");
+
                 transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
+                transaction.update(users.document(borrowerUid), "notifications", notificationList);
                 transaction.update(books.document(bookID), "status", "requested");
                 transaction.update(books.document(bookID), "requesters", profileList);
                 return true;
@@ -406,72 +416,24 @@ public class DatabaseWrapper {
                 DocumentSnapshot acceptedUserSnapshot = transaction.get(users.document(borrowerUid));
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
 
+                String title = (String) bookSnapshot.get("title");
 
-                List<String> bookList = (List<String>) acceptedUserSnapshot.get("booksBorrowedOrRequested");
-                if (bookList == null) {
-                    bookList = new ArrayList<>();
-                }
-                List<String> notificationList = (List<String>) acceptedUserSnapshot.get("notification");
-                if (bookList == null) {
-                    bookList = new ArrayList<>();
-                }
-                List<String> profileList = (List<String>) bookSnapshot.get("requesters");
-                if (profileList == null) {
-                    profileList = new ArrayList<>();
+                List<String> notificationList = (List<String>) acceptedUserSnapshot.get("notifications");
+                if (notificationList == null) {
+                    notificationList = new ArrayList<>();
                 }
 
-                if (!profileList.contains(borrowerUid) || !bookList.contains(bookID)) {
-                    return false;
-                }
+                //TODO: add date to notifications
+                notificationList.add(bookID + ",Your request for " + title + " was accepted");
 
-                Map<String, List<String>> rejectedUserBookListMap = new HashMap<>();
-                Map<String, List<String>> rejectedUserNotificationListMap = new HashMap<>();
-
-                for (String profileID : profileList) {
-                    if (profileID.compareTo(borrowerUid) == 0) {
-                        DocumentSnapshot rejectedUserSnapshot = transaction.get(users.document(profileID));
-                        List<String> rejectedUserBookList = (List<String>) rejectedUserSnapshot.get("booksBorrowedOrRequested");
-                        if (rejectedUserBookList == null) {
-                            rejectedUserBookList = new ArrayList<>();
-                        }
-                        rejectedUserBookList.remove(profileID);
-
-                        List<String> rejectedUserNotificationList = (List<String>) rejectedUserSnapshot.get("notification");
-                        if (rejectedUserNotificationList == null) {
-                            rejectedUserNotificationList = new ArrayList<>();
-                        }
-                        // TODO: we need a notification table this is just a test
-                        notificationList.add(bookID);
-
-                        rejectedUserBookListMap.put(profileID, rejectedUserBookList);
-                        rejectedUserNotificationListMap.put(profileID, rejectedUserNotificationList);
-                    }
-                }
-
-                //write
-
-                for (String profileID : profileList) {
-
-                    transaction.update(users.document(profileID), "booksBorrowedOrRequested", rejectedUserBookListMap.get(profileID));
-                    transaction.update(users.document(profileID), "notifications", rejectedUserNotificationListMap.get(profileID));
-
-                }
-
-                bookList.remove(bookID);
-                // TODO: we need a notification table this is just a test
-                notificationList.add(bookID);
-
-
-                transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
-                // TODO: we need a notification table this is just a test
-                transaction.update(users.document(borrowerUid), "notifications", notificationList);
-
-                transaction.update(books.document(bookID), "requesters", new ArrayList<String>());
                 transaction.update(books.document(bookID), "status", "accepted");
-                transaction.update(books.document(bookID), "borrower", borrowerUid);
-
-
+                transaction.update(users.document(borrowerUid), "notifications", notificationList);
                 return true;
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -482,7 +444,7 @@ public class DatabaseWrapper {
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
-
+                String title = (String) bookSnapshot.get("title");
                 List<String> bookList = (List<String>) userSnapshot.get("booksBorrowedOrRequested");
                 if (bookList == null) {
                     bookList = new ArrayList<>();
@@ -496,35 +458,82 @@ public class DatabaseWrapper {
                     profileList = new ArrayList<>();
                 }
 
-                if (!profileList.contains(borrowerUid) || !bookList.contains(bookID)) {
-                    return false;
-                }
-
                 bookList.remove(bookID);
                 profileList.remove(borrowerUid);
-                // TODO: we need a notification table this is just a test
-                notificationList.add(bookID);
+                //TODO: add date to notifications
+                notificationList.add(bookID + ",Your request for " + title + " was rejected");
 
                 transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
                 transaction.update(books.document(bookID), "requesters", profileList);
-                // TODO: we need a notification table this is just a test
                 transaction.update(users.document(borrowerUid), "notifications", notificationList);
-
-                return null;
+                return true;
             }
         });
     }
-    public Task<Void> borrowBook (String borrowerUid, String ISBN) {
-        return null;
+    public Task<Boolean> borrowBook (final String borrowerUid, final String bookID, final String ISBN) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
+                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded")  ) {
+                    return false;
+                }
+                transaction.update(books.document(bookID), "status", "borrowed");
+                transaction.update(books.document(bookID), "borrower", borrowerUid);
+                transaction.update(books.document(bookID), "confirmationNeeded", true);
+                return true;
+            }
+        });
     }
-    public Task<Void> confirmBorrowBook (String borrowerUid, String ISBN) {
-        return null;
+    public Task<Boolean> confirmBorrowBook (final String borrowerUid, final String bookID, final String ISBN) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
+                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded")  ) {
+                    return false;
+                }
+
+                transaction.update(books.document(bookID), "confirmationNeeded", false);
+                return true;
+            }
+        });
     }
-    public Task<Void> returnBook (String borrowerUid, String ISBN) {
-        return null;
+    public Task<Boolean> returnBook (final String borrowerUid, final String bookID, final String ISBN) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
+                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded")  ) {
+                    return false;
+                }
+                transaction.update(books.document(bookID), "status", "available");
+                transaction.update(books.document(bookID), "borrower", null);
+                transaction.update(books.document(bookID), "confirmationNeeded", true);
+                return true;
+            }
+        });
     }
-    public Task<Void> confrimReturnBook (String borrowerUid, String ISBN) {
-        return null;
+    public Task<Boolean> confirmReturnBook (String borrowerUid, final String bookID, final String ISBN) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
+                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded")  ) {
+                    return false;
+                }
+
+                transaction.update(books.document(bookID), "confirmationNeeded", false);
+                return true;
+            }
+        });
     }
 
     public Task<Boolean> uploadBookImage (Book book, Bitmap bitmap) {
@@ -596,7 +605,6 @@ public class DatabaseWrapper {
         return null;
 
     }
-
 
 
     public abstract static class OnChangeListener {

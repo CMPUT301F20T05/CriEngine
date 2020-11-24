@@ -77,58 +77,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newBookAuthor" />
 
-    <EditText
-        android:id="@+id/newBookImageURL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="@string/book_imageurl_hint"
-        android:inputType="textUri|textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newBookISBN" />
-
     <Button
         android:id="@+id/newBookSaveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/save_button"
+        android:text="@string/add_book_save_button"
         android:textAllCaps="false"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintEnd_toStartOf="@+id/newBookCancelButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/newBookCancelButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/cancel_button"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/newBookSaveButton" />
-
-    <LinearLayout
-        android:id="@+id/popupMessage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/newBookWarning"
@@ -142,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newBookImageURL" />
+        app:layout_constraintTop_toBottomOf="@+id/newBookISBN" />
 
     <fragment
         android:id="@+id/bottom_navigation_frag"
@@ -153,5 +114,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout="@layout/fragment_bottom_nav" />
+
+    <ImageView
+        android:id="@+id/newBookImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/newBookSaveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newBookWarning"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

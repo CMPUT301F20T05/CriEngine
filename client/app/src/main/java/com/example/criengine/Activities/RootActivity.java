@@ -44,7 +44,6 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
     private DatabaseWrapper dbw;
-    static public Profile dummyProfile;
 
     public enum PAGE {
         SEARCH(0),
@@ -76,12 +75,6 @@ public class RootActivity extends AppCompatActivity {
         setContentView(R.layout.activity_root);
 
         dbw = DatabaseWrapper.getWrapper();
-
-        // Dummy Code starts here.
-        dummyProfile = new Profile();
-        dummyProfile.addNotification(new Notification("Your request for \"Book 1\" was rejected."));
-        dummyProfile.addNotification(new Notification("You got a new request for \"Book 2\"."));
-        // Dummy code ends here.
 
         navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new onNavItemSelect());
@@ -163,7 +156,7 @@ public class RootActivity extends AppCompatActivity {
                 new OnSuccessListener<Profile>() {
                     @Override
                     public void onSuccess(Profile profile) {
-                        int notificationCount = dummyProfile.getNotifications().size();
+                        int notificationCount = profile.getNotifications().size();
                         BadgeDrawable badge = navigation
                                 .getOrCreateBadge(R.id.bottom_navigation_item_notifications);
                         badge.setVisible(notificationCount > 0);

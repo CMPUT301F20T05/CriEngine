@@ -41,10 +41,9 @@
     <string name="book_desc_hint">Description</string>
     <string name="book_author_hint">Author</string>
     <string name="book_isbn_hint">ISBN</string>
-    <string name="book_status_hint">Status</string>
-    <string name="book_imageurl_hint">Image URL (optional)</string>
     <string name="book_warning">*Please Fill Out All Fields</string>
     <string name="popup_confirm">Book Created</string>
+    <string name="add_book_save_button">Save and Add Photo</string>
 
     <!--  Book Details Activity  -->
     <string name="book_title_placeholder">Title</string>

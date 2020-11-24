@@ -44,12 +44,9 @@ public class MyProfileFragmentTest {
 
         solo.clickOnButton("Login");
 
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
+        // Returns True if you can find "My Books" on the screen. Waits 30 seconds to find
         // at least 1 match.
-        TestCase.assertTrue(solo.waitForText("My Books", 1, 10000));
+        assertTrue(solo.waitForText("My Books", 1, 30000));
     }
 
     /**
