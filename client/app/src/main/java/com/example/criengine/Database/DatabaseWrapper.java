@@ -60,7 +60,7 @@ public class DatabaseWrapper {
     public DatabaseWrapper(DatabaseWrapper dbw) {
         DatabaseWrapper.dbw = dbw;
         this.user = dbw.user;
-        this.userId = null;g
+        this.userId = null;
         db = null;
         users = null;
         books = null;
