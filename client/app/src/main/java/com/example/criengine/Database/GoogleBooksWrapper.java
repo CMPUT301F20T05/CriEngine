@@ -59,7 +59,6 @@ public class GoogleBooksWrapper {
                 String description;
                 JSONArray authors;
                 String authorsString = "";
-
                 if (jBook.isNull("title")) {
                     title = null;
                 } else {
@@ -84,7 +83,7 @@ public class GoogleBooksWrapper {
                     }
                 }
 
-                Book book = new Book(null, null, title, authorsString, description, null, "available");
+                Book book = new Book(null, null, title, authorsString, description, isbn, "available");
 
                 return book;
 
