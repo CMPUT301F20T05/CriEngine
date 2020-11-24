@@ -111,13 +111,22 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                 break;
             case "requested":
                 actionButton.setText("Cancel");
-                // todo: remove once implemented functionality
-                actionButton.setEnabled(false);
                 actionButton.setOnClickListener(
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // TODO: remove request from profile && book
+                                book.removeRequesters(dbw.userId);
+                                dbw.declineRequest(dbw.userId, book.getBookID()).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Boolean> task) {
+                                        if (book.getRequesters().size() == 0) {
+                                            book.setStatus("available");
+                                            dbw.addBook(book);
+                                        }
+                                        ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
+                                    }
+                                });
+
                             }
                         }
                 );

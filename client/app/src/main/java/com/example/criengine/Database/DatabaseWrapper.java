@@ -405,6 +405,8 @@ public class DatabaseWrapper {
             };
         });
     }
+
+
     public Task<Boolean> acceptRequest (final String borrowerUid, final String bookID) {
         return db.runTransaction(new Transaction.Function<Boolean>() {
             @Nullable
@@ -460,7 +462,11 @@ public class DatabaseWrapper {
                 bookList.remove(bookID);
                 profileList.remove(borrowerUid);
                 //TODO: add date to notifications
-                notificationList.add(bookID + "|Your request for " + title + " was rejected");
+                if (borrowerUid != userId) {
+                    notificationList.add(bookID + "|Your request for " + title + " was rejected");
+                } else {
+                    notificationList.add(bookID + "|Your request for " + title + " was cancelled");
+                }
 
                 transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
                 transaction.update(books.document(bookID), "requesters", profileList);

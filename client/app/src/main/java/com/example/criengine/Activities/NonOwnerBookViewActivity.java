@@ -164,4 +164,16 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         editText.setBackgroundColor(Color.TRANSPARENT);
         editText.setTextColor(Color.BLACK);
     }
+
+    //TODO return to the correct page by passing startpage as intent
+    @Override
+    public void onBackPressed() {
+        // go back to previous activity
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", RootActivity.PAGE.SEARCH);
+        startActivity(intent);
+    }
+
+
+
 }
