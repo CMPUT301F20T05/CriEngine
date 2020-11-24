@@ -75,6 +75,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 book.setImageURL(null);
+                photo = null;
                 confirmDialog.show();
             }
         });
@@ -145,7 +146,7 @@ public class CameraActivity extends AppCompatActivity {
             // BitMap is data structure of image file which store the image in memory.
             photo = (Bitmap) data.getExtras().get("data");
 
-            // Set the image in imageview for display
+            // Set the image in image view for display
             newImage.setImageBitmap(photo);
         }
     }
@@ -157,6 +158,7 @@ public class CameraActivity extends AppCompatActivity {
     private void goBack() {
         Intent intent = new Intent(this, MyBookActivity.class);
         intent.putExtra("Book", book);
+        intent.putExtra("photo", photo);
         startActivity(intent);
     }
 

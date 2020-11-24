@@ -51,7 +51,7 @@ public class ViewMyBookTest {
         // at least 1 match.
         assertTrue(solo.waitForText("My Books", 1, 50000));
 
-        addBook();
+        TestUtilityMethods.addBook(solo);
 
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
@@ -70,9 +70,6 @@ public class ViewMyBookTest {
 
         // Test to see if the changes were acknowledged.
         assertTrue(solo.waitForText("A good title.", 1, 2000));
-
-        solo.goBack();
-        cleanup();
     }
 
     /**
@@ -89,9 +86,6 @@ public class ViewMyBookTest {
         // Make sure that the changes were not saved.
         assertTrue(solo.waitForText("Delete Book", 1, 2000));
         assertTrue(solo.waitForText("Mock Title", 1, 2000));
-
-        solo.goBack();
-        cleanup();
     }
 
     /**
@@ -107,34 +101,6 @@ public class ViewMyBookTest {
 
         // Make sure we didn't change screens.
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
-
-        solo.goBack();
-        cleanup();
-    }
-
-    /**
-     * Add a mock book.
-     */
-    public void addBook() {
-        solo.clickOnButton("Add A Book");
-        solo.enterText((EditText) solo.getView(R.id.newBookTitle), "Mock Title");
-        solo.enterText((EditText) solo.getView(R.id.newBookDesc), "This is a new Description");
-        solo.enterText((EditText) solo.getView(R.id.newBookAuthor), "This is a new Author");
-        solo.enterText((EditText) solo.getView(R.id.newBookISBN), "This is a new ISBN");
-        solo.clickOnButton("Save and Add Photo");
-        solo.clickOnText("NOT NOW");
-    }
-
-    /**
-     * Delete the book to make it ready for the next test.
-     */
-    public void cleanup() {
-        solo.clickInList(0);
-        solo.clickOnButton("Delete Book");
-        solo.clickOnText("DELETE");
-
-        // Sleep for 3 seconds to let the database properly delete the book.
-        solo.sleep(3000);
     }
 
     /**
@@ -142,6 +108,8 @@ public class ViewMyBookTest {
      */
     @After
     public void tearDown() {
+        solo.goBack();
+        TestUtilityMethods.cleanup(solo);
         solo.finishOpenedActivities();
     }
 }

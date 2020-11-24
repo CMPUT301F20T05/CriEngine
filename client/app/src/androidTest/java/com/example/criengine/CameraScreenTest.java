@@ -58,7 +58,7 @@ public class CameraScreenTest {
         // at least 1 match. This is to counter potentially long wait times when logging in.
         assertTrue(solo.waitForText("My Books", 1, 50000));
 
-        addBook();
+        TestUtilityMethods.addBook(solo);
 
         solo.clickInList(0);
 
@@ -82,8 +82,6 @@ public class CameraScreenTest {
 
         // Asserts that the current activity is the My Book activity.
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
-        solo.goBack();
-        cleanup();
     }
 
     /**
@@ -96,8 +94,6 @@ public class CameraScreenTest {
 
         // Make sure that the user is still in the same activity.
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
-        solo.goBack();
-        cleanup();
     }
 
     /**
@@ -139,34 +135,6 @@ public class CameraScreenTest {
         solo.goBack();
         solo.assertCurrentActivity("Wrong Activity", MyBookActivity.class);
         assertTrue(solo.waitForText("This is a better title.", 1, 2000));
-
-        solo.goBack();
-        cleanup();
-    }
-
-    /**
-     * Add a mock book.
-     */
-    public void addBook() {
-        solo.clickOnButton("Add A Book");
-        solo.enterText((EditText) solo.getView(R.id.newBookTitle), "Mock Title");
-        solo.enterText((EditText) solo.getView(R.id.newBookDesc), "This is a new Description");
-        solo.enterText((EditText) solo.getView(R.id.newBookAuthor), "This is a new Author");
-        solo.enterText((EditText) solo.getView(R.id.newBookISBN), "This is a new ISBN");
-        solo.clickOnButton("Save and Add Photo");
-        solo.clickOnText("NOT NOW");
-    }
-
-    /**
-     * Delete the book to make it ready for the next test.
-     */
-    public void cleanup() {
-        solo.clickInList(0);
-        solo.clickOnButton("Delete Book");
-        solo.clickOnText("DELETE");
-
-        // Sleep for 3 seconds to let the database properly delete the book.
-        solo.sleep(3000);
     }
 
     /**
@@ -174,6 +142,8 @@ public class CameraScreenTest {
      */
     @After
     public void tearDown() {
+        solo.goBack();
+        TestUtilityMethods.cleanup(solo);
         solo.finishOpenedActivities();
     }
 }

@@ -51,7 +51,7 @@ public class MyBooksListTest {
         // at least 1 match. This is to counter potentially long wait times when logging in.
         assertTrue(solo.waitForText("My Books", 1, 50000));
 
-        addBook();
+        TestUtilityMethods.addBook(solo);
     }
 
     /**
@@ -98,33 +98,6 @@ public class MyBooksListTest {
         // Assert that only the available books are displayed.
         assertFalse(solo.waitForText("Accepted", 1, 1000));
         assertFalse(solo.waitForText("Borrowed", 1, 1000));
-
-        cleanup();
-    }
-
-    /**
-     * Add a mock book.
-     */
-    public void addBook() {
-        solo.clickOnButton("Add A Book");
-        solo.enterText((EditText) solo.getView(R.id.newBookTitle), "Mock Title");
-        solo.enterText((EditText) solo.getView(R.id.newBookDesc), "This is a new Description");
-        solo.enterText((EditText) solo.getView(R.id.newBookAuthor), "This is a new Author");
-        solo.enterText((EditText) solo.getView(R.id.newBookISBN), "This is a new ISBN");
-        solo.clickOnButton("Save and Add Photo");
-        solo.clickOnText("NOT NOW");
-    }
-
-    /**
-     * Delete the book to make it ready for the next test.
-     */
-    public void cleanup() {
-        solo.clickInList(0);
-        solo.clickOnButton("Delete Book");
-        solo.clickOnText("DELETE");
-
-        // Sleep for 3 seconds to let the database properly delete the book.
-        solo.sleep(3000);
     }
 
     /**
@@ -132,6 +105,7 @@ public class MyBooksListTest {
      */
     @After
     public void tearDown() {
+        TestUtilityMethods.cleanup(solo);
         solo.finishOpenedActivities();
     }
 }

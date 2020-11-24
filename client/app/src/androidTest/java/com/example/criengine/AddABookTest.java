@@ -88,7 +88,7 @@ public class AddABookTest {
         solo.clickInList(0);
         assertTrue(solo.waitForText("Mock Title", 1, 1000));
         solo.goBack();
-        cleanup();
+        TestUtilityMethods.cleanup(solo);
     }
 
     /**
@@ -114,7 +114,7 @@ public class AddABookTest {
 
         assertTrue(solo.waitForText("Mock Title", 1, 1000));
         solo.goBack();
-        cleanup();
+        TestUtilityMethods.cleanup(solo);
     }
 
     /**
@@ -124,18 +124,6 @@ public class AddABookTest {
     public void scanButtonTest() {
         solo.clickOnButton("Scan");
         solo.assertCurrentActivity("Wrong Activity", ScanActivity.class);
-    }
-
-    /**
-     * Delete the book to make it ready for the next test.
-     */
-    public void cleanup() {
-        solo.clickInList(0);
-        solo.clickOnButton("Delete Book");
-        solo.clickOnText("DELETE");
-
-        // Sleep for 3 seconds to let the database properly delete the book.
-        solo.sleep(3000);
     }
 
     /**
