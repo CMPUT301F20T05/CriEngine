@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
 import com.example.criengine.Fragments.FilterFragment.OnFragmentInteractionListener;
@@ -25,11 +26,13 @@ import java.util.List;
  */
 public class RequestedBooksFragment extends RootFragment implements OnFragmentInteractionListener {
     Button filterButton;
+    ListView bookListView;
     List<String> filters = Arrays.asList("Requested", "Watched", "Borrowing", "Accepted");
     List<String> activeFilters = new ArrayList<>();
     ArrayList<Book> borrowerBooks = new ArrayList<>();
     ArrayList<Book> displayBooks = new ArrayList<>();
     BorrowerBooksListAdapter borrowerBooksListAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     /**
      * Get the layout associated with the fragment.
@@ -67,8 +70,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
 
         borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks);
 
-        final ListView bookNameTextView = getView().findViewById(R.id.bookListView);
-        bookNameTextView.setAdapter(borrowerBooksListAdapter);
+        bookListView = getView().findViewById(R.id.bookListView);
+        bookListView.setAdapter(borrowerBooksListAdapter);
 
         dbw.getBorrowedOrRequestedBooks(dbw.userId).addOnSuccessListener(
                 new OnSuccessListener<List<Book>>() {
@@ -80,6 +83,12 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                     }
                 }
         );
+
+        // Setup Swipe refresh layout to use default root fragment lister
+        swipeRefreshLayout = getView().findViewById(R.id.my_requests_swipe_refresh_layout);
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
     }
 
     /**

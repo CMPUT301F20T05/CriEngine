@@ -5,15 +5,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.example.criengine.R;
 
 /**
  * General ProfileActivity class that sets up common features.
  */
 public abstract class ProfileFragment extends RootFragment {
-
     ImageButton userImageButton;
     TextView userTextView;
     EditText bioEditText;
