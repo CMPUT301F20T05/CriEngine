@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.SelectGeopage;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.R;
@@ -89,9 +90,12 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                     userRequests.clear();
                     // TODO: Push changes to database.
 
-                    Intent intent = new Intent(v.getContext(), RootActivity.class);
-                    intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                    v.getContext().startActivity(intent);
+                    Intent intentGeopage = new Intent(v.getContext(), SelectGeopage.class);
+                    v.getContext().startActivity(intentGeopage);
+
+//                    Intent intent = new Intent(v.getContext(), RootActivity.class);
+//                    intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+//                    v.getContext().startActivity(intent);
                 }
             }
         );

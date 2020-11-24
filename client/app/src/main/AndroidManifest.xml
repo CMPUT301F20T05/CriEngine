@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -54,6 +55,7 @@
         <activity android:name=".Activities.BookActivity" />
         <activity android:name=".Activities.UserProfileActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Activities.SelectGeopage" />
     </application>
 
 </manifest>

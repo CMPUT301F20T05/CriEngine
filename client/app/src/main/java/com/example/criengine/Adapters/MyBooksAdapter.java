@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RequestsForBookActivity;
+import com.example.criengine.Activities.SelectGeopage;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 import java.util.ArrayList;
@@ -113,8 +114,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                         @Override
                         public void onClick(View v) {
                             // TODO: Redirect to Geo-Location page.
+                            Intent intent = new Intent(v.getContext(), SelectGeopage.class);
+                            v.getContext().startActivity(intent);
                         }
                     });
+                    actionButton.setEnabled(true);
                 } else {
                     actionButton.setText("Scan");
                     actionButton.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +129,6 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                     });
                 }
                 actionButton.setVisibility(View.VISIBLE);
-                actionButton.setEnabled(false); // Temp disable the button.
                 break;
             default:
                 statusText.setText("Available");

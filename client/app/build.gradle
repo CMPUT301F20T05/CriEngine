@@ -51,5 +51,8 @@ dependencies {
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.5.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-geojson:5.6.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-services:5.6.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-sdk-core:5.6.0'
 }
