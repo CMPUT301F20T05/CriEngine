@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.SelectGeopage;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
@@ -64,11 +65,11 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         Button acceptUser = view.findViewById(R.id.user_accept);
         Button rejectUser = view.findViewById(R.id.user_reject);
 
-        // Get the name of the user.
-        final String name = userRequests.get(position);
+        // Get the uid of the user.
+        final String uid = userRequests.get(position);
 
         // Set the text for names / buttons.
-        username.setText(name);
+        username.setText(uid);
         acceptUser.setText("✔");
         rejectUser.setText("✖");
 
@@ -76,16 +77,11 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    for (int i = 0; i < userRequests.size(); i++) {
-                        if (userRequests.get(i).equals(name)) {
-                            dbw.acceptRequest(userRequests.get(i), book.getBookID());
-                        } else {
-                            dbw.declineRequest(userRequests.get(i), book.getBookID());
-                        }
-                    }
-                    Intent intent = new Intent(v.getContext(), RootActivity.class);
-                    intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                    v.getContext().startActivity(intent);
+                    Intent intentGeopage = new Intent(v.getContext(), SelectGeopage.class);
+                    intentGeopage.putExtra("acceptedUser", uid);
+                    intentGeopage.putExtra("users", userRequests);
+                    intentGeopage.putExtra("book", book);
+                    v.getContext().startActivity(intentGeopage);
                 }
             }
         );
@@ -94,9 +90,9 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dbw.declineRequest(name, book.getBookID());
+                    dbw.declineRequest(uid, book.getBookID());
 
-                    userRequests.remove(name);
+                    userRequests.remove(uid);
                     if (userRequests.size() == 0) {
                         book.setStatus("available");
                         dbw.addBook(book);
