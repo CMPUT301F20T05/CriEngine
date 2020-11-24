@@ -21,8 +21,8 @@ import java.util.ArrayList;
  * Outstanding Issues:
  * - Does not push changes to the database.
  */
-public class NotificationAdapter extends ArrayAdapter<Notification> {
-    private ArrayList<Notification> notificationItems;
+public class NotificationAdapter extends ArrayAdapter<String> {
+    private ArrayList<String> notificationItems;
     private Context context;
     private Profile profile;
     private DatabaseWrapper dbw;
@@ -33,7 +33,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
      * @param notificationItems The ArrayList of notifications.
      */
     public NotificationAdapter(@NonNull Context context,
-                               @NonNull ArrayList<Notification> notificationItems,
+                               @NonNull ArrayList<String> notificationItems,
                                Profile profile,
                                DatabaseWrapper dbw
                                ) {
@@ -68,7 +68,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         Button dismissButton = view.findViewById(R.id.actionButton);
 
         // Object to be displayed.
-        final Notification notification = notificationItems.get(position);
+        final Notification notification = new Notification(notificationItems.get(position));
 
         // Set the text and date to their proper values.
         notificationDescription.setText(notification.getDescription());
@@ -76,16 +76,17 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 
         // Set the button text.
         dismissButton.setText("Dismiss");
+        final int finalPos = position;
 
         // Set an action for the button when its clicked.
         dismissButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationItems.remove(notification);
+                notificationItems.remove(finalPos);
 
                 // Set the new notification list. From here we can push to the database.
                 profile.setNotifications(notificationItems);
-                // TODO: push changes to database.
+                dbw.addProfile(profile);
 
                 notifyDataSetChanged();
                 dbw.notifyChanged();
