@@ -134,7 +134,12 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
             // The user has already requested this book.
             requestBookButton.setEnabled(false);
             requestBookButton.setText("Request Sent");
+        } else if (userProfile.getBooksOwned().contains(book.getBookID())) {
+            // The book is owned by the user.
+            requestBookButton.setEnabled(false);
+            requestBookButton.setText("This is your Book");
         } else if (!book.getStatus().equals("borrowed") && !book.getStatus().equals("accepted")) {
+            // The book is available for being requested.
             requestBookButton.setEnabled(true);
             requestBookButton.setText("Request This Book");
         } else {
