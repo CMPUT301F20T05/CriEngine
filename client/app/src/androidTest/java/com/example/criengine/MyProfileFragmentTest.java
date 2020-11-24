@@ -6,10 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
-
-import junit.framework.TestCase;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,9 +41,9 @@ public class MyProfileFragmentTest {
 
         solo.clickOnButton("Login");
 
-        // Returns True if you can find "My Books" on the screen. Waits 30 seconds to find
-        // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 30000));
+        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
+        // at least 1 match. This is to counter potentially long wait times when logging in.
+        assertTrue(solo.waitForText("My Books", 1, 50000));
     }
 
     /**

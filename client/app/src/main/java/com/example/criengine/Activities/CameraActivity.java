@@ -24,7 +24,6 @@ import com.example.criengine.R;
  */
 public class CameraActivity extends AppCompatActivity {
     private Button saveButton;
-    private Button cancelButton;
     private Button deleteButton;
     private ImageView newImage;
     private static final int pic_id = 1888;
@@ -56,7 +55,6 @@ public class CameraActivity extends AppCompatActivity {
 
         // Set the view objects.
         deleteButton = findViewById(R.id.delete_picture);
-        cancelButton = findViewById(R.id.cancel_picture);
         saveButton = findViewById(R.id.save_camera_image);
         newImage = findViewById(R.id.camera_image);
         confirmDialog = confirmDelete();
@@ -78,15 +76,6 @@ public class CameraActivity extends AppCompatActivity {
             public void onClick(View v) {
                 book.setImageURL(null);
                 confirmDialog.show();
-            }
-        });
-
-        // Define the actions to perform when clicking the cancel button.
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photo = null;
-                goBack();
             }
         });
 
@@ -168,7 +157,6 @@ public class CameraActivity extends AppCompatActivity {
     private void goBack() {
         Intent intent = new Intent(this, MyBookActivity.class);
         intent.putExtra("Book", book);
-        intent.putExtra("photo", photo);
         startActivity(intent);
     }
 

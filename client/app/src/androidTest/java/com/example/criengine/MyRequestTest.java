@@ -1,15 +1,18 @@
 package com.example.criengine;
 
 import android.widget.EditText;
+
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -29,13 +32,7 @@ public class MyRequestTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-    }
 
-    /**
-     * Test to see if we can navigate to my requests.
-     */
-    @Test
-    public void navigateToMyRequests() {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
@@ -45,13 +42,16 @@ public class MyRequestTest {
 
         solo.clickOnButton("Login");
 
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
+        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
+        // at least 1 match. This is to counter potentially long wait times when logging in.
+        assertTrue(solo.waitForText("My Books", 1, 50000));
+    }
 
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
-        // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
+    /**
+     * Test to see if we can navigate to my requests.
+     */
+    @Test
+    public void navigateToMyRequests() {
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_my_requests));
 
         assertTrue(solo.waitForText("My Requests", 1, 2000));
