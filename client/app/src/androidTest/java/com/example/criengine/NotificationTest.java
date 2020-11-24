@@ -28,10 +28,9 @@ public class NotificationTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
 
@@ -49,12 +48,9 @@ public class NotificationTest {
 
         solo.clickOnButton("Login");
 
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
+        // Returns True if you can find "My Books" on the screen. Waits 30 seconds to find
         // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 10000));
+        assertTrue(solo.waitForText("My Books", 1, 30000));
 
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
 
@@ -63,10 +59,9 @@ public class NotificationTest {
 
     /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
         solo.finishOpenedActivities();
     }
 }

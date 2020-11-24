@@ -3,26 +3,33 @@ package com.example.criengine.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * Handles displaying information about a book. Items such as the title, author, description etc.
  * Outstanding Issues:
- * - Does not push changes to database.
  */
 public class MyBookActivity extends BookActivity {
     private Button editCancelBookButton;
     private Button seeRequestsButton;
     private Button deleteSaveBookButton;
+    private ImageView image;
+    public Bitmap transferImage;
+    private TextView imageInfo;
 
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
@@ -33,6 +40,7 @@ public class MyBookActivity extends BookActivity {
     private Book book;
 
     AlertDialog confirmDialog;
+    AlertDialog confirmNavigate;
 
     private boolean editMode;
 
@@ -60,6 +68,7 @@ public class MyBookActivity extends BookActivity {
      */
     private void setPageViewOnly() {
         editCancelBookButton.setText(R.string.edit_book);
+        imageInfo.setVisibility(View.INVISIBLE);
         if (book.getRequesters().size() == 0) {
             // Only allow the user to see requests if there are requests.
             seeRequestsButton.setVisibility(View.GONE);
@@ -77,6 +86,7 @@ public class MyBookActivity extends BookActivity {
     private void setPageEditable() {
         deleteSaveBookButton.setText(R.string.save_button);
         seeRequestsButton.setVisibility(View.INVISIBLE);
+        imageInfo.setVisibility(View.VISIBLE);
         editCancelBookButton.setText(R.string.cancel_button);
 
         enableEditText(bookTitle);
@@ -122,6 +132,7 @@ public class MyBookActivity extends BookActivity {
         // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
+            transferImage = (Bitmap) getIntent().getParcelableExtra("photo");
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
@@ -129,10 +140,28 @@ public class MyBookActivity extends BookActivity {
         }
 
         // my book exclusive UI component
+        image = findViewById(R.id.bookView_image);
+        imageInfo = findViewById(R.id.click_to_edit_image);
         editCancelBookButton = findViewById(R.id.edit_book_button);
         seeRequestsButton = findViewById(R.id.see_requests_button);
         deleteSaveBookButton = findViewById(R.id.delete_book_button);
         confirmDialog = confirmDelete();
+        confirmNavigate = confirmNavigateToCamera();
+
+        image.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_book));
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editMode) {
+                    if (checkForChanges()) {
+                        confirmNavigate.show();
+                    } else {
+                        navigateToCamera();
+                    }
+                }
+            }
+        });
 
         editCancelBookButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,10 +196,7 @@ public class MyBookActivity extends BookActivity {
                 if (editMode) {
                     setPageViewOnly();
                     editMode = !editMode;
-                    book.setTitle(bookTitle.getText().toString());
-                    book.setDescription(bookDetail.getText().toString());
-                    book.setAuthor(bookAuthor.getText().toString());
-                    dbw.addBook(book);
+                    saveBook();
                 } else {
                     confirmDialog.show();
                 }
@@ -199,10 +225,29 @@ public class MyBookActivity extends BookActivity {
             bookBorrowerLabel.setVisibility(View.GONE);
             bookBorrower.setVisibility(View.GONE);
         }
-//        bookImage.setImageURI(mockBook.getImageURL());
+
+        prevAuthor = bookAuthor.getText().toString();
+        prevDetail = bookDetail.getText().toString();
+        prevTitle = bookTitle.getText().toString();
 
         editMode = false;
         setPageViewOnly();
+
+        // If an image is passed in (ie. we just took a picture and are returning to this screen,
+        // then display that image without needing to make a db call. Otherwise make the call.
+        if (transferImage != null) {
+            image.setImageBitmap(transferImage);
+        } else if (book.getImageURL() != null) {
+            dbw.downloadBookImage(book).addOnSuccessListener(new OnSuccessListener<Bitmap>() {
+                @Override
+                public void onSuccess(Bitmap bitmap) {
+                    if (bitmap != null) {
+                        image.setImageBitmap(bitmap);
+                        transferImage = bitmap;
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -211,8 +256,7 @@ public class MyBookActivity extends BookActivity {
      * @return The confirmation dialog. If user selects to delete the book, then redirect to
      *          the main activity.
      */
-    private AlertDialog confirmDelete()
-    {
+    private AlertDialog confirmDelete() {
         return new AlertDialog.Builder(this)
                 // set title and message and button behaviors
                 .setTitle("Delete Book")
@@ -231,5 +275,66 @@ public class MyBookActivity extends BookActivity {
                     }
                 })
                 .create();
+    }
+
+    /**
+     * Retrieved from:
+     * https://stackoverflow.com/questions/11740311/android-confirmation-message-for-delete
+     * @return The confirmation dialog. If user selects to edit the image, then redirect to
+     *          the camera activity. Confirm whether they want to save their current changes or not
+     */
+    private AlertDialog confirmNavigateToCamera() {
+        return new AlertDialog.Builder(this)
+                // set title and message and button behaviors
+                .setTitle("Before you go...")
+                .setMessage("Do you want to save your changes?")
+                .setPositiveButton("SAVE & GO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                        saveBook();
+                        navigateToCamera();
+                    }
+
+                })
+                .setNegativeButton("DISCARD & GO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        navigateToCamera();
+                    }
+                })
+                .create();
+    }
+
+    /**
+     * Starts the camera activity.
+     */
+    private void navigateToCamera() {
+        Intent intent = new Intent(this, CameraActivity.class);
+        intent.putExtra("Book", book);
+        intent.putExtra("photo", transferImage);
+        startActivity(intent);
+    }
+
+    /**
+     * Saves to book to the database.
+     */
+    private void saveBook() {
+        book.setTitle(bookTitle.getText().toString());
+        book.setDescription(bookDetail.getText().toString());
+        book.setAuthor(bookAuthor.getText().toString());
+        dbw.addBook(book);
+    }
+
+    /**
+     * Check if any changes were made
+     * @return True if changes were made. False otherwise.
+     */
+    private boolean checkForChanges() {
+        if (!prevAuthor.equals(bookAuthor.getText().toString())
+                || !prevDetail.equals(bookDetail.getText().toString())
+                || !prevTitle.equals(bookTitle.getText().toString())) {
+            return true;
+        }
+        return false;
     }
 }
