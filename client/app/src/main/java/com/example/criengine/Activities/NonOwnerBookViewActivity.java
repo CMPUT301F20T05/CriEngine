@@ -36,6 +36,8 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     private ImageView image;
     private Profile userProfile;
 
+    // Testing config
+    private boolean PREVENT_BORROW_OWN_BOOK = false;
     /**
      * A custom onCreate() method. Allows for the usage for fragments in the activity.
      * Without this method, there is the possible issue of the fragment being null when it is called
@@ -134,7 +136,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
             // The user has already requested this book.
             requestBookButton.setEnabled(false);
             requestBookButton.setText("Request Sent");
-        } else if (userProfile.getBooksOwned().contains(book.getBookID())) {
+        } else if (userProfile.getBooksOwned().contains(book.getBookID()) && PREVENT_BORROW_OWN_BOOK) {
             // The book is owned by the user.
             requestBookButton.setEnabled(false);
             requestBookButton.setText("This is your Book");
@@ -162,4 +164,16 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         editText.setBackgroundColor(Color.TRANSPARENT);
         editText.setTextColor(Color.BLACK);
     }
+
+    //TODO return to the correct page by passing startpage as intent
+    @Override
+    public void onBackPressed() {
+        // go back to previous activity
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", RootActivity.PAGE.SEARCH);
+        startActivity(intent);
+    }
+
+
+
 }

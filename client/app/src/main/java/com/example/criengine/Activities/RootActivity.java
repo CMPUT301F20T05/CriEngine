@@ -1,5 +1,6 @@
 package com.example.criengine.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -206,5 +207,14 @@ public class RootActivity extends AppCompatActivity {
 //            super.onBackPressed();
         }
         return;
+    }
+
+    public void refresh(RootActivity.PAGE page) {
+        finish();
+        overridePendingTransition(0, 0);
+        Intent intent = getIntent();
+        intent.putExtra("Index", page);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }

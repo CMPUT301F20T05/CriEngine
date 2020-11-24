@@ -98,9 +98,9 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
                         dbw.addBook(book);
 
                         // Return to previous activity automatically.
-                        Intent intent = new Intent(v.getContext(), RootActivity.class);
+                        Intent intent = new Intent(context, RootActivity.class);
                         intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                        v.getContext().startActivity(intent);
+                        context.startActivity(intent);
                     }
                     notifyDataSetChanged();
                 }
