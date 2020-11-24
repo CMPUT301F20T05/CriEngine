@@ -1,7 +1,9 @@
 package com.example.criengine.Activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.permissions.PermissionsListener;
@@ -33,6 +37,7 @@ import com.mapbox.mapboxsdk.style.layers.Layer;
 import com.mapbox.mapboxsdk.style.layers.SymbolLayer;
 import com.mapbox.mapboxsdk.style.sources.GeoJsonSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -63,6 +68,11 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
     private LocationEngine locationEngine;
     private LatLng givenLocation;
     private Layer droppedMarkerLayer;
+    private DatabaseWrapper dbw;
+    private String acceptedUserID;
+    private ArrayList<String> requesters;
+    private Book requestedBook;
+
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -73,6 +83,18 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Grabs the accepted user, and book to accept.
+        if (getIntent().getExtras() != null) {
+            acceptedUserID = (String) getIntent().getSerializableExtra("acceptedUser");
+            requesters = (ArrayList<String>) getIntent().getSerializableExtra("users");
+            requestedBook = (Book) getIntent().getSerializableExtra("book");
+        } else {
+            Intent intent = new Intent(this, SomethingWentWrong.class);
+            startActivity(intent);
+            return;
+        }
+        dbw = DatabaseWrapper.getWrapper();
 
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
@@ -128,9 +150,20 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
                         public void onClick(View view) {
                             // Use the map target's coordinates to store the location
                             final LatLng mapTargetLatLng = mapboxMap.getCameraPosition().target;
-                            // TODO: put this in db
-                            System.out.println(mapTargetLatLng);
-                            finish();
+                            requestedBook.setGeolocation(mapTargetLatLng.toString());
+                            dbw.addBook(requestedBook);
+                            // Reject every request except the accepted one
+                            for (int i = 0; i < requesters.size(); i++) {
+                                if (requesters.get(i).equals(acceptedUserID)) {
+                                    dbw.acceptRequest(requesters.get(i), requestedBook.getBookID());
+                                } else {
+                                    dbw.declineRequest(requesters.get(i), requestedBook.getBookID());
+                                }
+                            }
+//                            finish();
+                            Intent intent = new Intent(view.getContext(), RootActivity.class);
+                            intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+                            view.getContext().startActivity(intent);
                         }
                     });
                 } else {

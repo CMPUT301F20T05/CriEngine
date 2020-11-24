@@ -108,26 +108,14 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 break;
             case "accepted":
                 statusText.setText("Accepted");
-                if (book.getGeolocation() == null) {
-                    actionButton.setText("Location");
-                    actionButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO: Redirect to Geo-Location page.
-                            Intent intent = new Intent(v.getContext(), SelectGeopage.class);
-                            v.getContext().startActivity(intent);
-                        }
-                    });
-                    actionButton.setEnabled(true);
-                } else {
-                    actionButton.setText("Scan");
-                    actionButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO: Redirect to Scan activity.
-                        }
-                    });
-                }
+                actionButton.setText("Scan");
+                actionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: Redirect to Scan activity.
+                    }
+                });
+
                 actionButton.setVisibility(View.VISIBLE);
                 break;
             default:
