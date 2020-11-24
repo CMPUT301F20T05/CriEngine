@@ -396,7 +396,7 @@ public class DatabaseWrapper {
                 bookList.add(bookID);
                 profileList.add(borrowerUid);
                 //TODO: add date to notifications
-                notificationList.add(bookID + ",You got a new request for " + title + "!");
+                notificationList.add(bookID + "|You got a new request for " + title + "!");
 
                 transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
                 transaction.update(users.document(borrowerUid), "notifications", notificationList);
@@ -424,7 +424,7 @@ public class DatabaseWrapper {
                 }
 
                 //TODO: add date to notifications
-                notificationList.add(bookID + ",Your request for " + title + " was accepted");
+                notificationList.add(bookID + "|Your request for " + title + " was accepted");
 
                 transaction.update(books.document(bookID), "status", "accepted");
                 transaction.update(users.document(borrowerUid), "notifications", notificationList);
@@ -461,7 +461,7 @@ public class DatabaseWrapper {
                 bookList.remove(bookID);
                 profileList.remove(borrowerUid);
                 //TODO: add date to notifications
-                notificationList.add(bookID + ",Your request for " + title + " was rejected");
+                notificationList.add(bookID + "|Your request for " + title + " was rejected");
 
                 transaction.update(users.document(borrowerUid), "booksBorrowedOrRequested", bookList);
                 transaction.update(books.document(bookID), "requesters", profileList);

@@ -18,7 +18,7 @@ public class Notification {
      * @param notificationString The notification text to be turned into a notification object
      */
     public Notification(String notificationString) {
-        String[] parsedString = notificationString.split(",");
+        String[] parsedString = notificationString.split("\\|");
         this.bookID = parsedString[0];
         this.description = parsedString[1];
         //TODO: add date to notifications
