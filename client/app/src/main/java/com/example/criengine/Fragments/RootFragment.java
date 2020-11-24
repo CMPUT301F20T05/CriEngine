@@ -56,14 +56,16 @@ public abstract class RootFragment extends Fragment {
         }
         @Override
         public void onRefresh() {
-            dbw.notifyChanged();
-            new Handler().postDelayed(new Runnable() {
-                @Override public void run() {
-                    root.refresh();
-                    layout.setRefreshing(false);
-                }
-            }, 1500);
-
+            if(layout.isRefreshing()) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dbw.notifyChanged();
+                        root.refresh();
+                        layout.setRefreshing(false);
+                    }
+                }, 1500);
+            }
         }
     }
 }
