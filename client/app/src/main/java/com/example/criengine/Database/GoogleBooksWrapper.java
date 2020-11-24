@@ -108,7 +108,7 @@ public class GoogleBooksWrapper {
         URL url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:9780156012195");
         Book book = null;
         try {
-            book = new getBookTask().execute("9780156012195").get();
+            book = new getBookTask().execute(isbn).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
