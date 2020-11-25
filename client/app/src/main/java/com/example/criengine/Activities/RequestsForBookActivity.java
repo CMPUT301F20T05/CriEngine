@@ -1,17 +1,28 @@
 package com.example.criengine.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.example.criengine.Adapters.RequestsForBookAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Requests for Book Activity. Displays all users who have requested your available book & allows
@@ -25,6 +36,9 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
     private ListView userListView;
     private TextView header;
     private Book book;
+    private ArrayList<Profile> userList;
+    private DatabaseWrapper dbw;
+    private Context context;
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -35,8 +49,8 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_requests_for_book);
-
         // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
@@ -45,15 +59,23 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
             startActivity(intent);
             return;
         }
+        dbw = DatabaseWrapper.getWrapper();
 
-        // Set the adapter.
-        userListAdapter = new RequestsForBookAdapter(this, (ArrayList<String>) book.getRequesters(), book);
+        dbw.getBookBorrowers(book.getBookID()).addOnSuccessListener(new OnSuccessListener<List<Profile>>() {
+            @Override
+            public void onSuccess(List<Profile> profiles) {
+                userList = (ArrayList<Profile>) profiles;
+
+                // Set the adapter.
+                userListAdapter = new RequestsForBookAdapter(context, userList, book);
+                userListView.setAdapter(userListAdapter);
+            }
+        });
+
 
         userListView = findViewById(R.id.requestsListView);
         header = findViewById(R.id.requests_for_book_header);
         header.setText("Requests for \"" + book.getTitle() + "\"");
-
-        userListView.setAdapter(userListAdapter);
 
         // Opens to the book information screen when you click on a specific book.
         userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

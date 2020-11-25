@@ -1,12 +1,13 @@
 package com.example.criengine.Objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Creates a user profile.
  * Contains all information specific to a profile.
  */
-public class Profile {
+public class Profile implements Serializable {
     private String userID;
     private String email;
     private String username;
