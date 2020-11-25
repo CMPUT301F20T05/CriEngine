@@ -335,6 +335,31 @@ public class DatabaseWrapper {
                 });
     }
 
+    public Task<List<Profile>> getBookBorrowers(String bookID) {
+        return users
+                .whereArrayContains("booksBorrowedOrRequested", bookID)
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Profile>>() {
+                    @Override
+                    public List<Profile> then(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            try {
+                                return query.toObjects(Profile.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return new ArrayList<Profile>();
+                        }
+                    }
+                });
+    }
+
     /**
      * Get a list of all books in the database
      * @return list of all books

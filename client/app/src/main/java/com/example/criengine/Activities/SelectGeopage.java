@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
@@ -70,7 +72,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
     private Layer droppedMarkerLayer;
     private DatabaseWrapper dbw;
     private String acceptedUserID;
-    private ArrayList<String> requesters;
+    private ArrayList<Profile> requesters;
     private Book requestedBook;
 
 
@@ -87,7 +89,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
         // Grabs the accepted user, and book to accept.
         if (getIntent().getExtras() != null) {
             acceptedUserID = (String) getIntent().getSerializableExtra("acceptedUser");
-            requesters = (ArrayList<String>) getIntent().getSerializableExtra("users");
+            requesters = (ArrayList<Profile>) getIntent().getSerializableExtra("users");
             requestedBook = (Book) getIntent().getSerializableExtra("book");
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
@@ -154,16 +156,18 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
                             dbw.addBook(requestedBook);
                             // Reject every request except the accepted one
                             for (int i = 0; i < requesters.size(); i++) {
-                                if (requesters.get(i).equals(acceptedUserID)) {
-                                    dbw.acceptRequest(requesters.get(i), requestedBook.getBookID());
-                                } else {
-                                    dbw.declineRequest(requesters.get(i), requestedBook.getBookID());
+                                if (!requesters.get(i).getUserID().equals(acceptedUserID)) {
+                                    dbw.declineRequest(requesters.get(i).getUserID(), requestedBook.getBookID());
                                 }
                             }
-//                            finish();
-                            Intent intent = new Intent(view.getContext(), RootActivity.class);
-                            intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                            view.getContext().startActivity(intent);
+                            dbw.acceptRequest(acceptedUserID, requestedBook.getBookID()).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+                                    Intent intent = new Intent(view.getContext(), RootActivity.class);
+                                    intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+                                    view.getContext().startActivity(intent);
+                                }
+                            });
                         }
                     });
                 } else {

@@ -15,6 +15,7 @@ import com.example.criengine.Activities.SelectGeopage;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import java.util.ArrayList;
 
@@ -24,8 +25,8 @@ import java.util.ArrayList;
  * Outstanding Issues:
  * - Does not retrieve nor push changes to the database.
  */
-public class RequestsForBookAdapter extends ArrayAdapter<String> {
-    private ArrayList<String> userRequests;
+public class RequestsForBookAdapter extends ArrayAdapter<Profile> {
+    private ArrayList<Profile> userRequests;
     private Book book;
     private Context context;
     private DatabaseWrapper dbw;
@@ -35,7 +36,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
      * @param context The context of the activity.
      * @param userRequests The list of users requesting a book.
      */
-    public RequestsForBookAdapter(@NonNull Context context, @NonNull ArrayList<String> userRequests, Book book) {
+    public RequestsForBookAdapter(@NonNull Context context, @NonNull ArrayList<Profile> userRequests, Book book) {
         super(context, 0, userRequests);
         this.context = context;
         this.userRequests = userRequests;
@@ -66,10 +67,11 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         Button rejectUser = view.findViewById(R.id.user_reject);
 
         // Get the uid of the user.
-        final String uid = userRequests.get(position);
+        final Profile profile = userRequests.get(position);
+        String uid = profile.getUserID();
 
         // Set the text for names / buttons.
-        username.setText(uid);
+        username.setText(profile.getUsername());
         acceptUser.setText("✔");
         rejectUser.setText("✖");
 
