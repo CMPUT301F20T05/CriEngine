@@ -13,8 +13,14 @@ import androidx.annotation.Nullable;
 
 import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RequestsForBookActivity;
+import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Database.DatabaseWrapper;
+
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import java.util.ArrayList;
 
 /*
@@ -25,6 +31,7 @@ import java.util.ArrayList;
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
     private Context context;
+    private DatabaseWrapper dbw;
 
     /**
      * Constructor. Extends off of the array adapter.
@@ -35,6 +42,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         super(context, 0, bookItems);
         this.context = context;
         this.bookItems = bookItems;
+        dbw = DatabaseWrapper.getWrapper();
     }
 
     /**
@@ -78,12 +86,13 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         headerText.setText(book.getTitle());
 
         // Modify the button and status seen from the screen depending on the status of the book.
+        actionButton.setVisibility(View.VISIBLE);
+        actionButton.setEnabled(true);
         switch (book.getStatus()) {
             case "requested":
                 actionButton.setText("See Requests");
                 statusText.setText("Has Requests");
                 actionButton.setVisibility(View.VISIBLE);
-                actionButton.setEnabled(true); // Enable the button.
                 actionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -94,46 +103,51 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 });
                 break;
             case "borrowed":
-                actionButton.setText("Scan");
                 statusText.setText("Borrowed");
-                actionButton.setVisibility(View.VISIBLE);
-                actionButton.setEnabled(false); // Temp disable the button.
-                actionButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // TODO: Redirect to Scan activity.
-                    }
-                });
-                break;
-            case "accepted":
-                statusText.setText("Accepted");
-                if (book.getGeolocation() == null) {
-                    actionButton.setText("Location");
+                if(book.isConfirmationNeeded()) {
+                    actionButton.setVisibility(View.VISIBLE);
+                    actionButton.setText("Return");
                     actionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            // TODO: Redirect to Geo-Location page.
+                            dbw.confirmReturnBook(book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Boolean> task) {
+                                    ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
+                                }
+                            });
                         }
                     });
                 } else {
-                    actionButton.setText("Scan");
-                    actionButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO: Redirect to Scan activity.
-                        }
-                    });
+                    actionButton.setVisibility(View.GONE);
                 }
-                actionButton.setVisibility(View.VISIBLE);
-                actionButton.setEnabled(false); // Temp disable the button.
+                break;
+            case "accepted":
+                statusText.setText("Accepted");
+                    if (book.isConfirmationNeeded()) {
+                        actionButton.setText("Scanned!");
+                        actionButton.setEnabled(false);
+                    } else {
+                        actionButton.setText("Lend");
+                        actionButton.setEnabled(true);
+                        actionButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dbw.borrowBook(book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Boolean> task) {
+                                        ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
+                                    }
+                                });
+                            }
+                        });
+                    }
                 break;
             default:
                 statusText.setText("Available");
                 actionButton.setVisibility(View.GONE);
-                actionButton.setEnabled(false); // Temp disable the button.
                 break;
         }
-
         return view;
     }
 }

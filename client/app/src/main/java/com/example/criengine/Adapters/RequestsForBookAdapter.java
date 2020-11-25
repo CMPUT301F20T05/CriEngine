@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.SelectGeopage;
+import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.R;
@@ -26,6 +28,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
     private ArrayList<String> userRequests;
     private Book book;
     private Context context;
+    private DatabaseWrapper dbw;
 
     /**
      * Constructor.
@@ -37,6 +40,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         this.context = context;
         this.userRequests = userRequests;
         this.book = book;
+        this.dbw = DatabaseWrapper.getWrapper();
     }
 
     /**
@@ -61,37 +65,23 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         Button acceptUser = view.findViewById(R.id.user_accept);
         Button rejectUser = view.findViewById(R.id.user_reject);
 
-        // Get the name of the user.
-        final String name = userRequests.get(position);
+        // Get the uid of the user.
+        final String uid = userRequests.get(position);
 
         // Set the text for names / buttons.
-        username.setText(name);
+        username.setText(uid);
         acceptUser.setText("✔");
         rejectUser.setText("✖");
-
-        // Notifications to be sent to the appropriate users.
-        Notification rejectedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was refused.");
-        Notification acceptedNotification = new Notification("Your request on \"" + book.getTitle() + "\" was accepted!");
 
         acceptUser.setOnClickListener(
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    book.setStatus("accepted");
-                    // TODO: The user should be listed as a PotentialBorrower / Borrower on the book. (?)
-                    for (int i = 0; i < userRequests.size(); i++) {
-                        if (userRequests.get(i).equals(name)) {
-                            // TODO: Notify the accepted user + push changes to db.
-                        } else {
-                            // TODO: Notify the rejected user(s) + push changes to db.
-                        }
-                    }
-                    userRequests.clear();
-                    // TODO: Push changes to database.
-
-                    Intent intent = new Intent(v.getContext(), RootActivity.class);
-                    intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                    v.getContext().startActivity(intent);
+                    Intent intentGeopage = new Intent(v.getContext(), SelectGeopage.class);
+                    intentGeopage.putExtra("acceptedUser", uid);
+                    intentGeopage.putExtra("users", userRequests);
+                    intentGeopage.putExtra("book", book);
+                    v.getContext().startActivity(intentGeopage);
                 }
             }
         );
@@ -100,20 +90,18 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO: Notify the user of the rejection.
-                    userRequests.remove(name);
-                    // TODO: Push changes to database.
+                    dbw.declineRequest(uid, book.getBookID());
 
+                    userRequests.remove(uid);
                     if (userRequests.size() == 0) {
                         book.setStatus("available");
-                        // TODO: Push changes to database.
+                        dbw.addBook(book);
 
                         // Return to previous activity automatically.
-                        Intent intent = new Intent(v.getContext(), RootActivity.class);
+                        Intent intent = new Intent(context, RootActivity.class);
                         intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-                        v.getContext().startActivity(intent);
+                        context.startActivity(intent);
                     }
-
                     notifyDataSetChanged();
                 }
             }

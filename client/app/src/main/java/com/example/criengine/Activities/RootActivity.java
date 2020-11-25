@@ -1,5 +1,6 @@
 package com.example.criengine.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -12,13 +13,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.criengine.Database.DatabaseWrapper;
 
 import com.example.criengine.Fragments.BottomNavFragment;
-import com.example.criengine.Fragments.ErrorFragment;
 
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
 
+import com.example.criengine.Fragments.SearchBooksFragment;
 import com.example.criengine.Objects.Notification;
 import com.example.criengine.Objects.Profile;
 
@@ -44,7 +45,6 @@ public class RootActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
     private DatabaseWrapper dbw;
-    static public Profile dummyProfile;
 
     public enum PAGE {
         SEARCH(0),
@@ -76,12 +76,6 @@ public class RootActivity extends AppCompatActivity {
         setContentView(R.layout.activity_root);
 
         dbw = DatabaseWrapper.getWrapper();
-
-        // Dummy Code starts here.
-        dummyProfile = new Profile();
-        dummyProfile.addNotification(new Notification("Your request for \"Book 1\" was rejected."));
-        dummyProfile.addNotification(new Notification("You got a new request for \"Book 2\"."));
-        // Dummy code ends here.
 
         navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new onNavItemSelect());
@@ -125,7 +119,7 @@ public class RootActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return new ErrorFragment();
+                    return new SearchBooksFragment();
                 case 1:
                     return new NotificationFragment();
                 case 2:
@@ -163,7 +157,7 @@ public class RootActivity extends AppCompatActivity {
                 new OnSuccessListener<Profile>() {
                     @Override
                     public void onSuccess(Profile profile) {
-                        int notificationCount = dummyProfile.getNotifications().size();
+                        int notificationCount = profile.getNotifications().size();
                         BadgeDrawable badge = navigation
                                 .getOrCreateBadge(R.id.bottom_navigation_item_notifications);
                         badge.setVisible(notificationCount > 0);
@@ -213,5 +207,14 @@ public class RootActivity extends AppCompatActivity {
 //            super.onBackPressed();
         }
         return;
+    }
+
+    public void refresh(RootActivity.PAGE page) {
+        finish();
+        overridePendingTransition(0, 0);
+        Intent intent = getIntent();
+        intent.putExtra("Index", page);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }
