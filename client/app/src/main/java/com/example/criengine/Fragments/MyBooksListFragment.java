@@ -1,20 +1,22 @@
 package com.example.criengine.Fragments;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.criengine.Activities.AddBookActivity;
-import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
     private Button filterButton;
     private ListView headerText;
     private ArrayList<String> filterStatus = new ArrayList<>();
+    SwipeRefreshLayout swipeRefreshLayout;
 
     /**
      * Returns the layout.
@@ -99,6 +102,12 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
                 new MyBooksListFilterFragment(filterStatus).show(getChildFragmentManager(), "Filter_Status");
             }
         });
+
+        // Setup Swipe refresh layout to use default root fragment lister
+        swipeRefreshLayout = getView().findViewById(R.id.my_books_swipe_refresh_layout);
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
     }
 
     /**
