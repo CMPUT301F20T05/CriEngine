@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Activities.SelectGeopage;
+import com.example.criengine.Activities.UserProfileActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Notification;
@@ -72,6 +75,15 @@ public class RequestsForBookAdapter extends ArrayAdapter<String> {
         username.setText(uid);
         acceptUser.setText("✔");
         rejectUser.setText("✖");
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), UserProfileActivity.class);
+                intent.putExtra("userId", uid);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         acceptUser.setOnClickListener(
             new View.OnClickListener() {

@@ -54,14 +54,6 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
         header.setText("Requests for \"" + book.getTitle() + "\"");
 
         userListView.setAdapter(userListAdapter);
-
-        // Opens to the book information screen when you click on a specific book.
-        userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: redirect to view the user profile.
-            }
-        });
     }
 
     /**
