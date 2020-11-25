@@ -65,12 +65,12 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
     }
 
     /**
-     * Overrides the back button so it returns to the main activity.
+     * Overrides the back button so it returns to the book activity.
      */
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, RootActivity.class);
-        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
+        Intent intent = new Intent(this, MyBookActivity.class);
+        intent.putExtra("Book", book);
         startActivity(intent);
     }
 }

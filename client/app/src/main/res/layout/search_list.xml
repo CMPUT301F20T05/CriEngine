@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
+        android:background="@color/list_background"
         android:layout_height="match_parent"
-        android:background="@color/item_background"
         android:orientation="vertical">
 
         <TextView
