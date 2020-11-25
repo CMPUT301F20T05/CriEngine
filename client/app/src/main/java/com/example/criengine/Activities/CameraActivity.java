@@ -30,6 +30,7 @@ public class CameraActivity extends AppCompatActivity {
     private Bitmap photo;
     private Book book;
     private AlertDialog confirmDialog;
+    private boolean saveFlag = false;
     DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
 
     /**
@@ -98,6 +99,7 @@ public class CameraActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveFlag = true;
                 if (photo != null) {
                     dbw.uploadBookImage(book, photo);
                 }
@@ -156,6 +158,9 @@ public class CameraActivity extends AppCompatActivity {
      * All information about the book is contained in the "Extra".
      */
     private void goBack() {
+        if (!saveFlag) {
+            photo = null;
+        }
         Intent intent = new Intent(this, MyBookActivity.class);
         intent.putExtra("Book", book);
         intent.putExtra("photo", photo);
