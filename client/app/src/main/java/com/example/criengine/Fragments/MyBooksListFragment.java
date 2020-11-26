@@ -2,6 +2,7 @@ package com.example.criengine.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * My Books List Fragment.
  * Displays all owned books and their status's.
@@ -33,6 +36,8 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
     private ListView headerText;
     private ArrayList<String> filterStatus = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
+
+    final int SCAN_RESULT_CODE = 0;
 
     /**
      * Returns the layout.
@@ -136,5 +141,21 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
             displayBooks.addAll(myBooks);
         }
         myBooksListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == SCAN_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Get String data from Intent
+                String barcodeData = data.getStringExtra("barcode");
+                Log.d("testing", "barcode data=" + barcodeData);
+
+                myBooksListAdapter.onActivityResult(barcodeData);
+            }
+        }
     }
 }

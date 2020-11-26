@@ -1,5 +1,6 @@
 package com.example.criengine.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RequestsForBookActivity;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.ScanActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 
 import com.example.criengine.Objects.Book;
@@ -33,6 +35,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
     private Context context;
     private DatabaseWrapper dbw;
 
+    private String action;
+    private Book book;
+
+    final int SCAN_RESULT_CODE = 0;
+
     /**
      * Constructor. Extends off of the array adapter.
      * @param context The context of the activity.
@@ -43,6 +50,28 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         this.context = context;
         this.bookItems = bookItems;
         dbw = DatabaseWrapper.getWrapper();
+    }
+
+    /**
+     * On return from scan activity, MyBooksListFragment calls this function to update the database that the book has been returned or lent.
+     * @param barcode   The barcode string scanned
+     */
+    public void onActivityResult(String barcode) {
+        if (action.equals("Return")) {
+            dbw.confirmReturnBook(book.getBookID(), barcode).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                @Override
+                public void onComplete(@NonNull Task<Boolean> task) {
+                    ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
+                }
+            });
+        } else if (action.equals("Lend")) {
+            dbw.borrowBook(book.getBookID(), barcode).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                @Override
+                public void onComplete(@NonNull Task<Boolean> task) {
+                    ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
+                }
+            });
+        }
     }
 
     /**
@@ -70,7 +99,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         Button actionButton = view.findViewById(R.id.actionButton);
 
         // Get the book to be displayed.
-        final Book book = bookItems.get(position);
+        book = bookItems.get(position);
 
         // Opens to the book information screen when you click on a specific book.
         view.setOnClickListener(new View.OnClickListener() {
@@ -110,12 +139,8 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                     actionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            dbw.confirmReturnBook(book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Boolean> task) {
-                                    ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
-                                }
-                            });
+                            ((Activity) context).startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                            action = "Return";
                         }
                     });
                 } else {
@@ -133,12 +158,8 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                         actionButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                dbw.borrowBook(book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Boolean> task) {
-                                        ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
-                                    }
-                                });
+                                ((Activity) context).startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                                action = "Lend";
                             }
                         });
                     }

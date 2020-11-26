@@ -1,6 +1,8 @@
 package com.example.criengine.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
+import com.example.criengine.Database.GoogleBooksWrapper;
 import com.example.criengine.Fragments.FilterFragment.OnFragmentInteractionListener;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
@@ -18,6 +21,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Requested Books Fragment. Handles displaying information about all outgoing requests.
@@ -33,6 +38,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
     ArrayList<Book> displayBooks = new ArrayList<>();
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
+
+    final int SCAN_RESULT_CODE = 0;
 
     /**
      * Get the layout associated with the fragment.
@@ -107,8 +114,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
         // Modifies the array so that only the filtered status's are displayed.
         if (activeFilters.size() > 0) {
             for(Book book: borrowerBooks){
-                boolean isBorrowed = book.getStatus().equals("borrowed") && book.getBorrower() == dbw.userId;
-                boolean isAccepted = book.getStatus().equals("accepted") && book.getBorrower() == dbw.userId;
+                boolean isBorrowed = book.getStatus().equals("borrowed") && book.getBorrower().equals(dbw.userId);
+                boolean isAccepted = book.getStatus().equals("accepted") && book.getBorrower().equals(dbw.userId);
                 boolean isRequested = book.getStatus().equals("requested");
                 if((activeFilters.contains("Requested") && isRequested)
                         || (activeFilters.contains("Borrowing") && isBorrowed)
@@ -122,5 +129,21 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
             displayBooks.addAll(borrowerBooks);
         }
         borrowerBooksListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == SCAN_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Get String data from Intent
+                String barcodeData = data.getStringExtra("barcode");
+                Log.d("testing", "barcode data=" + barcodeData);
+
+                borrowerBooksListAdapter.onActivityResult(barcodeData);
+            }
+        }
     }
 }
