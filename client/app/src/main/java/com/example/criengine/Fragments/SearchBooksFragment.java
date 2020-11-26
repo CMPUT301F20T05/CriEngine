@@ -158,7 +158,7 @@ public class SearchBooksFragment extends RootFragment {
         // Setup Swipe refresh layout to use default root fragment listener
         swipeProfileRefreshLayout = getView().findViewById(R.id.search_profile_swipe_refresh_layout);
         if (swipeProfileRefreshLayout != null) {
-            swipeProfileRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+            swipeProfileRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeProfileRefreshLayout));
         }
     }
 }
