@@ -99,7 +99,7 @@ public class RegisterAccount extends AppCompatActivity {
         email = emailField.getText().toString();
 
         // Assign a text change listener to see if the button should be enabled.
-        submitButton.setEnabled(false);
+        enableSubmit(false);
         usernameField.addTextChangedListener(fieldTextWatcher);
         emailField.addTextChangedListener(fieldTextWatcher);
         passwordField.addTextChangedListener(fieldTextWatcher);
@@ -109,7 +109,7 @@ public class RegisterAccount extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitButton.setEnabled(false);
+                enableSubmit(false);
                 username = usernameField.getText().toString();
                 email = emailField.getText().toString();
                 password = passwordField.getText().toString();
@@ -138,15 +138,18 @@ public class RegisterAccount extends AppCompatActivity {
                                             });
                                         } else {
                                             Log.d(TAG, "Get Failure: " + task.getException());
+                                            enableSubmit(true);
                                             return;
                                         }
                                     }
                                 });
                             } else {
-                                usernameField.setError("Username must be unique");
+                                usernameField.setError("This username is already taken!");
+                                enableSubmit(true);
                             }
                         } else {
                             Log.d(TAG, "Get Failure: " + task.getException());
+                            enableSubmit(true);
                             return;
                         }
                     }
@@ -156,17 +159,31 @@ public class RegisterAccount extends AppCompatActivity {
     }
 
     /**
+     * Enable/Disable the submit button depending on input.
+     * @param flag True if we want to enable the button.
+     */
+    public void enableSubmit(Boolean flag) {
+        if (flag) {
+            submitButton.setEnabled(true);
+            submitButton.setText("Submit");
+        } else {
+            submitButton.setEnabled(false);
+            submitButton.setText("Processing");
+        }
+    }
+
+    /**
      * Checks all fields and runs validation on the email.
      * If all checks pass, this will enable the submit-button.
      */
     private void checkAllFields() {
-        submitButton.setEnabled(true);
+        enableSubmit(true);
         warningMessage.setVisibility(View.GONE);
         if (isEmpty(usernameField) || isEmpty(emailField) || isEmpty(passwordField) ||
                 isEmpty(firstnameField) || isEmpty(lastnameField) ||
                 validateEmail(email)) {
             warningMessage.setVisibility(View.VISIBLE);
-            submitButton.setEnabled(false);
+            enableSubmit(false);
         }
     }
 
