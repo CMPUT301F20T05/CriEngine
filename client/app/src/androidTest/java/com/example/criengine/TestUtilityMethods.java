@@ -28,8 +28,5 @@ public class TestUtilityMethods {
         solo.clickInList(0);
         solo.clickOnButton("Delete Book");
         solo.clickOnText("DELETE");
-
-        // Sleep for 3 seconds to let the database properly delete the book.
-        solo.sleep(3000);
     }
 }
