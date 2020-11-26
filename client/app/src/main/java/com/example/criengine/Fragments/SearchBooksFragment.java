@@ -92,7 +92,12 @@ public class SearchBooksFragment extends RootFragment {
             @Override
             public void onSuccess(List<Book> books) {
                 allBooks.addAll(books);
-                searchBooks.addAll(allBooks);
+                for (Book book : allBooks) {
+                    if (!book.getStatus().equals("accepted")
+                        && !book.getStatus().equals("borrowed")) {
+                        searchBooks.add(book);
+                    }
+                }
                 searchBookAdapter.notifyDataSetChanged();
             }
         });
@@ -127,8 +132,8 @@ public class SearchBooksFragment extends RootFragment {
                 searchBooks.clear();
                 for (Book book : allBooks) {
                     if (book.getDescription().toLowerCase().contains(s.toString().toLowerCase())
-                        && !book.getStatus().equals("Accepted")
-                        && !book.getStatus().equals("Borrowed")) {
+                        && !book.getStatus().equals("accepted")
+                        && !book.getStatus().equals("borrowed")) {
                         searchBooks.add(book);
                     }
                 }
