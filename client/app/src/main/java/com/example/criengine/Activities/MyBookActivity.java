@@ -71,8 +71,8 @@ public class MyBookActivity extends BookActivity {
     private void setPageViewOnly() {
         editCancelBookButton.setText(R.string.edit_book);
         imageInfo.setVisibility(View.INVISIBLE);
-        if (book.getRequesters().size() == 0) {
-            // Only allow the user to see requests if there are requests.
+        if (!book.getStatus().equals("requested")) {
+            // Users should only see the button if the status is requested.
             seeRequestsButton.setVisibility(View.GONE);
         }
         deleteSaveBookButton.setText(R.string.delete_book);
