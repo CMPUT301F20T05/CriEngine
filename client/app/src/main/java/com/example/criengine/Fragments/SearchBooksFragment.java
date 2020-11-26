@@ -16,11 +16,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
 import com.example.criengine.Adapters.SearchBooksListAdapter;
+import com.example.criengine.Adapters.SearchProfilesListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -34,10 +37,19 @@ public class SearchBooksFragment extends Fragment {
 
     // variable declaration
     private ArrayList<Book> searchBooks;
+    private ArrayList<Profile> searchProfiles;
     private ArrayList<Book> allBooks;
-    private SearchBooksListAdapter searchAdapter;
+    private ArrayList<Profile> allProfiles;
+
+    private SearchBooksListAdapter searchBookAdapter;
+    private SearchProfilesListAdapter searchProfileAdapter;
+
     private EditText keyword;
-    private ListView results;
+    private ListView bookResults;
+    private ListView profileResults;
+    private TextView bookLabel;
+    private TextView profileLabel;
+
     private DatabaseWrapper dbw;
 
     public SearchBooksFragment() {
@@ -57,11 +69,23 @@ public class SearchBooksFragment extends Fragment {
         // Setup database wrapper
         dbw = DatabaseWrapper.getWrapper();
 
-        // Setup lists of books
+        final String[] bookString = {""};
+        final String[] profileString = {""};
+
+        bookLabel = getView().findViewById(R.id.search_book_label);
+        bookLabel.setText(R.string.search_book);
+        profileLabel = getView().findViewById(R.id.search_profile_label);
+        profileLabel.setText(R.string.search_profile);
+
+        // Setup lists of books and profiles
         allBooks = new ArrayList<Book>();
+        allProfiles = new ArrayList<Profile>();
         searchBooks = new ArrayList<Book>();
+        searchProfiles = new ArrayList<Profile>();
+
         // Setup adapter
-        searchAdapter = new SearchBooksListAdapter(getContext(), searchBooks);
+        searchBookAdapter = new SearchBooksListAdapter(getContext(), searchBooks);
+        searchProfileAdapter = new SearchProfilesListAdapter(getContext(), searchProfiles);
 
         // Get all books from database
         dbw.searchBooks().addOnSuccessListener(new OnSuccessListener<List<Book>>() {
@@ -69,13 +93,24 @@ public class SearchBooksFragment extends Fragment {
             public void onSuccess(List<Book> books) {
                 allBooks.addAll(books);
                 searchBooks.addAll(allBooks);
-                searchAdapter.notifyDataSetChanged();
+                searchBookAdapter.notifyDataSetChanged();
+            }
+        });
+
+        dbw.searchProfiles().addOnSuccessListener(new OnSuccessListener<List<Profile>>() {
+            @Override
+            public void onSuccess(List<Profile> profiles) {
+                allProfiles.addAll(profiles);
+                searchProfiles.addAll(allProfiles);
+                searchProfileAdapter.notifyDataSetChanged();
             }
         });
 
         // Set listview and adapter
-        results = getView().findViewById(R.id.search_result_list);
-        results.setAdapter(searchAdapter);
+        bookResults = getView().findViewById(R.id.search_result_list);
+        bookResults.setAdapter(searchBookAdapter);
+        profileResults = getView().findViewById(R.id.search_profile_list);
+        profileResults.setAdapter(searchProfileAdapter);
 
         keyword = getView().findViewById(R.id.search_box);
 
@@ -86,13 +121,27 @@ public class SearchBooksFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                bookString[0] = "Books Matching: " + s.toString();
+                bookLabel.setText(bookString[0]);
                 searchBooks.clear();
                 for (Book book : allBooks) {
-                    if (book.getDescription().toLowerCase().contains(s.toString().toLowerCase())) {
+                    if (book.getDescription().toLowerCase().contains(s.toString().toLowerCase())
+                        && !book.getStatus().equals("Accepted")
+                        && !book.getStatus().equals("Borrowed")) {
                         searchBooks.add(book);
                     }
                 }
-                searchAdapter.notifyDataSetChanged();
+                searchBookAdapter.notifyDataSetChanged();
+
+                profileString[0] = "Profiles Matching: " + s.toString();
+                profileLabel.setText(profileString[0]);
+                searchProfiles.clear();
+                for (Profile profile : allProfiles) {
+                    if (profile.getUsername().toLowerCase().contains(s.toString().toLowerCase())) {
+                        searchProfiles.add(profile);
+                    }
+                }
+                searchProfileAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -110,6 +159,6 @@ public class SearchBooksFragment extends Fragment {
             }
         };
 
-        results.setOnItemClickListener(selected);
+        bookResults.setOnItemClickListener(selected);
     }
 }

@@ -351,6 +351,34 @@ public class DatabaseWrapper {
             });
     }
 
+    /**
+     * Get a list of all profiles in the database
+     * @return list of all profiles
+     */
+    public Task<List<Profile>> searchProfiles() {
+        return users
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Profile>>() {
+                    @Override
+                    public List<Profile> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            try {
+                                return query.toObjects(Profile.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return new ArrayList<Profile>();
+                        }
+                    }
+                });
+    }
+
     // TODO you cant request your own book
     public Task<Boolean> makeRequest (final String borrowerUid, final String bookID) {
         return db.runTransaction(new Transaction.Function<Boolean>() {

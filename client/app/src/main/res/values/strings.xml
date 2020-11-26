@@ -85,4 +85,8 @@
 
     <!-- Non Owner Book View Activity -->
     <string name="request_book_button">Request This Book</string>
+
+    <!-- Search Activity -->
+    <string name="search_book">Books Matching: </string>
+    <string name="search_profile">Profiles Matching: </string>
 </resources>

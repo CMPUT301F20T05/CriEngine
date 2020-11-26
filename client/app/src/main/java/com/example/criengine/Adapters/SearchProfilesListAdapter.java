@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,22 +16,18 @@ import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
-/**
- * Adapter for search fragment
- */
-public class SearchBooksListAdapter extends ArrayAdapter<Book> {
-    private ArrayList<Book> items;
+public class SearchProfilesListAdapter extends ArrayAdapter<Profile> {
+    private ArrayList<Profile> items;
     private Context context;
     private DatabaseWrapper dbw;
 
-    public SearchBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> books) {
-        super(context, 0, books);
+    public SearchProfilesListAdapter(@NonNull Context context, @NonNull ArrayList<Profile> profiles) {
+        super(context, 0, profiles);
         this.context = context;
-        this.items = books;
+        this.items = profiles;
     }
 
     @NonNull
@@ -42,35 +37,21 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            view = inflater.inflate(R.layout.search_list, parent, false);
+            view = inflater.inflate(R.layout.profile_list, parent, false);
         }
 
-        // Get the object from the xml file.
-        TextView searchTitle = view.findViewById(R.id.search_book_title);
-        TextView searchDesc = view.findViewById(R.id.search_book_desc);
-        TextView searchStatus = view.findViewById(R.id.search_book_status);
-        final TextView searchUser = view.findViewById(R.id.search_book_user);
+        TextView searchUsername = view.findViewById(R.id.search_profile_user);
 
-        final Book book = items.get(position);
+        final Profile profile = items.get(position);
 
-        searchTitle.setText(book.getTitle());
-        searchDesc.setText(book.getDescription());
-        searchStatus.setText(book.getStatus());
-
-        // Get the book's owner username
-        dbw.getProfile(book.getOwner()).addOnSuccessListener(new OnSuccessListener<Profile>() {
-            @Override
-            public void onSuccess(Profile profile) {
-                searchUser.setText(profile.getUsername());
-            }
-        });
+        searchUsername.setText(profile.getUsername());
 
         // Opens to the book information screen when you click on a specific book.
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MyBookActivity.class);
-                intent.putExtra("Book", book);
+                intent.putExtra("Profile", profile);
                 v.getContext().startActivity(intent);
             }
         });
