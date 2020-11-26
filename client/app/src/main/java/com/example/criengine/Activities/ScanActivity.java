@@ -99,6 +99,7 @@ public class ScanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("barcode", barcodeData);
+                intent.putExtra("bookID", getIntent().getStringExtra("BookID"));
                 setResult(RESULT_OK, intent);
                 finish();
             }

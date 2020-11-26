@@ -140,9 +140,10 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
             if (resultCode == RESULT_OK) {
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
+                String bookID = data.getStringExtra("bookID");
                 Log.d("testing", "barcode data=" + barcodeData);
 
-                borrowerBooksListAdapter.onActivityResult(barcodeData);
+                borrowerBooksListAdapter.onActivityResult(barcodeData, bookID);
             }
         }
     }

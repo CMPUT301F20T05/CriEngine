@@ -138,9 +138,10 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
             if (resultCode == RESULT_OK) {
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
-                Log.d("testing", "barcode data=" + barcodeData);
+                String bookID = data.getStringExtra("bookID");
+                Log.d("testing", "barcode data=" + bookID);
 
-                myBooksListAdapter.onActivityResult(barcodeData);
+                myBooksListAdapter.onActivityResult(barcodeData, bookID);
             }
         }
     }

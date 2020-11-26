@@ -38,8 +38,6 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
     private DatabaseWrapper dbw;
 
     private String action;
-    private Book book;
-
     final int SCAN_RESULT_CODE = 0;
 
     /**
@@ -60,11 +58,11 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
      * On return from scan activity, RequestedBookFragment calls this function to update the database that the book has been borrowed or returned.
      * @param barcode   The barcode string scanned
      */
-    public void onActivityResult(String barcode) {
+    public void onActivityResult(String barcode, String bookID) {
         if (action.equals("Return")) {
-            dbw.returnBook(book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS));
+            dbw.returnBook(bookID, barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS));
         } else if (action.equals("Borrow")) {
-            dbw.confirmBorrowBook(dbw.userId, book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS));
+            dbw.confirmBorrowBook(dbw.userId, bookID, barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS));
         }
     }
 
@@ -91,11 +89,10 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         TextView statusText = view.findViewById(R.id.statusText);
         Button actionButton = view.findViewById(R.id.actionButton);
 
-        book = bookItems.get(position);
+        final Book book = bookItems.get(position);
 
         // Opens to the book information screen when you click on a specific book.
         view.setOnClickListener(v -> {
-            book = bookItems.get(position);
             Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
             intent.putExtra("Book", book);
             v.getContext().startActivity(intent);
@@ -105,8 +102,8 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         statusText.setText(book.getStatus());
 
-        actionButton.setEnabled(true);
         actionButton.setVisibility(View.VISIBLE);
+        actionButton.setEnabled(true);
         switch (book.getStatus()) {
             case "borrowed":
 //            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
@@ -118,8 +115,10 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     actionButton.setText("Return");
                     actionButton.setOnClickListener(
                             v -> {
-                                fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
-                                action = "Returned";
+                                Intent intent = new Intent(context, ScanActivity.class);
+                                intent.putExtra("BookID", book.getBookID());
+                                fragment.startActivityForResult(intent, SCAN_RESULT_CODE);
+                                action = "Return";
                             }
                     );
                 }
@@ -145,7 +144,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     actionButton.setText("Borrow");
                     actionButton.setOnClickListener(
                             v -> {
-                                fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                                Intent intent = new Intent(context, ScanActivity.class);
+                                intent.putExtra("BookID", book.getBookID());
+                                fragment.startActivityForResult(intent, SCAN_RESULT_CODE);
                                 action = "Borrow";
                             }
                     );

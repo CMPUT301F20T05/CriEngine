@@ -502,10 +502,10 @@ public class DatabaseWrapper {
     }
     public Task<Boolean> borrowBook (final String bookID, final String ISBN) {
         return db.runTransaction(new Transaction.Function<Boolean>() {
-
             @Nullable
             @Override
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                Log.d("testingDB", bookID);
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
 //                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded") || bookSnapshot.get("status") != "accepted" ) {
 //                    return false;

@@ -39,8 +39,6 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
     private DatabaseWrapper dbw;
 
     private String action;
-    private Book book;
-
     final int SCAN_RESULT_CODE = 0;
 
     /**
@@ -60,12 +58,13 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
      * On return from scan activity, MyBooksListFragment calls this function to update the database that the book has been returned or lent.
      * @param barcode The barcode string scanned
      */
-    public void onActivityResult(String barcode) {
+    public void onActivityResult(String barcode, String bookID) {
         Log.d("TestingOnActivityResult", barcode);
         if (action.equals("Return")) {
-            dbw.confirmReturnBook(book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS));
+            Log.d("TESTING_LEND", bookID);
+            dbw.confirmReturnBook(bookID, barcode).addOnCompleteListener(task -> ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS));
         } else if (action.equals("Lend")) {
-            dbw.borrowBook(book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS));
+            dbw.borrowBook(bookID, barcode).addOnCompleteListener(task -> ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS));
         }
     }
 
@@ -94,11 +93,10 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         Button actionButton = view.findViewById(R.id.actionButton);
 
         // Get the book to be displayed.
-        book = bookItems.get(position);
+        final Book book = bookItems.get(position);
 
         // Opens to the book information screen when you click on a specific book.
         view.setOnClickListener(v -> {
-            book = bookItems.get(position);
             Intent intent = new Intent(v.getContext(), MyBookActivity.class);
             intent.putExtra("Book", book);
             v.getContext().startActivity(intent);
@@ -129,12 +127,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                 if(book.isConfirmationNeeded()) {
                     actionButton.setVisibility(View.VISIBLE);
                     actionButton.setText("Return");
-                    actionButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
-                            action = "Return";
-                        }
+                    actionButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(context, ScanActivity.class);
+                        intent.putExtra("BookID", book.getBookID());
+                        fragment.startActivityForResult(intent, SCAN_RESULT_CODE);
+                        action = "Return";
                     });
                 } else {
                     actionButton.setVisibility(View.GONE);
@@ -148,12 +145,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                     } else {
                         actionButton.setText("Lend");
                         actionButton.setEnabled(true);
-                        actionButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
-                                action = "Lend";
-                            }
+                        actionButton.setOnClickListener(v -> {
+                            Intent intent = new Intent(context, ScanActivity.class);
+                            intent.putExtra("BookID", book.getBookID());
+                            fragment.startActivityForResult(intent, SCAN_RESULT_CODE);
+                            action = "Lend";
                         });
                     }
                 break;
