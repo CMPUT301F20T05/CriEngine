@@ -121,12 +121,14 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         headerText.setText(book.getTitle());
 
+        actionButton.setEnabled(true);
         statusText.setText(book.getStatus());
 
         actionButton.setVisibility(View.VISIBLE);
         actionButton.setEnabled(true);
         switch (book.getStatus()) {
             case "borrowed":
+                statusText.setText("Borrowed");
                 if (book.isConfirmationNeeded()) {
                     actionButton.setEnabled(false);
                     actionButton.setText("Scanned!");
@@ -144,6 +146,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                 }
                 break;
             case "requested":
+                statusText.setText("Requested");
                 actionButton.setText("Cancel");
                 actionButton.setOnClickListener(
                         v -> {
@@ -162,6 +165,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                 if (book.isConfirmationNeeded()) {
                     actionButton.setVisibility(View.VISIBLE);
                     actionButton.setText("Borrow");
+                    statusText.setText("Accepted");
                     actionButton.setOnClickListener(
                             v -> {
                                 Intent intent = new Intent(context, ScanActivity.class);
