@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import com.example.criengine.Activities.ScanActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
+
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
@@ -58,9 +61,27 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
      */
     public void onActivityResult(String barcode, String bookID) {
         if (action.equals("Return")) {
-            dbw.confirmReturnBook(bookID, barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.MY_BOOKS));
+            dbw.confirmReturnBook(bookID, barcode).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                @Override
+                public void onSuccess(Boolean success) {
+                    if (success) {
+                        ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
+                    } else {
+                        Toast.makeText(context, "ISBN Scan failed, did you scan the wrong book?", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         } else if (action.equals("Lend")) {
-            dbw.borrowBook(bookID, barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.MY_BOOKS));
+            dbw.borrowBook(bookID, barcode).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                @Override
+                public void onSuccess(Boolean success) {
+                    if (success) {
+                        ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
+                    } else {
+                        Toast.makeText(context, "ISBN Scan failed, did you scan the wrong book?", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
     }
 
