@@ -24,8 +24,6 @@ import java.util.ArrayList;
 /*
  * BookListAdapter is a custom ArrayAdapter that can be used to show Book instances in
  * a ListView.
- * Outstanding Issues:
- * - Does not push changes to the database.
  */
 public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 

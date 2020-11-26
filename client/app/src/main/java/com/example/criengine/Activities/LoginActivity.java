@@ -106,8 +106,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Overrides the back button so that after logout you can't return to the previous screen
+     * Closes the app allowing the user to return to their home phone screen.
      */
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 };

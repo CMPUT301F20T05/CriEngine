@@ -65,7 +65,6 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         headerText = getView().findViewById(R.id.bookListView);
         headerText.setAdapter(myBooksListAdapter);
 
-        // TODO: please pass this activity a profile object somehow, so we dont need to do this nightmare double call
         dbw.getProfile(dbw.userId).addOnSuccessListener(
                 new OnSuccessListener<Profile>() {
                     @Override
