@@ -54,7 +54,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
 
     /**
      * On return from scan activity, MyBooksListFragment calls this function to update the database that the book has been returned or lent.
-     * @param barcode   The barcode string scanned
+     * @param barcode The barcode string scanned
      */
     public void onActivityResult(String barcode) {
         if (action.equals("Return")) {
@@ -105,6 +105,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                book = bookItems.get(position);
                 Intent intent = new Intent(v.getContext(), MyBookActivity.class);
                 intent.putExtra("Book", book);
                 v.getContext().startActivity(intent);
