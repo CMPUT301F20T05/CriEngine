@@ -16,13 +16,15 @@
     <color name="status_rejected">#8b0000</color>
     <color name="status_accepted">#008b00</color>
 
-    <!-- Text color -->
-    <color name="red_text">#f55a42</color>
-    <color name="blue_text">#035efc</color>
-
     <!-- App Theme  -->
     <color name="light_green">#F1FAEE</color>
     <color name="light_blue">#A8DADC</color>
-    <color name="list_background">#e59cf0</color>
+    <color name="list_background">#A8DADC</color>
     <color name="warning_text">#E63946</color>
+    <color name="red_text">#E63946</color>
+    <color name="blue_text">#035efc</color>
+
+    <!-- App Background Gradient (Make values same color to make a solid)  -->
+    <color name="bottom_color">#f5e6e7</color>
+    <color name="top_color">#F1FAEE</color>
 </resources>
