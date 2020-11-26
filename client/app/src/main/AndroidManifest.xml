@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.criengine">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,18 +18,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SomethingWentWrong" />
-        <activity android:name=".Activities.NonOwnerBookViewActivity"></activity>
-        <activity android:name=".Activities.LoginActivity">
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
+
+        <activity android:name=".Activities.ScanActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.SomethingWentWrong"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.CameraActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.NonOwnerBookViewActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.LoginActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.RegisterAccount" />
-        <activity android:name=".Activities.AddBookActivity" />
-        <activity android:name=".Activities.RequestsForBookActivity" />
+        <activity android:name=".Activities.RegisterAccount"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.AddBookActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.RequestsForBookActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".Fragments.MyBooksListFilterFragment"
             tools:ignore="Instantiatable" />
@@ -36,11 +56,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.MyProfileActivity"
-            android:parentActivityName=".Activities.RootActivity" />
-        <activity android:name=".Activities.MyBookActivity" />
-        <activity android:name=".Activities.BookActivity" />
+        <activity android:name=".Activities.MyBookActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.BookActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".Activities.UserProfileActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Activities.SelectGeopage" />
     </application>
 
 </manifest>

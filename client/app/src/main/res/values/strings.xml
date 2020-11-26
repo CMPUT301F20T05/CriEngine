@@ -11,13 +11,16 @@
     <string name="phone_text_hint">(XXX) XXX-XXXX</string>
     <string name="address_text_hint">52 Example St</string>
 
-    <!--  My Profile Activity  -->
+    <!-- My Profile Fragment -->
     <string name="cancel_button">Cancel</string>
     <string name="logout_button">Logout</string>
     <string name="edit_button">Edit</string>
     <string name="save_button">Save</string>
 
-    <!-- My Books Activity  -->
+    <!-- User Profile Activity -->
+    <string name="user_books_text">%1$s\'s Books</string>
+
+    <!-- My Books Activity -->
     <string name="add_a_book_button">Add A Book</string>
     <string name="my_books_header">My Books</string>
     <string name="my_books_filter">Filter</string>
@@ -38,10 +41,9 @@
     <string name="book_desc_hint">Description</string>
     <string name="book_author_hint">Author</string>
     <string name="book_isbn_hint">ISBN</string>
-    <string name="book_status_hint">Status</string>
-    <string name="book_imageurl_hint">Image URL (optional)</string>
     <string name="book_warning">*Please Fill Out All Fields</string>
     <string name="popup_confirm">Book Created</string>
+    <string name="add_book_save_button">Save and Add Photo</string>
 
     <!--  Book Details Activity  -->
     <string name="book_title_placeholder">Title</string>
@@ -76,8 +78,13 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_my_profile">My Profile</string>
 
+    <!--    Scan Activity    -->
+    <string name="scan_prompt">Please scan the barcode</string>
+    <string name="scan_complete">Scan complete, press confirm</string>
+    <string name="scan_confirm">Confirm Scan</string>
+
     <!-- Outgoing Requests Fragment -->
-    <string name="title_my_requests">My Requests</string>
+    <string name="requests_header">My Requests</string>
 
     <!-- Something Went Wrong Activity -->
     <string name="apology">Sorry! Something went wrong.</string>
@@ -85,6 +92,22 @@
 
     <!-- Non Owner Book View Activity -->
     <string name="request_book_button">Request This Book</string>
+
+    <!-- Camera Activity  -->
+    <string name="picture_info_text">Click image to open camera</string>
+    <string name="save_picture">Save</string>
+    <string name="cancel_picture">Cancel</string>
+    <string name="delete_picture">Delete</string>
+
+    <!-- Book Component XML  -->
+    <string name="click_to_edit_image">Click image to edit</string>
+
+    <!-- Geolocation -->
+    <string name="confirm_location">Confirm</string>
+
+    <!-- Mapbox -->
+    <string name="mapbox_access_token">pk.eyJ1IjoicmptYWgxIiwiYSI6ImNraHYwcDhwbDBjdHgycm1ud21sMmtnNzkifQ.Rse6Ld79kjmY3_-7g7cpbw</string>
+    <string name="user_location_permission_not_granted">Please give location privileges to the app</string>
 
     <!-- Search Activity -->
     <string name="search_book">Books Matching: </string>

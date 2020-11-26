@@ -13,11 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.criengine.Activities.MyBookActivity;
+import com.example.criengine.Activities.NonOwnerBookViewActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.criengine.Objects.Book;
+import com.example.criengine.R;
 
 import java.util.ArrayList;
 
@@ -69,7 +73,8 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MyBookActivity.class);
+                Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
+                intent.putExtra("Page", RootActivity.PAGE.SEARCH);
                 intent.putExtra("Book", book);
                 v.getContext().startActivity(intent);
             }

@@ -6,10 +6,14 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Adapters.NotificationAdapter;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.ArrayList;
 
 /**
  * Notification Fragment.
@@ -18,6 +22,9 @@ import com.example.criengine.R;
 public class NotificationFragment extends RootFragment {
     private NotificationAdapter notificationAdapter;
     private ListView notificationListView;
+    private ArrayList<String> notificationList;
+    private Profile myProfile;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     /**
      * Get the layout associated with the fragment.
@@ -40,15 +47,26 @@ public class NotificationFragment extends RootFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set the adapter.
-        notificationAdapter = new NotificationAdapter(getContext(),
-                RootActivity.dummyProfile.getNotifications(),
-                RootActivity.dummyProfile,
-                dbw
-            );
-
         // Assign the view object.
         notificationListView = getView().findViewById(R.id.notificationsListView);
-        notificationListView.setAdapter(notificationAdapter);
+
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                new OnSuccessListener<Profile>() {
+                    @Override
+                    public void onSuccess(Profile profile) {
+                        notificationList = profile.getNotifications();
+                        myProfile = profile;
+                        // Set the adapter.
+                        notificationAdapter = new NotificationAdapter(getContext(),notificationList,myProfile, dbw);
+                        notificationListView.setAdapter(notificationAdapter);
+                    }
+                }
+        );
+
+        // Setup Swipe refresh layout to use default root fragment lister
+        swipeRefreshLayout = getView().findViewById(R.id.notifications_swipe_refresh_layout);
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
     }
 }

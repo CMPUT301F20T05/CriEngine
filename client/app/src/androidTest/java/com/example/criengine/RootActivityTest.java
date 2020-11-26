@@ -35,10 +35,9 @@ public class RootActivityTest {
 
     /**
      * Initialize solo instance before all tests
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
@@ -53,6 +52,8 @@ public class RootActivityTest {
 
         viewPager = solo.getCurrentActivity().findViewById(R.id.view_pager);
         bottomNav = solo.getCurrentActivity().findViewById(R.id.bottom_navigation);
+
+        assertTrue(solo.waitForText("My Books", 1, 50000));
     }
 
     /**
@@ -60,10 +61,6 @@ public class RootActivityTest {
      */
     @Test
     public void initialPageTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        assertTrue(solo.waitForText("My Books", 1, 10000));
         Assert.assertEquals(viewPager.getCurrentItem(), 3);
         Assert.assertEquals(bottomNav.getSelectedItemId(), R.id.bottom_navigation_item_my_books);
     }
@@ -73,10 +70,6 @@ public class RootActivityTest {
      */
     @Test
     public void swipeTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
         // Right Swipe - My profile
         solo.scrollToSide(Solo.RIGHT);;
 
@@ -113,10 +106,6 @@ public class RootActivityTest {
      */
     @Test
     public void bottomNavigationTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
         // Search Menu Button
         View searchMenuItem
                 = solo.getCurrentActivity().findViewById(R.id.bottom_navigation_item_search);

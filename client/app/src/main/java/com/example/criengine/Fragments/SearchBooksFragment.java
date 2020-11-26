@@ -6,19 +6,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.criengine.Activities.NonOwnerBookViewActivity;
 import com.example.criengine.Adapters.SearchBooksListAdapter;
 import com.example.criengine.Adapters.SearchProfilesListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
@@ -33,7 +29,7 @@ import java.util.List;
 /**
  * Lets user search for a books description
  */
-public class SearchBooksFragment extends Fragment {
+public class SearchBooksFragment extends RootFragment {
 
     // variable declaration
     private ArrayList<Book> searchBooks;
@@ -51,16 +47,20 @@ public class SearchBooksFragment extends Fragment {
     private TextView profileLabel;
 
     private DatabaseWrapper dbw;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeProfileRefreshLayout;
 
     public SearchBooksFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Get the layout associated with the fragment.
+     * @return The layout.
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_books, container, false);
+    public int getFragmentLayout() {
+        return R.layout.fragment_search_books;
     }
 
     @Override
@@ -97,6 +97,7 @@ public class SearchBooksFragment extends Fragment {
             }
         });
 
+        // Get all profiles from database
         dbw.searchProfiles().addOnSuccessListener(new OnSuccessListener<List<Profile>>() {
             @Override
             public void onSuccess(List<Profile> profiles) {
@@ -114,7 +115,7 @@ public class SearchBooksFragment extends Fragment {
 
         keyword = getView().findViewById(R.id.search_box);
 
-        // Search all books whenever keyword text is changed
+        // Search all books/profiles whenever keyword text is changed
         keyword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -148,17 +149,16 @@ public class SearchBooksFragment extends Fragment {
             public void afterTextChanged(Editable s) { }
         });
 
-        // Let users click on a book and take them to the book page
-        AdapterView.OnItemClickListener selected = new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book book = searchBooks.get(position);
-                Intent intent = new Intent(view.getContext(), NonOwnerBookViewActivity.class);
-                intent.putExtra("Book", book);
-                view.getContext().startActivity(intent);
-            }
-        };
+        // Setup Swipe refresh layout to use default root fragment lister
+        swipeRefreshLayout = getView().findViewById(R.id.search_swipe_refresh_layout);
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
 
-        bookResults.setOnItemClickListener(selected);
+        // Setup Swipe refresh layout to use default root fragment listener
+        swipeProfileRefreshLayout = getView().findViewById(R.id.search_profile_swipe_refresh_layout);
+        if (swipeProfileRefreshLayout != null) {
+            swipeProfileRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
     }
 }

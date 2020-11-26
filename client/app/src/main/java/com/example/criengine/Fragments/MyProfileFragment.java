@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Database.DatabaseWrapper;
@@ -26,6 +27,8 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
 
     private Button logoutCancelButton;
     private Button editSaveButton;
+
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private String prevBioText;
     private String prevPhoneText;
@@ -107,10 +110,11 @@ public class MyProfileFragment extends ProfileFragment implements IOnBackPressed
         logoutCancelButton = view.findViewById(R.id.logout_cancel_button);
         editSaveButton = view.findViewById(R.id.edit_save_button);
 
-        // save the key listeners
-        bioEditText.setTag(bioEditText.getKeyListener());
-        phoneEditText.setTag(phoneEditText.getKeyListener());
-        addressEditText.setTag(addressEditText.getKeyListener());
+        // Setup Swipe refresh layout to use default root fragment lister
+        swipeRefreshLayout = getView().findViewById(R.id.my_profile_swipe_refresh_layout);
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
 
         editSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override

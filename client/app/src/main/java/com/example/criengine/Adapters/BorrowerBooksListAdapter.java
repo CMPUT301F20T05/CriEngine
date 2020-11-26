@@ -12,21 +12,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import java.util.ArrayList;
 
 /*
  * BookListAdapter is a custom ArrayAdapter that can be used to show Book instances in
  * a ListView.
- * Outstanding Issues:
- * - Does not push changes to the database.
  */
 public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
     private ArrayList<Book> bookItems;
     private Context context;
+    private DatabaseWrapper dbw;
 
     /**
      * Constructor for the class. Instantiates the object.
@@ -37,6 +40,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         super(context, 0, bookItems);
         this.context = context;
         this.bookItems = bookItems;
+        dbw = DatabaseWrapper.getWrapper();
     }
 
     /**
@@ -69,6 +73,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
                 intent.putExtra("Book", book);
+                intent.putExtra("Page", RootActivity.PAGE.REQUESTS);
                 v.getContext().startActivity(intent);
             }
         });
@@ -77,50 +82,75 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         statusText.setText(book.getStatus());
 
-        // Cancel -- we requested /  watching a book
-        // Scan -- we have borrowed / Status == Accepted
-        // Ok -- Rejected
-        DatabaseWrapper dbw = DatabaseWrapper.getWrapper();
-        if (book.getRequesters().contains(dbw.userId)) {
-            actionButton.setText("Cancel");
-            // todo: remove once implemented functionality
-            actionButton.setEnabled(false);
-            actionButton.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO: remove request from profile && book
-                        }
-                    }
-            );
+        actionButton.setEnabled(true);
+        actionButton.setVisibility(View.VISIBLE);
+        switch (book.getStatus()) {
+            case "borrowed":
+//            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
+                if (book.isConfirmationNeeded()) {
+                    actionButton.setEnabled(false);
+                    actionButton.setText("Scanned!");
+                } else {
+                    actionButton.setEnabled(true);
+                    actionButton.setText("Return");
+                    actionButton.setOnClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dbw.returnBook(book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Boolean> task) {
+                                            ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
+                                        }
+                                    });
+                                }
+                            }
+                    );
+                }
+                break;
+            case "requested":
+                actionButton.setText("Cancel");
+                actionButton.setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                book.removeRequesters(dbw.userId);
+                                dbw.declineRequest(dbw.userId, book.getBookID()).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Boolean> task) {
+                                        if (book.getRequesters().size() == 0) {
+                                            book.setStatus("available");
+                                            dbw.addBook(book);
+                                        }
+                                        ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
+                                    }
+                                });
 
-        } else if (book.getBorrower().equals(dbw.userId)) {
-            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
-            actionButton.setText("Scan");
-            // todo: remove once implemented functionality
-            actionButton.setEnabled(false);
-            actionButton.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO : navigate to scan page
+                            }
                         }
-                    }
-            );
-        } else {
-            statusText.setText("Rejected");
-            statusText.setTextColor(view.getResources().getColor(R.color.status_rejected));
-            actionButton.setText("Ok");
-            // todo: remove once implemented functionality
-            actionButton.setEnabled(false);
-            actionButton.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // TODO: remove request from profile
-                        }
-                    }
-            );
+                );
+                break;
+            case "accepted":
+                if (book.isConfirmationNeeded()) {
+                    actionButton.setVisibility(View.VISIBLE);
+                    actionButton.setText("Borrow");
+                    actionButton.setOnClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dbw.confirmBorrowBook(dbw.userId, book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Boolean> task) {
+                                            ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
+                                        }
+                                    });
+                                }
+                            }
+                    );
+                } else {
+                    actionButton.setVisibility(View.GONE);
+                }
+                break;
         }
 
         return view;
