@@ -59,19 +59,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
      */
     public void onActivityResult(String barcode) {
         if (action.equals("Return")) {
-            dbw.returnBook(book.getBookID(), barcode).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS);
-                }
-            });
+            dbw.returnBook(book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS));
         } else if (action.equals("Borrow")) {
-            dbw.confirmBorrowBook(dbw.userId, book.getBookID(), barcode).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS);
-                }
-            });
+            dbw.confirmBorrowBook(dbw.userId, book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS));
         }
     }
 
@@ -104,6 +94,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                book = bookItems.get(position);
                 Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
                 intent.putExtra("Book", book);
                 v.getContext().startActivity(intent);
