@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -137,7 +140,17 @@ public class RegisterAccount extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-                                            Log.d(TAG, "Get Failure: " + task.getException());
+                                            try {
+                                                throw task.getException();
+                                            } catch (FirebaseAuthWeakPasswordException e) {
+                                                passwordField.setError(e.getReason());
+                                            } catch (FirebaseAuthEmailException e) {
+                                                emailField.setError(e.getMessage());
+                                            } catch (FirebaseAuthUserCollisionException e) {
+                                                emailField.setError(e.getMessage());
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
                                             enableSubmit(true);
                                             return;
                                         }
