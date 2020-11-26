@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(final View v) {
                     String email = loginEmail.getText().toString();
                     String password = loginPassword.getText().toString();
+                    enableLogin(false);
 
                     // TODO: Remove the auto login later.
                     if (email.isEmpty() && password.isEmpty()) {
@@ -67,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     if ((email.isEmpty() || password.isEmpty())) {
                         loginEmail.setError("Login Failed");
+                        enableLogin(true);
                         return;
                     }
 
@@ -87,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                         // If sign in fails, display a message to the user.
                                         Log.w("TAG", "signInWithEmail:failure", task.getException());
                                         loginEmail.setError("Login Failed");
+                                        enableLogin(true);
                                         // ...
                                     }
                                 }
@@ -103,6 +106,20 @@ public class LoginActivity extends AppCompatActivity {
                 v.getContext().startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Enables/Disables the login button.
+     * @param flag True if we want to enable the button.
+     */
+    public void enableLogin(Boolean flag) {
+        if (flag) {
+            loginButton.setEnabled(true);
+            loginButton.setText("Login");
+        } else {
+            loginButton.setEnabled(false);
+            loginButton.setText("Processing");
+        }
     }
 
     /**
