@@ -115,9 +115,13 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
         // Modifies the array so that only the filtered status's are displayed.
         if (activeFilters.size() > 0) {
             for (Book book : borrowerBooks) {
-                boolean isBorrowed = book.getStatus().equals("borrowed") && book.getBorrower().equals(dbw.userId);
-                boolean isAccepted = book.getStatus().equals("accepted") && book.getBorrower().equals(dbw.userId);
+                if (book == null || book.getStatus() == null){
+                    continue;
+                }
                 boolean isRequested = book.getStatus().equals("requested");
+                boolean userIsBorrower = book.getBorrower() != null && book.getBorrower().equals(dbw.userId);
+                boolean isBorrowed = book.getStatus().equals("borrowed") && userIsBorrower;
+                boolean isAccepted = book.getStatus().equals("accepted") && userIsBorrower;
                 if ((activeFilters.contains("Requested") && isRequested)
                         || (activeFilters.contains("Borrowing") && isBorrowed)
                         || (activeFilters.contains("Accepted") && isAccepted))
