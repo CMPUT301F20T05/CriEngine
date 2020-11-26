@@ -1,12 +1,16 @@
 package com.example.criengine.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 
@@ -39,5 +43,29 @@ public abstract class RootFragment extends Fragment {
         root = (RootActivity) getActivity();
         dbw = DatabaseWrapper.getWrapper();
         return inflater.inflate(getFragmentLayout(), container, false);
+    }
+
+    /**
+     * Default SwipeRefreshLayout listener.
+     * Lasts 1.5 seconds and calls for a RootActivity refresh
+     */
+    protected class RefreshRootListener implements SwipeRefreshLayout.OnRefreshListener {
+        SwipeRefreshLayout layout;
+        RefreshRootListener(SwipeRefreshLayout layout) {
+            this.layout = layout;
+        }
+        @Override
+        public void onRefresh() {
+            if(layout.isRefreshing()) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dbw.notifyChanged();
+                        root.refresh();
+                        layout.setRefreshing(false);
+                    }
+                }, 1500);
+            }
+        }
     }
 }

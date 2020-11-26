@@ -2,22 +2,19 @@ package com.example.criengine.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Adapters.SearchBooksListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
@@ -30,7 +27,7 @@ import java.util.List;
 /**
  * Lets user search for a books description
  */
-public class SearchBooksFragment extends Fragment {
+public class SearchBooksFragment extends RootFragment {
 
     // variable declaration
     private ArrayList<Book> searchBooks;
@@ -39,16 +36,19 @@ public class SearchBooksFragment extends Fragment {
     private EditText keyword;
     private ListView results;
     private DatabaseWrapper dbw;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public SearchBooksFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Get the layout associated with the fragment.
+     * @return The layout.
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_books, container, false);
+    public int getFragmentLayout() {
+        return R.layout.fragment_search_books;
     }
 
     @Override
@@ -105,11 +105,18 @@ public class SearchBooksFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Book book = searchBooks.get(position);
                 Intent intent = new Intent(view.getContext(), NonOwnerBookViewActivity.class);
+                intent.putExtra("Page", RootActivity.PAGE.SEARCH);
                 intent.putExtra("Book", book);
                 view.getContext().startActivity(intent);
             }
         };
 
         results.setOnItemClickListener(selected);
+
+        // Setup Swipe refresh layout to use default root fragment lister
+        swipeRefreshLayout = getView().findViewById(R.id.search_swipe_refresh_layout);
+        if(swipeRefreshLayout != null) {
+            swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
+        }
     }
 }

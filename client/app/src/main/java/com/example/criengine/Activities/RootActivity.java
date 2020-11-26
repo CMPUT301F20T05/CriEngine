@@ -3,6 +3,7 @@ package com.example.criengine.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,19 +12,14 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.criengine.Database.DatabaseWrapper;
-
 import com.example.criengine.Fragments.BottomNavFragment;
-
 import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Fragments.MyProfileFragment;
 import com.example.criengine.Fragments.NotificationFragment;
 import com.example.criengine.Fragments.RequestedBooksFragment;
-
 import com.example.criengine.Fragments.SearchBooksFragment;
-import com.example.criengine.Objects.Notification;
-import com.example.criengine.Objects.Profile;
-
 import com.example.criengine.Interfaces.IOnBackPressed;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.badge.BadgeDrawable;
@@ -36,15 +32,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * - Outgoing Requests fragment
  * - My Books fragment
  * - My Profile fragment
- *
- * Outstanding Issues:
- * - Does not refresh information on page swipe.
  */
 public class RootActivity extends AppCompatActivity {
     private static final int PAGE_COUNT = 5;
     private ViewPager2 viewPager;
     private BottomNavigationView navigation;
     private DatabaseWrapper dbw;
+    private RootPagerFragmentAdapter mPagerAdapter;
 
     public enum PAGE {
         SEARCH(0),
@@ -55,7 +49,7 @@ public class RootActivity extends AppCompatActivity {
 
         public final int value;
 
-        private PAGE(int value) {
+        PAGE(int value) {
             this.value = value;
         }
 
@@ -81,7 +75,8 @@ public class RootActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(new onNavItemSelect());
 
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(new RootPagerFragmentAdapter(this));
+        mPagerAdapter = new RootPagerFragmentAdapter(this);
+        viewPager.setAdapter(mPagerAdapter);
         viewPager.registerOnPageChangeCallback(new onPageChange());
 
         dbw.addOnChangeListener(new DatabaseWrapper.OnChangeListener () {
@@ -104,7 +99,7 @@ public class RootActivity extends AppCompatActivity {
     /**
      * FragmentStateAdapter for the ViewPager
      */
-    private class RootPagerFragmentAdapter extends FragmentStateAdapter {
+    private static class RootPagerFragmentAdapter extends FragmentStateAdapter {
         public RootPagerFragmentAdapter(@NonNull FragmentActivity fa) {
             super(fa);
         }
@@ -132,6 +127,21 @@ public class RootActivity extends AppCompatActivity {
 
             return null;
         }
+
+        @Override
+        public int getItemViewType(int position) {
+            return super.getItemViewType(position);
+        }
+    }
+
+
+    /**
+     * Reloads the activity on the current page
+     */
+    public void refresh() {
+        Intent intent = new Intent(this, RootActivity.class);
+        intent.putExtra("Index", PAGE.values()[viewPager.getCurrentItem()]);
+        startActivity(intent);
     }
 
     /**

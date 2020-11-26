@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.InputType;
 import android.text.method.KeyListener;
 import android.view.View;
@@ -14,14 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 /**
  * Handles displaying information about a book. Items such as the title, author, description etc.
- * Outstanding Issues:
  */
 public class MyBookActivity extends BookActivity {
     private Button editCancelBookButton;
@@ -69,8 +71,8 @@ public class MyBookActivity extends BookActivity {
     private void setPageViewOnly() {
         editCancelBookButton.setText(R.string.edit_book);
         imageInfo.setVisibility(View.INVISIBLE);
-        if (book.getRequesters().size() == 0) {
-            // Only allow the user to see requests if there are requests.
+        if (!book.getStatus().equals("requested")) {
+            // Users should only see the button if the status is requested.
             seeRequestsButton.setVisibility(View.GONE);
         }
         deleteSaveBookButton.setText(R.string.delete_book);
@@ -263,9 +265,13 @@ public class MyBookActivity extends BookActivity {
                 .setMessage("Are you sure you want to delete this book?")
                 .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        dbw.deleteBook(book);
-                        dialog.dismiss();
-                        onBackPressed();
+                        dbw.deleteBook(book).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Boolean> task) {
+                                dialog.dismiss();
+                                onBackPressed();
+                            }
+                        });
                     }
 
                 })

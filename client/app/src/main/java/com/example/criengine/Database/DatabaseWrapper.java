@@ -335,6 +335,31 @@ public class DatabaseWrapper {
                 });
     }
 
+    public Task<List<Profile>> getBookBorrowers(String bookID) {
+        return users
+                .whereArrayContains("booksBorrowedOrRequested", bookID)
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Profile>>() {
+                    @Override
+                    public List<Profile> then(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            try {
+                                return query.toObjects(Profile.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return new ArrayList<Profile>();
+                        }
+                    }
+                });
+    }
+
     /**
      * Get a list of all books in the database
      * @return list of all books
@@ -477,14 +502,14 @@ public class DatabaseWrapper {
     }
     public Task<Boolean> borrowBook (final String bookID, final String ISBN) {
         return db.runTransaction(new Transaction.Function<Boolean>() {
-
             @Nullable
             @Override
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                Log.d("testingDB", bookID);
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
-//                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded") || bookSnapshot.get("status") != "accepted" ) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) || !(Boolean) bookSnapshot.get("confirmationNeeded") || ((String) bookSnapshot.get("status")).equals("accepted"))) {
+                    return false;
+                }
 
                 transaction.update(books.document(bookID), "confirmationNeeded", true);
                 return true;
@@ -498,9 +523,10 @@ public class DatabaseWrapper {
             @Override
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
-//                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded") || bookSnapshot.get("status") != "accepted" ) {
-//                    return false;
-//                }
+
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) || (Boolean) bookSnapshot.get("confirmationNeeded") || ((String) bookSnapshot.get("status")).equals("accepted"))) {
+                    return false;
+                }
                 transaction.update(books.document(bookID), "status", "borrowed");
                 transaction.update(books.document(bookID), "borrower", borrowerUid);
                 transaction.update(books.document(bookID), "confirmationNeeded", false);
@@ -516,9 +542,9 @@ public class DatabaseWrapper {
             @Override
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
-//                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded")  || bookSnapshot.get("status") != "borrowed" ) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) || !(Boolean) bookSnapshot.get("confirmationNeeded") || ((String) bookSnapshot.get("status")).equals("borrowed"))) {
+                    return false;
+                }
                 transaction.update(books.document(bookID), "confirmationNeeded", true);
                 return true;
             }
@@ -539,9 +565,9 @@ public class DatabaseWrapper {
                 }
 
                 bookList.remove(bookID);
-//                if (bookSnapshot.get("ISBN") != ISBN || !(Boolean) bookSnapshot.get("confirmationNeeded")  || bookSnapshot.get("status") != "borrowed" ) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) || (Boolean) bookSnapshot.get("confirmationNeeded") || ((String) bookSnapshot.get("status")).equals("borrowed"))) {
+                    return false;
+                }
                 transaction.update(users.document(borrowerID), "booksBorrowedOrRequested", bookList);
 
                 transaction.update(books.document(bookID), "requesters", new ArrayList<>());

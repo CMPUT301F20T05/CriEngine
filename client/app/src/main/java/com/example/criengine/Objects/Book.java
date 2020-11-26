@@ -1,8 +1,12 @@
 package com.example.criengine.Objects;
 
+import com.mapbox.mapboxsdk.geometry.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Creates a book object.
@@ -236,6 +240,23 @@ public class Book implements Serializable {
     public String getGeolocation() {
         return geolocation;
     }
+
+    /**
+     * Get the location of the book.
+     * @return The geo location.
+     */
+    public LatLng getLatLng() {
+        if (geolocation == null) {
+            return null;
+        }
+
+        String regex = "LatLng \\[latitude=(.+?), longitude=(.+?), altitude=0\\.0\\]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(geolocation);
+        matcher.matches();
+        return new LatLng(Double.parseDouble(matcher.group(1)),Double.parseDouble(matcher.group(2)));
+    }
+
 
     /**
      * Returns the image URL.
