@@ -13,12 +13,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.criengine.Activities.AddBookActivity;
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Objects.Book;
-import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * My Books List Fragment.
@@ -34,8 +33,11 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
     private ArrayList<String> filterStatus = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
 
+    final int SCAN_RESULT_CODE = 0;
+
     /**
      * Returns the layout.
+     *
      * @return The layout.
      */
     @Override
@@ -45,7 +47,8 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
     /**
      * Called when creating the fragment.
-     * @param view The view.
+     *
+     * @param view               The view.
      * @param savedInstanceState If the activity is being re-initialized after previously being
      *                           shut down then this Bundle contains the data it most recently
      *                           supplied.
@@ -59,28 +62,20 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         myBooks = new ArrayList<>();
 
         // Set the adapter.
-        myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks);
+        myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks, this);
 
         // Setup the adapter.
         headerText = getView().findViewById(R.id.bookListView);
         headerText.setAdapter(myBooksListAdapter);
 
         dbw.getProfile(dbw.userId).addOnSuccessListener(
-                new OnSuccessListener<Profile>() {
-                    @Override
-                    public void onSuccess(Profile profile) {
-                        dbw.getOwnedBooks(profile).addOnSuccessListener(
-                                new OnSuccessListener<List<Book>>() {
-                                    @Override
-                                    public void onSuccess(List<Book> books) {
-                                        myBooks.addAll(books);
-                                        displayBooks.addAll(myBooks);
-                                        myBooksListAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                        );
-                    }
-                }
+                profile -> dbw.getOwnedBooks(profile).addOnSuccessListener(
+                        books -> {
+                            myBooks.addAll(books);
+                            displayBooks.addAll(myBooks);
+                            myBooksListAdapter.notifyDataSetChanged();
+                        }
+                )
         );
 
         // Opens to the add-a-book screen when you click the button.
@@ -95,22 +90,18 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
         // Opens the filter fragment where you can filter information.
         filterButton = getView().findViewById(R.id.filter_button);
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MyBooksListFilterFragment(filterStatus).show(getChildFragmentManager(), "Filter_Status");
-            }
-        });
+        filterButton.setOnClickListener(v -> new MyBooksListFilterFragment(filterStatus).show(getChildFragmentManager(), "Filter_Status"));
 
         // Setup Swipe refresh layout to use default root fragment lister
         swipeRefreshLayout = getView().findViewById(R.id.my_books_swipe_refresh_layout);
-        if(swipeRefreshLayout != null) {
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
         }
     }
 
     /**
      * Handles modifying what is displayed on the screen if the user chooses to filter the info.
+     *
      * @param newStatus Contains the different status' that the user wants to display.
      */
     @Override
@@ -136,5 +127,27 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
             displayBooks.addAll(myBooks);
         }
         myBooksListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * On return from scan activity called from MyBooksAdapter, pass data to adapter to update book
+     *
+     * @param requestCode: the request code corresponding to the scan activity
+     * @param resultCode:  the result code of if the activity was successful
+     * @param data:        payload of intent
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        // Check that it is the ScanActivity with an OK result
+        if (requestCode == SCAN_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Get String data from Intent
+                String barcodeData = data.getStringExtra("barcode");
+                String bookID = data.getStringExtra("bookID");
+
+                myBooksListAdapter.onActivityResult(barcodeData, bookID);
+            }
+        }
     }
 }
