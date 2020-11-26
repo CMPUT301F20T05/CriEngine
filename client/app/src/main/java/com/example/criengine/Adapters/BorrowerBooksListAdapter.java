@@ -73,6 +73,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
                 intent.putExtra("Book", book);
+                intent.putExtra("Page", RootActivity.PAGE.REQUESTS);
                 v.getContext().startActivity(intent);
             }
         });
