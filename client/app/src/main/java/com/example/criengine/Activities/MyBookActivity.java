@@ -264,7 +264,7 @@ public class MyBookActivity extends BookActivity {
                 .setTitle("Delete Book")
                 .setMessage("Are you sure you want to delete this book?")
                 .setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
+                    public void onClick(final DialogInterface dialog, int whichButton) {
                         dbw.deleteBook(book).addOnCompleteListener(new OnCompleteListener<Boolean>() {
                             @Override
                             public void onComplete(@NonNull Task<Boolean> task) {
