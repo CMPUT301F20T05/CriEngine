@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
+import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Adapters.SearchBooksListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
@@ -104,6 +105,7 @@ public class SearchBooksFragment extends RootFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Book book = searchBooks.get(position);
                 Intent intent = new Intent(view.getContext(), NonOwnerBookViewActivity.class);
+                intent.putExtra("Page", RootActivity.PAGE.SEARCH);
                 intent.putExtra("Book", book);
                 view.getContext().startActivity(intent);
             }
