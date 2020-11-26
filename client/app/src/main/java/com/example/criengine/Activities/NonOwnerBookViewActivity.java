@@ -35,6 +35,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     private Book book;
     private ImageView image;
     private Profile userProfile;
+    private RootActivity.PAGE previousPage;
 
     // Testing config
     private boolean PREVENT_BORROW_OWN_BOOK = false;
@@ -49,11 +50,13 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
         // Grabs the book.
         if (getIntent().getExtras() != null) {
             book = (Book) getIntent().getSerializableExtra("Book");
+            previousPage = (RootActivity.PAGE) getIntent().getSerializableExtra("Page");
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
             return;
         }
+
 
         setContentView(R.layout.activity_non_owner_book_view);
 
@@ -170,7 +173,10 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     public void onBackPressed() {
         // go back to previous activity
         Intent intent = new Intent(this, RootActivity.class);
-        intent.putExtra("Index", RootActivity.PAGE.SEARCH);
+        if (previousPage == null) {
+            previousPage = RootActivity.PAGE.REQUESTS;
+        }
+        intent.putExtra("Index", previousPage);
         startActivity(intent);
     }
 

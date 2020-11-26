@@ -92,10 +92,14 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         final Book book = bookItems.get(position);
 
         // Opens to the book information screen when you click on a specific book.
-        view.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
-            intent.putExtra("Book", book);
-            v.getContext().startActivity(intent);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
+                intent.putExtra("Book", book);
+                intent.putExtra("Page", RootActivity.PAGE.REQUESTS);
+                v.getContext().startActivity(intent);
+            }
         });
 
         headerText.setText(book.getTitle());
