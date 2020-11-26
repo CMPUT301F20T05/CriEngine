@@ -130,6 +130,12 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         myBooksListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * On return from scan activity called from MyBooksAdapter, pass data to adapter to update book
+     * @param requestCode: the request code corresponding to the scan activity
+     * @param resultCode: the result code of if the activity was successful
+     * @param data: payload of intent
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
