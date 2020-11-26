@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/id"
-            layout="@layout/component_profile" />
+        <include layout="@layout/component_profile" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
