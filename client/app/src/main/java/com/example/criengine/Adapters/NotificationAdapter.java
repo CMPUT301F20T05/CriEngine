@@ -18,8 +18,6 @@ import java.util.ArrayList;
 
 /*
  * Custom ArrayAdapter that can be used to show notification instances in a ListView.
- * Outstanding Issues:
- * - Does not push changes to the database.
  */
 public class NotificationAdapter extends ArrayAdapter<String> {
     private ArrayList<String> notificationItems;

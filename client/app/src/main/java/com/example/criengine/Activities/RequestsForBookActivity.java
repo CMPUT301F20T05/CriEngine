@@ -8,17 +8,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.criengine.Adapters.RequestsForBookAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
-import com.example.criengine.Adapters.RequestsForBookAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,9 +24,6 @@ import java.util.List;
 /**
  * Requests for Book Activity. Displays all users who have requested your available book & allows
  * for the owner to reject / accept a requester.
- * Outstanding Issues:
- * - Does not notify the users. (Database not setup)
- * - Does not push the book status/properties to the database.
  */
 public class RequestsForBookActivity extends AppCompatActivity implements Serializable {
     private RequestsForBookAdapter userListAdapter;
@@ -84,15 +78,5 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
                 // TODO: redirect to view the user profile.
             }
         });
-    }
-
-    /**
-     * Overrides the back button so it returns to the main activity.
-     */
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, RootActivity.class);
-        intent.putExtra("Index", RootActivity.PAGE.MY_BOOKS);
-        startActivity(intent);
     }
 }

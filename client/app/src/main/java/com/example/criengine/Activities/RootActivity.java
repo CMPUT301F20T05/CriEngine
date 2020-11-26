@@ -32,9 +32,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  * - Outgoing Requests fragment
  * - My Books fragment
  * - My Profile fragment
- *
- * Outstanding Issues:
- * - Does not refresh information on page swipe.
  */
 public class RootActivity extends AppCompatActivity {
     private static final int PAGE_COUNT = 5;

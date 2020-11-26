@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /*
  * MyBooksAdapter is custom ArrayAdapter that can be used to owned books in a list view.
  * Outstanding Issues:
- * - Does not redirect to scanning/location activities. (Need to implement)
+ * - Does not redirect to scanning activity. (Need to implement)
  */
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
