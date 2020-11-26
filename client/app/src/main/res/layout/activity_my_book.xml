@@ -12,7 +12,6 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/id"
             layout="@layout/component_book"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
