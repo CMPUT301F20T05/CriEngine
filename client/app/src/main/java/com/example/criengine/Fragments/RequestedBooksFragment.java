@@ -2,7 +2,6 @@ package com.example.criengine.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.criengine.Adapters.BorrowerBooksListAdapter;
-import com.example.criengine.Database.GoogleBooksWrapper;
 import com.example.criengine.Fragments.FilterFragment.OnFragmentInteractionListener;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
@@ -43,6 +41,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
 
     /**
      * Get the layout associated with the fragment.
+     *
      * @return The layout associated with the fragment.
      */
     @Override
@@ -53,10 +52,11 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
     /**
      * Called immediately after onCreateView(android.view.LayoutInflater, android.view.ViewGroup,
      * android.os.Bundle) has returned, but before any saved state has been restored in to the view.
-     * @param view The view.
+     *
+     * @param view               The view.
      * @param savedInstanceState If the activity is being re-initialized after previously being
-     *                            shut down then this Bundle contains the data it most recently
-     *                            supplied.
+     *                           shut down then this Bundle contains the data it most recently
+     *                           supplied.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
 
         // Setup Swipe refresh layout to use default root fragment lister
         swipeRefreshLayout = getView().findViewById(R.id.my_requests_swipe_refresh_layout);
-        if(swipeRefreshLayout != null) {
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
         }
     }
@@ -101,6 +101,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
     /**
      * Updates the list of books to be displayed depending on the active filters received from
      * the filter fragment
+     *
      * @param activeFilters the list of filters enabled when the FilterFragment confirm button
      *                      is pressed
      */
@@ -113,11 +114,11 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
 
         // Modifies the array so that only the filtered status's are displayed.
         if (activeFilters.size() > 0) {
-            for(Book book: borrowerBooks){
+            for (Book book : borrowerBooks) {
                 boolean isBorrowed = book.getStatus().equals("borrowed") && book.getBorrower().equals(dbw.userId);
                 boolean isAccepted = book.getStatus().equals("accepted") && book.getBorrower().equals(dbw.userId);
                 boolean isRequested = book.getStatus().equals("requested");
-                if((activeFilters.contains("Requested") && isRequested)
+                if ((activeFilters.contains("Requested") && isRequested)
                         || (activeFilters.contains("Borrowing") && isBorrowed)
                         || (activeFilters.contains("Accepted") && isAccepted))
                     displayBooks.add(book);
@@ -133,9 +134,10 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
 
     /**
      * On return from scan activity called from MyBooksAdapter, pass data to adapter to update book
+     *
      * @param requestCode: the request code corresponding to the scan activity
-     * @param resultCode: the result code of if the activity was successful
-     * @param data: payload of intent
+     * @param resultCode:  the result code of if the activity was successful
+     * @param data:        payload of intent
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -146,7 +148,6 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
                 String bookID = data.getStringExtra("bookID");
-                Log.d("testing", "barcode data=" + barcodeData);
 
                 borrowerBooksListAdapter.onActivityResult(barcodeData, bookID);
             }

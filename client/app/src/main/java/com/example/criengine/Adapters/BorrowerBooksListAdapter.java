@@ -1,9 +1,7 @@
 package com.example.criengine.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,6 @@ import com.example.criengine.Activities.ScanActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
@@ -56,7 +52,8 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
     /**
      * On return from scan activity, RequestedBookFragment calls this function to update the database that the book has been borrowed or returned.
-     * @param barcode   The barcode string scanned
+     *
+     * @param barcode The barcode string scanned
      */
     public void onActivityResult(String barcode, String bookID) {
         if (action.equals("Return")) {
@@ -106,7 +103,6 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         actionButton.setEnabled(true);
         switch (book.getStatus()) {
             case "borrowed":
-//            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
                 if (book.isConfirmationNeeded()) {
                     actionButton.setEnabled(false);
                     actionButton.setText("Scanned!");

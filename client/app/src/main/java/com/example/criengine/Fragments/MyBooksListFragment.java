@@ -2,7 +2,6 @@ package com.example.criengine.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,12 +13,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.criengine.Activities.AddBookActivity;
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Objects.Book;
-import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -41,6 +37,7 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
     /**
      * Returns the layout.
+     *
      * @return The layout.
      */
     @Override
@@ -50,7 +47,8 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
     /**
      * Called when creating the fragment.
-     * @param view The view.
+     *
+     * @param view               The view.
      * @param savedInstanceState If the activity is being re-initialized after previously being
      *                           shut down then this Bundle contains the data it most recently
      *                           supplied.
@@ -96,13 +94,14 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
         // Setup Swipe refresh layout to use default root fragment lister
         swipeRefreshLayout = getView().findViewById(R.id.my_books_swipe_refresh_layout);
-        if(swipeRefreshLayout != null) {
+        if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeRefreshLayout));
         }
     }
 
     /**
      * Handles modifying what is displayed on the screen if the user chooses to filter the info.
+     *
      * @param newStatus Contains the different status' that the user wants to display.
      */
     @Override
@@ -132,9 +131,10 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
     /**
      * On return from scan activity called from MyBooksAdapter, pass data to adapter to update book
+     *
      * @param requestCode: the request code corresponding to the scan activity
-     * @param resultCode: the result code of if the activity was successful
-     * @param data: payload of intent
+     * @param resultCode:  the result code of if the activity was successful
+     * @param data:        payload of intent
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -145,7 +145,6 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
                 String bookID = data.getStringExtra("bookID");
-                Log.d("testing", "barcode data=" + bookID);
 
                 myBooksListAdapter.onActivityResult(barcodeData, bookID);
             }
