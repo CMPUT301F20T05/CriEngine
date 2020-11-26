@@ -58,16 +58,15 @@ public class Profile implements Serializable {
      * @param userID The user ID.
      * @param email The email of the user.
      * @param username The username of the user.
-     * @param phone The phone number for the user.
      * @param firstname The first name of the user.
      * @param lastname The last name of the user.
      */
-    public Profile(String userID, String email, String username, String address, String phone, String firstname, String lastname) {
+    public Profile(String userID, String email, String username, String firstname, String lastname) {
         this.userID = userID;
         this.email = email;
         this.username = username;
-        this.address = address;
-        this.phone = phone;
+        this.address = null;
+        this.phone = null;
         this.firstname = firstname;
         this.lastname = lastname;
         this.bio = null;
