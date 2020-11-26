@@ -46,7 +46,8 @@ public class RootActivity extends AppCompatActivity {
         NOTIFICATIONS(1),
         REQUESTS(2),
         MY_BOOKS(3),
-        PROFILE(4);
+        PROFILE(4),
+        OTHER(5);
 
         public final int value;
 

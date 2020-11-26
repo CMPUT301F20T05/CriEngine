@@ -64,8 +64,9 @@ public class UserProfileActivity extends ProfileActivity {
         userBooksTextView = findViewById(R.id.user_books_text);
         userBooksListView = findViewById(R.id.user_books_listview);
 
+        // Setup data and adapter
         userBooks = new ArrayList<>();
-        searchBookAdapter = new SearchBooksListAdapter(this, userBooks);
+        searchBookAdapter = new SearchBooksListAdapter(this, userBooks, false);
         userBooksListView.setAdapter(searchBookAdapter);
 
         dbw = DatabaseWrapper.getWrapper();

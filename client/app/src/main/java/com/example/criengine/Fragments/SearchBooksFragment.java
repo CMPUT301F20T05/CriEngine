@@ -84,7 +84,7 @@ public class SearchBooksFragment extends RootFragment {
         searchProfiles = new ArrayList<Profile>();
 
         // Setup adapter
-        searchBookAdapter = new SearchBooksListAdapter(getContext(), searchBooks);
+        searchBookAdapter = new SearchBooksListAdapter(getContext(), searchBooks, true);
         searchProfileAdapter = new SearchProfilesListAdapter(getContext(), searchProfiles);
 
         // Get all books from database

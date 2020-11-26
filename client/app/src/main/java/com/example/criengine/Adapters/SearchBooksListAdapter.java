@@ -32,11 +32,14 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> items;
     private Context context;
     private DatabaseWrapper dbw;
+    private Boolean search;
 
-    public SearchBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> books) {
+    public SearchBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> books,
+                                  @NonNull Boolean search) {
         super(context, 0, books);
         this.context = context;
         this.items = books;
+        this.search = search;
     }
 
     @NonNull
@@ -74,7 +77,13 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
-                intent.putExtra("Page", RootActivity.PAGE.SEARCH);
+                // Book was clicked in search fragment
+                if (search) {
+                    intent.putExtra("Page", RootActivity.PAGE.SEARCH);
+                // Book was clicked in another activity
+                } else {
+                    intent.putExtra("Page", RootActivity.PAGE.OTHER);
+                }
                 intent.putExtra("Book", book);
                 v.getContext().startActivity(intent);
             }
