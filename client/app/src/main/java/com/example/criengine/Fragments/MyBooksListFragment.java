@@ -64,28 +64,20 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         myBooks = new ArrayList<>();
 
         // Set the adapter.
-        myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks);
+        myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks, this);
 
         // Setup the adapter.
         headerText = getView().findViewById(R.id.bookListView);
         headerText.setAdapter(myBooksListAdapter);
 
         dbw.getProfile(dbw.userId).addOnSuccessListener(
-                new OnSuccessListener<Profile>() {
-                    @Override
-                    public void onSuccess(Profile profile) {
-                        dbw.getOwnedBooks(profile).addOnSuccessListener(
-                                new OnSuccessListener<List<Book>>() {
-                                    @Override
-                                    public void onSuccess(List<Book> books) {
-                                        myBooks.addAll(books);
-                                        displayBooks.addAll(myBooks);
-                                        myBooksListAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                        );
-                    }
-                }
+                profile -> dbw.getOwnedBooks(profile).addOnSuccessListener(
+                        books -> {
+                            myBooks.addAll(books);
+                            displayBooks.addAll(myBooks);
+                            myBooksListAdapter.notifyDataSetChanged();
+                        }
+                )
         );
 
         // Opens to the add-a-book screen when you click the button.
@@ -100,12 +92,7 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
         // Opens the filter fragment where you can filter information.
         filterButton = getView().findViewById(R.id.filter_button);
-        filterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MyBooksListFilterFragment(filterStatus).show(getChildFragmentManager(), "Filter_Status");
-            }
-        });
+        filterButton.setOnClickListener(v -> new MyBooksListFilterFragment(filterStatus).show(getChildFragmentManager(), "Filter_Status"));
 
         // Setup Swipe refresh layout to use default root fragment lister
         swipeRefreshLayout = getView().findViewById(R.id.my_books_swipe_refresh_layout);
@@ -145,9 +132,8 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Check that it is the SecondActivity with an OK result
+//        super.onActivityResult(requestCode, resultCode, data);
+        // Check that it is the ScanActivity with an OK result
         if (requestCode == SCAN_RESULT_CODE) {
             if (resultCode == RESULT_OK) {
                 // Get String data from Intent

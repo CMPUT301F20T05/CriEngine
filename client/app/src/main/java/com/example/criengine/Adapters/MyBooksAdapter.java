@@ -3,6 +3,7 @@ package com.example.criengine.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.RequestsForBookActivity;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 public class MyBooksAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> bookItems;
     private Context context;
+    private Fragment fragment;
     private DatabaseWrapper dbw;
 
     private String action;
@@ -45,9 +48,10 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
      * @param context The context of the activity.
      * @param bookItems The ArrayList of books.
      */
-    public MyBooksAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems) {
+    public MyBooksAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems, Fragment fragment) {
         super(context, 0, bookItems);
         this.context = context;
+        this.fragment = fragment;
         this.bookItems = bookItems;
         dbw = DatabaseWrapper.getWrapper();
     }
@@ -57,20 +61,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
      * @param barcode The barcode string scanned
      */
     public void onActivityResult(String barcode) {
+        Log.d("TestingOnActivityResult", barcode);
         if (action.equals("Return")) {
-            dbw.confirmReturnBook(book.getBookID(), barcode).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
-                }
-            });
+            dbw.confirmReturnBook(book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS));
         } else if (action.equals("Lend")) {
-            dbw.borrowBook(book.getBookID(), barcode).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS);
-                }
-            });
+            dbw.borrowBook(book.getBookID(), barcode).addOnCompleteListener(task -> ((RootActivity)context).refresh(RootActivity.PAGE.MY_BOOKS));
         }
     }
 
@@ -102,14 +97,11 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
         book = bookItems.get(position);
 
         // Opens to the book information screen when you click on a specific book.
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                book = bookItems.get(position);
-                Intent intent = new Intent(v.getContext(), MyBookActivity.class);
-                intent.putExtra("Book", book);
-                v.getContext().startActivity(intent);
-            }
+        view.setOnClickListener(v -> {
+            book = bookItems.get(position);
+            Intent intent = new Intent(v.getContext(), MyBookActivity.class);
+            intent.putExtra("Book", book);
+            v.getContext().startActivity(intent);
         });
 
         // Set the text for the header and status.
@@ -140,7 +132,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                     actionButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ((Activity) context).startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                            fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
                             action = "Return";
                         }
                     });
@@ -159,7 +151,7 @@ public class MyBooksAdapter extends ArrayAdapter<Book> {
                         actionButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ((Activity) context).startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                                fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
                                 action = "Lend";
                             }
                         });

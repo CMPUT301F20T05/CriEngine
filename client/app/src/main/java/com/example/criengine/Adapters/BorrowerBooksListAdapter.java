@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
 import com.example.criengine.Activities.RootActivity;
@@ -33,6 +34,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
     private ArrayList<Book> bookItems;
     private Context context;
+    private Fragment fragment;
     private DatabaseWrapper dbw;
 
     private String action;
@@ -46,9 +48,10 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
      * @param context   The context.
      * @param bookItems The list of book items to be displayed.
      */
-    public BorrowerBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems) {
+    public BorrowerBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems, Fragment fragment) {
         super(context, 0, bookItems);
         this.context = context;
+        this.fragment = fragment;
         this.bookItems = bookItems;
         dbw = DatabaseWrapper.getWrapper();
     }
@@ -91,14 +94,11 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         book = bookItems.get(position);
 
         // Opens to the book information screen when you click on a specific book.
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                book = bookItems.get(position);
-                Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
-                intent.putExtra("Book", book);
-                v.getContext().startActivity(intent);
-            }
+        view.setOnClickListener(v -> {
+            book = bookItems.get(position);
+            Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
+            intent.putExtra("Book", book);
+            v.getContext().startActivity(intent);
         });
 
         headerText.setText(book.getTitle());
@@ -117,12 +117,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     actionButton.setEnabled(true);
                     actionButton.setText("Return");
                     actionButton.setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    ((Activity) context).startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
-                                    action = "Returned";
-                                }
+                            v -> {
+                                fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                                action = "Returned";
                             }
                     );
                 }
@@ -130,21 +127,15 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
             case "requested":
                 actionButton.setText("Cancel");
                 actionButton.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                book.removeRequesters(dbw.userId);
-                                dbw.declineRequest(dbw.userId, book.getBookID()).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Boolean> task) {
-                                        if (book.getRequesters().size() == 0) {
-                                            book.setStatus("available");
-                                            dbw.addBook(book);
-                                        }
-                                        ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS);
-                                    }
-                                });
-                            }
+                        v -> {
+                            book.removeRequesters(dbw.userId);
+                            dbw.declineRequest(dbw.userId, book.getBookID()).addOnCompleteListener(task -> {
+                                if (book.getRequesters().size() == 0) {
+                                    book.setStatus("available");
+                                    dbw.addBook(book);
+                                }
+                                ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS);
+                            });
                         }
                 );
                 break;
@@ -153,12 +144,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     actionButton.setVisibility(View.VISIBLE);
                     actionButton.setText("Borrow");
                     actionButton.setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    ((Activity) context).startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
-                                    action = "Borrow";
-                                }
+                            v -> {
+                                fragment.startActivityForResult(new Intent(context, ScanActivity.class), SCAN_RESULT_CODE);
+                                action = "Borrow";
                             }
                     );
                 } else {

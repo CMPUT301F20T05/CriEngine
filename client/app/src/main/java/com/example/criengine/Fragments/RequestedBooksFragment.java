@@ -75,7 +75,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
             }
         });
 
-        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks);
+        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks, this);
 
         bookListView = getView().findViewById(R.id.bookListView);
         bookListView.setAdapter(borrowerBooksListAdapter);
@@ -133,7 +133,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
 
         // Check that it is the SecondActivity with an OK result
         if (requestCode == SCAN_RESULT_CODE) {
