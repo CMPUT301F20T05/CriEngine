@@ -91,6 +91,11 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
             acceptedUserID = (String) getIntent().getSerializableExtra("acceptedUser");
             requesters = (ArrayList<Profile>) getIntent().getSerializableExtra("users");
             requestedBook = (Book) getIntent().getSerializableExtra("book");
+            String[] latLngStr = requestedBook.getGeolocation().split(" ");
+            givenLocation = null;
+            if (latLngStr.length == 2) {
+                givenLocation = new LatLng(Double.parseDouble(latLngStr[0]), Double.parseDouble(latLngStr[1]));
+            }
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
@@ -104,13 +109,6 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_select_geopage);
-
-        // check if a location was passed in
-        if (getIntent().getExtras() != null) {
-            givenLocation = (LatLng) getIntent().getSerializableExtra("location");
-        } else {
-            givenLocation = null;
-        }
 
         // Initialize the mapboxMap view
         mapView = findViewById(R.id.mapView);
@@ -152,7 +150,9 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
                         public void onClick(View view) {
                             // Use the map target's coordinates to store the location
                             final LatLng mapTargetLatLng = mapboxMap.getCameraPosition().target;
-                            requestedBook.setGeolocation(mapTargetLatLng.toString());
+                            String latLngStr = String.valueOf(mapTargetLatLng.getLatitude()) + ' ';
+                            latLngStr += String.valueOf(mapTargetLatLng.getLongitude());
+                            requestedBook.setGeolocation(latLngStr);
                             dbw.addBook(requestedBook);
                             // Reject every request except the accepted one
                             for (int i = 0; i < requesters.size(); i++) {
