@@ -80,13 +80,12 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         headerText.setText(book.getTitle());
 
-        statusText.setText(book.getStatus());
-
         actionButton.setEnabled(true);
         actionButton.setVisibility(View.VISIBLE);
         switch (book.getStatus()) {
             case "borrowed":
 //            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
+                statusText.setText("Borrowed");
                 if (book.isConfirmationNeeded()) {
                     actionButton.setEnabled(false);
                     actionButton.setText("Scanned!");
@@ -109,6 +108,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                 }
                 break;
             case "requested":
+                statusText.setText("Requested");
                 actionButton.setText("Cancel");
                 actionButton.setOnClickListener(
                         new View.OnClickListener() {
@@ -134,6 +134,7 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                 if (book.isConfirmationNeeded()) {
                     actionButton.setVisibility(View.VISIBLE);
                     actionButton.setText("Borrow");
+                    statusText.setText("Accepted");
                     actionButton.setOnClickListener(
                             new View.OnClickListener() {
                                 @Override
