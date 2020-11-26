@@ -57,6 +57,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
             return;
         }
 
+
         setContentView(R.layout.activity_non_owner_book_view);
 
         // My book UI components.
@@ -172,6 +173,9 @@ public class NonOwnerBookViewActivity extends AppCompatActivity {
     public void onBackPressed() {
         // go back to previous activity
         Intent intent = new Intent(this, RootActivity.class);
+        if (previousPage == null) {
+            previousPage = RootActivity.PAGE.REQUESTS;
+        }
         intent.putExtra("Index", previousPage);
         startActivity(intent);
     }
