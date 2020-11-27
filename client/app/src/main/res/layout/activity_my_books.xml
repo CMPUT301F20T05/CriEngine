@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/gradient_background"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/swipe_tutorial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="@string/swipe_tutorial"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header_layout" />
 
     <LinearLayout
         android:id="@+id/header_layout"
@@ -37,12 +52,12 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:textColor="@color/light_green"
-            android:textSize="20sp"
             android:background="@drawable/rounded_button"
             android:gravity="center"
             android:text="@string/my_books_filter"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/light_green"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -61,6 +76,7 @@
             android:dividerHeight="0dp"
             android:focusable="true" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <Button
         android:id="@+id/add_a_book"
         android:layout_width="0dp"
@@ -71,9 +87,37 @@
         android:background="@drawable/rounded_button"
         android:text="@string/add_a_book_button"
         android:textAllCaps="false"
-        android:textSize="30sp"
         android:textColor="@color/light_green"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/refresh_tutorial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="@string/refresh_tutorial"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipe_tutorial" />
+
+    <TextView
+        android:id="@+id/nav_bar_tutorial"
+        android:layout_width="0dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="@string/nav_var_tutorial"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_a_book"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
