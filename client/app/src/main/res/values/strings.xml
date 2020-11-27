@@ -62,7 +62,7 @@
     <string name="password_hint">Password</string>
     <string name="firstname_hint">First Name</string>
     <string name="lastname_hint">Last Name</string>
-    <string name="account_warning">A field is missing or entered incorrectly</string>
+    <string name="account_warning">Please fill out all fields to submit</string>
 
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
