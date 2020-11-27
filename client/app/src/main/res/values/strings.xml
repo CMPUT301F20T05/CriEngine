@@ -11,6 +11,11 @@
     <string name="phone_text_hint">(XXX) XXX-XXXX</string>
     <string name="address_text_hint">52 Example St</string>
 
+    <!-- Tutorial  -->
+    <string name="swipe_tutorial">⬅️ Swipe Left &amp; Right to navigate ➡️</string>
+    <string name="refresh_tutorial">⬇️ Swipe Down to refresh ⬇️</string>
+    <string name="profile_tutorial">Clicking a name will give more info!</string>
+
     <!-- My Profile Fragment -->
     <string name="cancel_button">Cancel</string>
     <string name="logout_button">Logout</string>

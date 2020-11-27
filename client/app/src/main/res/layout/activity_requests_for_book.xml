@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/requests_for_book_header">
+        app:layout_constraintTop_toBottomOf="@+id/profile_tutorial">
 
         <ListView
             android:id="@+id/requestsListView"
@@ -47,4 +47,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout="@layout/fragment_bottom_nav" />
+
+    <TextView
+        android:id="@+id/profile_tutorial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="@string/profile_tutorial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/requests_for_book_header" />
 </androidx.constraintlayout.widget.ConstraintLayout>

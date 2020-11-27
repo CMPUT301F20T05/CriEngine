@@ -3,8 +3,6 @@ package com.example.criengine.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -70,13 +68,5 @@ public class RequestsForBookActivity extends AppCompatActivity implements Serial
         userListView = findViewById(R.id.requestsListView);
         header = findViewById(R.id.requests_for_book_header);
         header.setText("Requests for \"" + book.getTitle() + "\"");
-
-        // Opens to the book information screen when you click on a specific book.
-        userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: redirect to view the user profile.
-            }
-        });
     }
 }

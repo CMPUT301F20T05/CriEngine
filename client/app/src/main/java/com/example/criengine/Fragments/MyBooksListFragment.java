@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,8 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
     private Button addBookButton;
     private Button filterButton;
     private ListView headerText;
+    private TextView swipeTutorial;
+    private TextView refreshTutorial;
     private ArrayList<String> filterStatus = new ArrayList<>();
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -64,6 +67,11 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
         // Set the adapter.
         myBooksListAdapter = new MyBooksAdapter(getContext(), displayBooks, this);
 
+        swipeTutorial = getView().findViewById(R.id.swipe_tutorial);
+        refreshTutorial = getView().findViewById(R.id.refresh_tutorial);
+        swipeTutorial.setVisibility(View.INVISIBLE);
+        refreshTutorial.setVisibility(View.INVISIBLE);
+
         // Setup the adapter.
         headerText = getView().findViewById(R.id.bookListView);
         headerText.setAdapter(myBooksListAdapter);
@@ -74,6 +82,10 @@ public class MyBooksListFragment extends RootFragment implements MyBooksListFilt
                             myBooks.addAll(books);
                             displayBooks.addAll(myBooks);
                             myBooksListAdapter.notifyDataSetChanged();
+                            if (myBooks.size() == 0) {
+                                swipeTutorial.setVisibility(View.VISIBLE);
+                                refreshTutorial.setVisibility(View.VISIBLE);
+                            }
                         }
                 )
         );
