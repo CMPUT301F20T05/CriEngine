@@ -59,7 +59,6 @@ public class GoogleBooksWrapper {
                 String description;
                 JSONArray authors;
                 String authorsString = "";
-
                 if (jBook.isNull("title")) {
                     title = null;
                 } else {
@@ -84,7 +83,7 @@ public class GoogleBooksWrapper {
                     }
                 }
 
-                Book book = new Book(null, null, title, authorsString, description, null, "available");
+                Book book = new Book(null, null, title, authorsString, description, isbn, "available");
 
                 return book;
 
@@ -108,7 +107,7 @@ public class GoogleBooksWrapper {
         URL url = new URL("https://www.googleapis.com/books/v1/volumes?q=isbn:9780156012195");
         Book book = null;
         try {
-            book = new getBookTask().execute("9780156012195").get();
+            book = new getBookTask().execute(isbn).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

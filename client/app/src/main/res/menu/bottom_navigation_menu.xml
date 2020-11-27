@@ -16,7 +16,7 @@
     <item
         android:id="@+id/bottom_navigation_item_my_requests"
         android:icon="@drawable/ic_requests"
-        android:title="@string/title_my_requests" />
+        android:title="@string/requests_header" />
 
     <item
         android:id="@+id/bottom_navigation_item_my_books"

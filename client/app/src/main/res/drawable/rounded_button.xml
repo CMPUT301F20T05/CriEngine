@@ -7,7 +7,7 @@
         android:drawable="@drawable/focused_button"
         android:state_focused="true" />
     <item
-        android:drawable="@color/disabled_button"
+        android:drawable="@drawable/disabled_button"
         android:state_enabled="false" />
     <item
         android:drawable="@drawable/default_button"

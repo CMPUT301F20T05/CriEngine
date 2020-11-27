@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="471dp"
+        android:layout_height="716dp"
+        android:layout_marginStart="235dp"
+        app:layout_constraintStart_toStartOf="@+id/leftBook"
+        app:layout_constraintTop_toBottomOf="@+id/apologyHeader"
+        app:srcCompat="@drawable/bookstack2" />
+
+    <ImageView
+        android:id="@+id/leftBook"
+        android:layout_width="471dp"
+        android:layout_height="716dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/apologySubHeader"
+        app:srcCompat="@drawable/bookstack2" />
+
+    <TextView
+        android:id="@+id/apologyHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="@string/apology"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/bottom_navigation_frag"
+        android:name="com.example.criengine.Fragments.BottomNavFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_bottom_nav" />
+
+    <TextView
+        android:id="@+id/apologySubHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="@string/apologySubHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/apologyHeader" />
+</androidx.constraintlayout.widget.ConstraintLayout>

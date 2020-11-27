@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".Activities.CameraActivity">
+
+    <fragment
+        android:id="@+id/bottom_navigation_frag"
+        android:name="com.example.criengine.Fragments.BottomNavFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout="@layout/fragment_bottom_nav" />
+
+    <ImageView
+        android:id="@+id/camera_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/picture_info_text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/save_camera_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/save_camera_image"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/save_picture"
+        android:textColor="@color/light_green"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/delete_picture"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/danger_see_through_button"
+        android:text="@string/delete_picture"
+        android:textAllCaps="false"
+        android:textColor="@color/warning_text"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
