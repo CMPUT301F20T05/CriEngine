@@ -252,8 +252,14 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
         if (previousPage == null) {
             previousPage = RootActivity.PAGE.REQUESTS;
         }
-        intent.putExtra("Index", previousPage);
-        startActivity(intent);
+
+        // Goes back to page that called NonOwnerBookActivity
+        if (previousPage == RootActivity.PAGE.OTHER) {
+            super.onBackPressed();
+        } else {
+            intent.putExtra("Index", previousPage);
+            startActivity(intent);
+        }
     }
 
     /**

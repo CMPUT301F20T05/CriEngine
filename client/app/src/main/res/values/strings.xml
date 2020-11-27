@@ -3,9 +3,9 @@
 
     <!-- Profile Component -->
     <string name="user_profile_text">%1$s\'s Profile</string>
-    <string name="bio_header">Bio</string>
+    <string name="bio_header">Bio:</string>
     <string name="bio_text">Edit your bio here</string>
-    <string name="contact_info">Contact Information</string>
+    <string name="contact_info">Contact Information:</string>
     <string name="phone_header">Phone:</string>
     <string name="address_header">Address:</string>
     <string name="phone_text_hint">(XXX) XXX-XXXX</string>
@@ -18,7 +18,7 @@
     <string name="save_button">Save</string>
 
     <!-- User Profile Activity -->
-    <string name="user_books_text">%1$s\'s Books</string>
+    <string name="user_books_text">%1$s\'s Books:</string>
 
     <!-- My Books Activity -->
     <string name="add_a_book_button">Add A Book</string>

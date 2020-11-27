@@ -32,11 +32,14 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> items;
     private Context context;
     private DatabaseWrapper dbw;
+    private Boolean isSearchFragment;
 
-    public SearchBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> books) {
+    public SearchBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> books,
+                                  @NonNull Boolean search) {
         super(context, 0, books);
         this.context = context;
         this.items = books;
+        this.isSearchFragment = search;
     }
 
     @NonNull
@@ -51,6 +54,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
 
         // Get the object from the xml file.
         TextView searchTitle = view.findViewById(R.id.search_book_title);
+        TextView searchAuthor = view.findViewById(R.id.search_book_author);
         TextView searchDesc = view.findViewById(R.id.search_book_desc);
         TextView searchStatus = view.findViewById(R.id.search_book_status);
         final TextView searchUser = view.findViewById(R.id.search_book_user);
@@ -58,6 +62,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
         final Book book = items.get(position);
 
         searchTitle.setText(book.getTitle());
+        searchAuthor.setText(book.getAuthor());
         searchDesc.setText(book.getDescription());
         searchStatus.setText(book.getStatus());
 
@@ -74,7 +79,13 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), NonOwnerBookViewActivity.class);
-                intent.putExtra("Page", RootActivity.PAGE.SEARCH);
+                // Book was clicked in search fragment
+                if (isSearchFragment) {
+                    intent.putExtra("Page", RootActivity.PAGE.SEARCH);
+                // Book was clicked in another activity
+                } else {
+                    intent.putExtra("Page", RootActivity.PAGE.OTHER);
+                }
                 intent.putExtra("Book", book);
                 v.getContext().startActivity(intent);
             }

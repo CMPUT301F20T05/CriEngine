@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.criengine.Adapters.SearchBooksListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
@@ -32,6 +33,7 @@ public class UserProfileActivity extends ProfileActivity {
     private TextView userBooksTextView;
     private ListView userBooksListView;
     private ArrayList<Book> userBooks;
+    private SearchBooksListAdapter searchBookAdapter;
 
     /**
      * The layout used by UserProfileActivity
@@ -61,7 +63,11 @@ public class UserProfileActivity extends ProfileActivity {
 
         userBooksTextView = findViewById(R.id.user_books_text);
         userBooksListView = findViewById(R.id.user_books_listview);
+
+        // Setup data and adapter
         userBooks = new ArrayList<>();
+        searchBookAdapter = new SearchBooksListAdapter(this, userBooks, false);
+        userBooksListView.setAdapter(searchBookAdapter);
 
         dbw = DatabaseWrapper.getWrapper();
         dbw.getProfile(userId).addOnSuccessListener(new OnSuccessListener<Profile>() {
@@ -78,12 +84,12 @@ public class UserProfileActivity extends ProfileActivity {
                     @Override
                     public void onSuccess(List<Book> books) {
                         userBooks.addAll(books);
+                        searchBookAdapter.notifyDataSetChanged();
                     }
                 });
             }
         });
 
-        // TODO: set the userBooksListView once the adapter is created from search
         // TODO: write integration tests once the search is in place
     }
 }
