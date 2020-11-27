@@ -60,12 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                     String email = loginEmail.getText().toString();
                     String password = loginPassword.getText().toString();
                     enableLogin(false);
-
-                    // TODO: Remove the auto login later.
-                    if (email.isEmpty() && password.isEmpty()) {
-                        email = "user2@email.com";
-                        password = "password";
-                    }
                     if ((email.isEmpty() || password.isEmpty())) {
                         loginEmail.setError("Login Failed");
                         enableLogin(true);

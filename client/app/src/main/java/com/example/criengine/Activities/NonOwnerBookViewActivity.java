@@ -82,7 +82,7 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
     private Layer droppedMarkerLayer;
 
     // Testing config
-    private boolean PREVENT_BORROW_OWN_BOOK = false;
+    private boolean PREVENT_BORROW_OWN_BOOK = true;
     /**
      * A custom onCreate() method. Allows for the usage for fragments in the activity.
      * Without this method, there is the possible issue of the fragment being null when it is called
