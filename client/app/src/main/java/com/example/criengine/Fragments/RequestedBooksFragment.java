@@ -24,13 +24,11 @@ import static android.app.Activity.RESULT_OK;
 
 /**
  * Requested Books Fragment. Handles displaying information about all outgoing requests.
- * Outstanding Issues:
- * - Does not navigate to a book if selected (activity not implemented).
  */
 public class RequestedBooksFragment extends RootFragment implements OnFragmentInteractionListener {
     Button filterButton;
     ListView bookListView;
-    List<String> filters = Arrays.asList("Requested", "Watched", "Borrowing", "Accepted");
+    List<String> filters = Arrays.asList("Requested", "Borrowing", "Accepted");
     List<String> activeFilters = new ArrayList<>();
     ArrayList<Book> borrowerBooks = new ArrayList<>();
     ArrayList<Book> displayBooks = new ArrayList<>();
