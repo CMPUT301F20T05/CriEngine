@@ -32,7 +32,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
     private ArrayList<Book> items;
     private Context context;
     private DatabaseWrapper dbw;
-    private Boolean search;
+    private Boolean isSearchFragment;
 
     public SearchBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> books,
                                   @NonNull Boolean search) {
