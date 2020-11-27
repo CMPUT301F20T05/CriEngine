@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@drawable/gradient_background"
     android:layout_height="match_parent">
@@ -86,8 +87,8 @@
         android:background="@drawable/rounded_button"
         android:text="@string/add_a_book_button"
         android:textAllCaps="false"
-        android:textSize="30sp"
         android:textColor="@color/light_green"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -98,12 +99,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="48dp"
-        android:gravity="center"
         android:layout_marginEnd="32dp"
+        android:gravity="center"
         android:text="@string/refresh_tutorial"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swipe_tutorial" />
+
+    <TextView
+        android:id="@+id/nav_bar_tutorial"
+        android:layout_width="0dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="@string/nav_var_tutorial"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_a_book"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
