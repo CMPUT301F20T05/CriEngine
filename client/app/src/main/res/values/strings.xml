@@ -25,6 +25,13 @@
     <string name="my_books_header">My Books</string>
     <string name="my_books_filter">Filter</string>
 
+    <!-- My Book Filter Fragment -->
+    <string name="filter_fragment_header">Filter By:</string>
+    <string name="filter_available_checkbox">Available</string>
+    <string name="filter_requests_checkbox">Requested</string>
+    <string name="filter_accepted_checkbox">Accepted</string>
+    <string name="filter_borrowed_checkbox">Borrowed</string>
+
     <!-- Requests For Book Activity -->
     <string name="requests_for_book_header">Requests on: INSERT NAME</string>
 
@@ -35,6 +42,7 @@
     <string name="book_author_hint">Author</string>
     <string name="book_isbn_hint">ISBN</string>
     <string name="book_warning">*Please Fill Out All Fields</string>
+    <string name="popup_confirm">Book Created</string>
     <string name="add_book_save_button">Save and Add Photo</string>
 
     <!--  Book Details Activity  -->
@@ -88,6 +96,7 @@
     <!-- Camera Activity  -->
     <string name="picture_info_text">Click image to open camera</string>
     <string name="save_picture">Save</string>
+    <string name="cancel_picture">Cancel</string>
     <string name="delete_picture">Delete</string>
 
     <!-- Book Component XML  -->

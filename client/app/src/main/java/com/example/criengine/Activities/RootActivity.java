@@ -155,6 +155,7 @@ public class RootActivity extends AppCompatActivity {
             super.onPageSelected(position);
             int id = navigation.getMenu().getItem(position).getItemId();
             navigation.setSelectedItemId(id);
+            // TODO: More refresh stuff goes here.
             updateNotificationBadge();
         }
     }

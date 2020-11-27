@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/rightBook"
         android:layout_width="471dp"
         android:layout_height="716dp"
         android:layout_marginStart="235dp"
