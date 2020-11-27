@@ -98,7 +98,7 @@ public class AddBookActivity extends AppCompatActivity {
                 checkForImage.show();
             }
         });
-      
+
         // Goes to scan activity
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override

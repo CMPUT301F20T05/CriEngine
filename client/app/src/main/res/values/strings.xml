@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CriEngine</string>
+    <string name="app_name">CriEngine 📚</string>
 
     <!-- Profile Component -->
     <string name="user_profile_text">%1$s\'s Profile</string>

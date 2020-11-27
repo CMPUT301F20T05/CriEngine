@@ -31,6 +31,7 @@
             android:ems="10"
             android:text="@string/user_profile_text"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_image"

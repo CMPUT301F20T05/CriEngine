@@ -9,9 +9,9 @@
     android:paddingBottom="8dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/item_background"
+        android:layout_width="fill_parent"
+        android:background="@color/list_background"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
