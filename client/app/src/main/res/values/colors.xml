@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#1D3557</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
     <!--  Button Colors  -->
-    <color name="default_button">#94fc03</color>
-    <color name="focused_button">#76c408</color>
-    <color name="disabled_button">#c6f584</color>
-    <color name="pressed_button">#77a13b</color>
+    <color name="default_button">#457B9D</color>
+    <color name="focused_button">#316d94</color>
+    <color name="disabled_button">#77a1bd</color>
+    <color name="pressed_button">#315973</color>
     <color name="safe_seeThrough_button">#32a852</color>
     <color name="danger_seeThrough_button">#a85132</color>
 
-    <!--My Request Activity-->
-    <color name="item_background">#beeeef</color>
+    <!-- My Request Activity-->
     <color name="status_rejected">#8b0000</color>
     <color name="status_accepted">#008b00</color>
 
-    <!-- Text color -->
-    <color name="red_text">#f55a42</color>
+    <!-- App Theme  -->
+    <color name="light_green">#F1FAEE</color>
+    <color name="light_blue">#A8DADC</color>
+    <color name="list_background">#A8DADC</color>
+    <color name="warning_text">#E63946</color>
+    <color name="red_text">#E63946</color>
     <color name="blue_text">#035efc</color>
+
+    <!-- App Background Gradient (Make values same color to make a solid)  -->
+    <color name="bottom_color">#f5e6e7</color>
+    <color name="top_color">#F1FAEE</color>
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".Activities.CameraActivity">
 
     <fragment
@@ -49,6 +50,7 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_button"
         android:text="@string/save_picture"
+        android:textColor="@color/light_green"
         android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
@@ -63,7 +65,7 @@
         android:background="@drawable/danger_see_through_button"
         android:text="@string/delete_picture"
         android:textAllCaps="false"
-        android:textColor="@color/red_text"
+        android:textColor="@color/warning_text"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_frag"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     android:orientation="vertical">
 
     <LinearLayout
@@ -32,6 +33,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_button"
+                android:textColor="@color/light_green"
                 android:text="@string/delete_book"
                 android:textAllCaps="false" />
 
@@ -43,6 +45,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounded_button"
                 android:text="@string/see_requests"
+                android:textColor="@color/light_green"
                 android:textAllCaps="false" />
 
             <Button
@@ -53,6 +56,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounded_button"
                 android:text="@string/edit_book"
+                android:textColor="@color/light_green"
                 android:textAllCaps="false" />
 
         </LinearLayout>
