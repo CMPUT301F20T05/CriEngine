@@ -91,11 +91,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
             acceptedUserID = (String) getIntent().getSerializableExtra("acceptedUser");
             requesters = (ArrayList<Profile>) getIntent().getSerializableExtra("users");
             requestedBook = (Book) getIntent().getSerializableExtra("book");
-            String[] latLngStr = requestedBook.getGeolocation().split(" ");
-            givenLocation = null;
-            if (latLngStr.length == 2) {
-                givenLocation = new LatLng(Double.parseDouble(latLngStr[0]), Double.parseDouble(latLngStr[1]));
-            }
+            givenLocation = requestedBook.getLatLng();
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
@@ -150,9 +146,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
                         public void onClick(View view) {
                             // Use the map target's coordinates to store the location
                             final LatLng mapTargetLatLng = mapboxMap.getCameraPosition().target;
-                            String latLngStr = String.valueOf(mapTargetLatLng.getLatitude()) + ' ';
-                            latLngStr += String.valueOf(mapTargetLatLng.getLongitude());
-                            requestedBook.setGeolocation(latLngStr);
+                            requestedBook.setGeolocation(mapTargetLatLng.toString());
                             dbw.addBook(requestedBook);
                             // Reject every request except the accepted one
                             for (int i = 0; i < requesters.size(); i++) {
@@ -183,7 +177,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
                     if (droppedMarkerLayer != null) {
                         droppedMarkerLayer.setProperties(visibility(VISIBLE));
                     }
-                    confirmLocationButton.setVisibility(View.GONE);
+                    confirmLocationButton.setVisibility(View.INVISIBLE);
                 }
             }
         });

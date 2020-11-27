@@ -1,5 +1,6 @@
 package com.example.criengine.Objects;
 
+import com.google.firebase.firestore.Exclude;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import java.io.Serializable;
@@ -245,6 +246,7 @@ public class Book implements Serializable {
      * Get the location of the book.
      * @return The geo location.
      */
+    @Exclude
     public LatLng getLatLng() {
         if (geolocation == null) {
             return null;
