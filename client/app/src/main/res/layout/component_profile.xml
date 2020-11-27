@@ -29,9 +29,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:fontFamily="sans-serif-black"
             android:text="@string/user_profile_text"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/user_image"
@@ -45,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/header_wrapper"
         android:layout_marginTop="16sp"
+        android:fontFamily="sans-serif-black"
         android:text="@string/bio_header"
         android:textSize="24sp" />
 
@@ -56,7 +58,7 @@
         android:background="@null"
         android:breakStrategy="simple"
         android:hint="@string/bio_text"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/contact_info_text"
@@ -64,6 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bio_text"
         android:layout_marginTop="16sp"
+        android:breakStrategy="simple"
+        android:fontFamily="sans-serif-black"
         android:text="@string/contact_info"
         android:textSize="24sp" />
 
@@ -87,6 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:breakStrategy="simple"
+            android:layout_marginStart="8sp"
             android:hint="@string/phone_text_hint"
             android:textSize="18sp" />
 
@@ -112,6 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:breakStrategy="simple"
+            android:layout_marginStart="8sp"
             android:hint="@string/address_text_hint"
             android:textSize="18sp" />
 

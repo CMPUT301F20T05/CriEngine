@@ -6,10 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
-
-import junit.framework.TestCase;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,12 +41,9 @@ public class MyProfileFragmentTest {
 
         solo.clickOnButton("Login");
 
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
-        // at least 1 match.
-        TestCase.assertTrue(solo.waitForText("My Books", 1, 10000));
+        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
+        // at least 1 match. This is to counter potentially long wait times when logging in.
+        assertTrue(solo.waitForText("My Books", 1, 50000));
     }
 
     /**
@@ -168,6 +162,17 @@ public class MyProfileFragmentTest {
         solo.enterText((EditText) solo.getView(R.id.bio_text), prevString);
         solo.clickOnButton("Save");
         assertTrue(solo.waitForText(prevString, 1, 2000));
+    }
+
+    /**
+     * Test to see if the logout button allows the user to logout
+     */
+    @Test
+    public void logoutTest() {
+        solo.scrollToSide(Solo.RIGHT);
+        assertTrue(solo.waitForText("Profile", 1, 2000));
+        solo.clickOnButton("Logout");
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
     /**

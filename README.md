@@ -29,12 +29,10 @@ Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
   - Account 2:
     - Username: user2@email.com
     - Password: password
-- Please note that authentication the first time logging in might take some time as it is synchronous .
+- Please note that authentication the first time logging in might take some time as it is synchronous.
+- Alternatively you can create your own account.
     
 ## Potential Test Issues
 - If your network connection is slow or disconnected, the intent tests will fail. This is because they need to connect to the database within a certain timeframe in order to pass.
 - To avoid tests from failing due to network issues, ensure you have the emulator started prior to starting the test.
   - In addition, try logging in manually to a test account to test the response time for the database.
-
-## Documentation
-- JavaDocs HTML sources can be found in client/app/javadocs.

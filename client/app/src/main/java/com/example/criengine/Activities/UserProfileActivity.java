@@ -1,7 +1,23 @@
 package com.example.criengine.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.criengine.Adapters.SearchBooksListAdapter;
+import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User profile activity.
@@ -9,6 +25,23 @@ import com.example.criengine.R;
  * - Not currently implemented.
  */
 public class UserProfileActivity extends ProfileActivity {
+
+    private DatabaseWrapper dbw;
+
+    private String userId;
+    private Profile userProfile;
+    private TextView userBooksTextView;
+    private ListView userBooksListView;
+    private ArrayList<Book> userBooks;
+    private SearchBooksListAdapter searchBookAdapter;
+
+    /**
+     * The layout used by UserProfileActivity
+     * @return The layout used by UserProfileActivity
+     */
+    public int getFragmentLayout() {
+        return R.layout.activity_user_profile;
+    }
 
     /**
      * Called upon the creation of the activity. (Initializes the activity)
@@ -18,10 +51,45 @@ public class UserProfileActivity extends ProfileActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_user_profile);
         super.onCreate(savedInstanceState);
 
-        // new UI components
+        if (getIntent().getExtras() != null) {
+            userId = getIntent().getStringExtra("userId");
+        } else {
+            Intent intent = new Intent(this, SomethingWentWrong.class);
+            startActivity(intent);
+            return;
+        }
 
+        userBooksTextView = findViewById(R.id.user_books_text);
+        userBooksListView = findViewById(R.id.user_books_listview);
+
+        // Setup data and adapter
+        userBooks = new ArrayList<>();
+        searchBookAdapter = new SearchBooksListAdapter(this, userBooks, false);
+        userBooksListView.setAdapter(searchBookAdapter);
+
+        dbw = DatabaseWrapper.getWrapper();
+        dbw.getProfile(userId).addOnSuccessListener(new OnSuccessListener<Profile>() {
+            @Override
+            public void onSuccess(Profile profile) {
+                userProfile = profile;
+                userTextView.setText(getString(R.string.user_profile_text, profile.getUsername()));
+                bioEditText.setText(profile.getBio());
+                phoneEditText.setText(profile.getPhone());
+                addressEditText.setText(profile.getAddress());
+                userBooksTextView.setText(getString(R.string.user_books_text, profile.getUsername()));
+
+                dbw.getOwnedBooks(profile).addOnSuccessListener(new OnSuccessListener<List<Book>>() {
+                    @Override
+                    public void onSuccess(List<Book> books) {
+                        userBooks.addAll(books);
+                        searchBookAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+
+        // TODO: write integration tests once the search is in place
     }
 }
