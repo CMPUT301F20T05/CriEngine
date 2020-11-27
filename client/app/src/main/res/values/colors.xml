@@ -12,9 +12,6 @@
     <color name="safe_seeThrough_button">#32a852</color>
     <color name="danger_seeThrough_button">#a85132</color>
 
-    <!--My Request Activity-->
-    <color name="item_background">#beeeef</color>
-
     <!-- My Request Activity-->
     <color name="status_rejected">#8b0000</color>
     <color name="status_accepted">#008b00</color>
