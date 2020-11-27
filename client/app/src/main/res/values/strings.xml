@@ -25,8 +25,6 @@
     <string name="my_books_header">My Books</string>
     <string name="my_books_filter">Filter</string>
 
-    <!-- My Book Filter Fragment -->
-
     <!-- Requests For Book Activity -->
     <string name="requests_for_book_header">Requests on: INSERT NAME</string>
 
