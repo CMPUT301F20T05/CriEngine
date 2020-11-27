@@ -21,6 +21,7 @@ import com.example.criengine.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.mapbox.mapboxsdk.Mapbox;
 
 /**
  * Handles displaying information about a book. Items such as the title, author, description etc.
@@ -122,6 +123,7 @@ public class MyBookActivity extends BookActivity {
      */
     @Override
     protected void inflate() {
+        Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_my_book);
     }
 
