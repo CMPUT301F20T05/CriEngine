@@ -131,7 +131,9 @@ public class SearchBooksFragment extends RootFragment {
                 bookLabel.setText(bookString[0]);
                 searchBooks.clear();
                 for (Book book : allBooks) {
-                    if (book.getDescription().toLowerCase().contains(s.toString().toLowerCase())
+                    if ((book.getDescription().toLowerCase().contains(s.toString().toLowerCase())
+                        || book.getAuthor().toLowerCase().contains(s.toString().toLowerCase())
+                        || book.getTitle().toLowerCase().contains(s.toString().toLowerCase()))
                         && !book.getStatus().equals("accepted")
                         && !book.getStatus().equals("borrowed")) {
                         searchBooks.add(book);

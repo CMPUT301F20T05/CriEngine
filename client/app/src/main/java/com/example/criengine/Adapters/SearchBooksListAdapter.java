@@ -54,6 +54,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
 
         // Get the object from the xml file.
         TextView searchTitle = view.findViewById(R.id.search_book_title);
+        TextView searchAuthor = view.findViewById(R.id.search_book_author);
         TextView searchDesc = view.findViewById(R.id.search_book_desc);
         TextView searchStatus = view.findViewById(R.id.search_book_status);
         final TextView searchUser = view.findViewById(R.id.search_book_user);
@@ -61,6 +62,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
         final Book book = items.get(position);
 
         searchTitle.setText(book.getTitle());
+        searchAuthor.setText(book.getAuthor());
         searchDesc.setText(book.getDescription());
         searchStatus.setText(book.getStatus());
 

@@ -65,8 +65,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        app:layout_constraintTop_toBottomOf="@+id/search_profile_label">
     </LinearLayout>
 
     <TextView
