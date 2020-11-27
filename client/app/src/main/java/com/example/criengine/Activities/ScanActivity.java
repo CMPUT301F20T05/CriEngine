@@ -1,21 +1,19 @@
 package com.example.criengine.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.SurfaceView;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.criengine.R;
 import com.google.android.gms.vision.CameraSource;
@@ -27,7 +25,7 @@ import java.io.IOException;
 
 /**
  * The main activity for all things scan related.
- *
+ * <p>
  * code referenced from https://medium.com/analytics-vidhya/creating-a-barcode-scanner-using-android-studio-71cff11800a2
  * Accessed Nov 5 2020
  */
@@ -45,9 +43,10 @@ public class ScanActivity extends AppCompatActivity {
     /**
      * Called upon creation of activity; code referenced from https://stackoverflow.com/questions/37251823/camera-not-opening-after-granting-the-permission-in-surface-view
      * Accessed Nov 20, 2020
-     * @param savedInstanceState  If the activity is being re-initialized after previously being
-     *                            shut down then this Bundle contains the data it most recently
-     *                            supplied. Note: Otherwise it is null. This value may be null.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being
+     *                           shut down then this Bundle contains the data it most recently
+     *                           supplied. Note: Otherwise it is null. This value may be null.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +63,10 @@ public class ScanActivity extends AppCompatActivity {
 
     /**
      * Once the user clicks yes or no on granting the app camera access, process the result here.
-     * @param requestCode   what kind of request was asked
-     * @param permissions   the permission(s)
-     * @param grantResults  whether the permission(s) was granted
+     *
+     * @param requestCode  what kind of request was asked
+     * @param permissions  the permission(s)
+     * @param grantResults whether the permission(s) was granted
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -99,6 +99,7 @@ public class ScanActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("barcode", barcodeData);
+                intent.putExtra("bookID", getIntent().getStringExtra("BookID"));
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -150,7 +151,8 @@ public class ScanActivity extends AppCompatActivity {
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
-            public void release() {}
+            public void release() {
+            }
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {

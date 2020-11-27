@@ -106,7 +106,7 @@ public class RequestsForBookAdapter extends ArrayAdapter<Profile> {
                 public void onClick(View v) {
                     dbw.declineRequest(uid, book.getBookID());
 
-                    userRequests.remove(uid);
+                    userRequests.remove(profile);
                     if (userRequests.size() == 0) {
                         book.setStatus("available");
                         dbw.addBook(book);

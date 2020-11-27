@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CriEngine</string>
+    <string name="app_name">CriEngine 📚</string>
 
     <!-- Profile Component -->
     <string name="user_profile_text">%1$s\'s Profile</string>
@@ -35,7 +35,6 @@
     <string name="book_author_hint">Author</string>
     <string name="book_isbn_hint">ISBN</string>
     <string name="book_warning">*Please Fill Out All Fields</string>
-    <string name="popup_confirm">Book Created</string>
     <string name="add_book_save_button">Save and Add Photo</string>
 
     <!--  Book Details Activity  -->
@@ -63,7 +62,7 @@
     <string name="password_hint">Password</string>
     <string name="firstname_hint">First Name</string>
     <string name="lastname_hint">Last Name</string>
-    <string name="account_warning">A field is missing or entered incorrectly</string>
+    <string name="account_warning">Please fill out all fields to submit</string>
 
     <!-- Bottom Navigation -->
     <string name="title_search">Search</string>
@@ -89,11 +88,11 @@
     <!-- Camera Activity  -->
     <string name="picture_info_text">Click image to open camera</string>
     <string name="save_picture">Save</string>
-    <string name="cancel_picture">Cancel</string>
     <string name="delete_picture">Delete</string>
 
     <!-- Book Component XML  -->
     <string name="click_to_edit_image">Click image to edit</string>
+    <string name="meeting_location">Meeting location</string>
 
     <!-- Geolocation -->
     <string name="confirm_location">Confirm</string>
@@ -101,4 +100,8 @@
     <!-- Mapbox -->
     <string name="mapbox_access_token">pk.eyJ1IjoicmptYWgxIiwiYSI6ImNraHYwcDhwbDBjdHgycm1ud21sMmtnNzkifQ.Rse6Ld79kjmY3_-7g7cpbw</string>
     <string name="user_location_permission_not_granted">Please give location privileges to the app</string>
+
+    <!-- Search Activity -->
+    <string name="search_book">Books Matching: </string>
+    <string name="search_profile">Profiles Matching: </string>
 </resources>

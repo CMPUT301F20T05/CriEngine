@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,7 +98,7 @@ public class AddBookActivity extends AppCompatActivity {
                 checkForImage.show();
             }
         });
-      
+
         // Goes to scan activity
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,11 +161,9 @@ public class AddBookActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Get String data from Intent
                 String barcodeData = data.getStringExtra("barcode");
-                Log.d("testing", "barcode data=" + barcodeData);
 
                 try {
                     Book book = new GoogleBooksWrapper().getBook(barcodeData);
-                    Log.d("testing book", "title");
                     bookTitle.setText(book.getTitle());
                     bookAuthor.setText(book.getAuthor());
                     bookDesc.setText(book.getDescription());

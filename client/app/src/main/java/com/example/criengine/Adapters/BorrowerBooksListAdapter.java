@@ -8,16 +8,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
 import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.ScanActivity;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
@@ -29,25 +32,63 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
     private ArrayList<Book> bookItems;
     private Context context;
+    private Fragment fragment;
     private DatabaseWrapper dbw;
+
+    private String action;
+    final int SCAN_RESULT_CODE = 0;
 
     /**
      * Constructor for the class. Instantiates the object.
-     * @param context The context.
+     *
+     * @param context   The context.
      * @param bookItems The list of book items to be displayed.
      */
-    public BorrowerBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems) {
+    public BorrowerBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems, Fragment fragment) {
         super(context, 0, bookItems);
         this.context = context;
+        this.fragment = fragment;
         this.bookItems = bookItems;
         dbw = DatabaseWrapper.getWrapper();
     }
 
     /**
+     * On return from scan activity, RequestedBookFragment calls this function to update the database that the book has been borrowed or returned.
+     *
+     * @param barcode The barcode string scanned
+     */
+    public void onActivityResult(String barcode, String bookID) {
+        if (action.equals("Return")) {
+            dbw.returnBook(bookID, barcode).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                @Override
+                public void onSuccess(Boolean success) {
+                    if (success) {
+                        ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
+                    } else {
+                        Toast.makeText(context, "ISBN Scan failed, did you scan the wrong book?", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else if (action.equals("Borrow")) {
+            dbw.confirmBorrowBook(dbw.userId, bookID, barcode).addOnSuccessListener(new OnSuccessListener<Boolean>() {
+                @Override
+                public void onSuccess(Boolean success) {
+                    if (success) {
+                        ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
+                    } else {
+                        Toast.makeText(context, "ISBN Scan failed, did you scan the wrong book?", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
      * Returns a view with the properly formatted information.
-     * @param position The position from the list.
+     *
+     * @param position    The position from the list.
      * @param convertView The old view to reuse (if possible).
-     * @param parent The parent view group.
+     * @param parent      The parent view group.
      * @return The view that displays the formatted data at the specified position in the data set.
      */
     @NonNull
@@ -80,13 +121,14 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
         headerText.setText(book.getTitle());
 
+        actionButton.setEnabled(true);
         statusText.setText(book.getStatus());
 
-        actionButton.setEnabled(true);
         actionButton.setVisibility(View.VISIBLE);
+        actionButton.setEnabled(true);
         switch (book.getStatus()) {
             case "borrowed":
-//            statusText.setTextColor(view.getResources().getColor(R.color.status_accepted));
+                statusText.setText("Borrowed");
                 if (book.isConfirmationNeeded()) {
                     actionButton.setEnabled(false);
                     actionButton.setText("Scanned!");
@@ -94,39 +136,28 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     actionButton.setEnabled(true);
                     actionButton.setText("Return");
                     actionButton.setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dbw.returnBook(book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Boolean> task) {
-                                            ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
-                                        }
-                                    });
-                                }
+                            v -> {
+                                Intent intent = new Intent(context, ScanActivity.class);
+                                intent.putExtra("BookID", book.getBookID());
+                                fragment.startActivityForResult(intent, SCAN_RESULT_CODE);
+                                action = "Return";
                             }
                     );
                 }
                 break;
             case "requested":
+                statusText.setText("Requested");
                 actionButton.setText("Cancel");
                 actionButton.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                book.removeRequesters(dbw.userId);
-                                dbw.declineRequest(dbw.userId, book.getBookID()).addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Boolean> task) {
-                                        if (book.getRequesters().size() == 0) {
-                                            book.setStatus("available");
-                                            dbw.addBook(book);
-                                        }
-                                        ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
-                                    }
-                                });
-
-                            }
+                        v -> {
+                            book.removeRequesters(dbw.userId);
+                            dbw.declineRequest(dbw.userId, book.getBookID()).addOnCompleteListener(task -> {
+                                if (book.getRequesters().size() == 0) {
+                                    book.setStatus("available");
+                                    dbw.addBook(book);
+                                }
+                                ((RootActivity) context).refresh(RootActivity.PAGE.REQUESTS);
+                            });
                         }
                 );
                 break;
@@ -134,17 +165,13 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                 if (book.isConfirmationNeeded()) {
                     actionButton.setVisibility(View.VISIBLE);
                     actionButton.setText("Borrow");
+                    statusText.setText("Accepted");
                     actionButton.setOnClickListener(
-                            new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dbw.confirmBorrowBook(dbw.userId, book.getBookID(), "ISBN").addOnCompleteListener(new OnCompleteListener<Boolean>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Boolean> task) {
-                                            ((RootActivity)context).refresh(RootActivity.PAGE.REQUESTS);
-                                        }
-                                    });
-                                }
+                            v -> {
+                                Intent intent = new Intent(context, ScanActivity.class);
+                                intent.putExtra("BookID", book.getBookID());
+                                fragment.startActivityForResult(intent, SCAN_RESULT_CODE);
+                                action = "Borrow";
                             }
                     );
                 } else {

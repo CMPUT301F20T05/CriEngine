@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/bookView_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fadingEdge="vertical"
@@ -14,23 +16,47 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/bookView_title"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:gravity="center"
+                android:inputType="textMultiLine|textPersonName"
                 android:text="@string/book_title_placeholder"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/meeting_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:text="@string/meeting_location"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <com.mapbox.mapboxsdk.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                mapbox:layout_constraintBottom_toTopOf="@+id/confirm_location_button"
+                mapbox:layout_constraintEnd_toEndOf="parent"
+                mapbox:layout_constraintStart_toStartOf="parent"
+                mapbox:layout_constraintTop_toTopOf="parent"
+                mapbox:mapbox_cameraZoom="15" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -56,7 +82,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/bookView_ISBN_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +113,8 @@
                     android:layout_marginEnd="16dp"
                     android:autofillHints=""
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
+                    android:minLines="1"
                     android:textSize="14sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/bookView_detail_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +146,7 @@
                     android:layout_marginEnd="16dp"
                     android:autofillHints=""
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/bookView_author_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +175,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/bookView_status_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -179,7 +206,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/bookView_owner_label"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -210,7 +237,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
                     android:textSize="14sp"
                     app:layout_constraintBaseline_toBaselineOf="@+id/bookView_borrower_label"
                     app:layout_constraintEnd_toEndOf="parent"
