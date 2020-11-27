@@ -91,6 +91,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
             acceptedUserID = (String) getIntent().getSerializableExtra("acceptedUser");
             requesters = (ArrayList<Profile>) getIntent().getSerializableExtra("users");
             requestedBook = (Book) getIntent().getSerializableExtra("book");
+            givenLocation = requestedBook.getLatLng();
         } else {
             Intent intent = new Intent(this, SomethingWentWrong.class);
             startActivity(intent);
@@ -104,13 +105,6 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
 
         // This contains the MapView in XML and needs to be called after the access token is configured.
         setContentView(R.layout.activity_select_geopage);
-
-        // check if a location was passed in
-        if (getIntent().getExtras() != null) {
-            givenLocation = (LatLng) getIntent().getSerializableExtra("location");
-        } else {
-            givenLocation = null;
-        }
 
         // Initialize the mapboxMap view
         mapView = findViewById(R.id.mapView);
@@ -183,7 +177,7 @@ public class SelectGeopage extends AppCompatActivity implements OnMapReadyCallba
                     if (droppedMarkerLayer != null) {
                         droppedMarkerLayer.setProperties(visibility(VISIBLE));
                     }
-                    confirmLocationButton.setVisibility(View.GONE);
+                    confirmLocationButton.setVisibility(View.INVISIBLE);
                 }
             }
         });

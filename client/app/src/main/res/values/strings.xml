@@ -92,6 +92,7 @@
 
     <!-- Book Component XML  -->
     <string name="click_to_edit_image">Click image to edit</string>
+    <string name="meeting_location">Meeting location</string>
 
     <!-- Geolocation -->
     <string name="confirm_location">Confirm</string>
