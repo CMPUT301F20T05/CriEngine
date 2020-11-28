@@ -177,21 +177,32 @@ public class ProfileUnitTest {
     }
 
     /**
+     * Test getter/setters for wishlist attribute.
+     */
+    @Test
+    public void testWishlistMethods() {
+        ArrayList<String> mockList = new ArrayList<>();
+        mockList.add("Book1");
+        mock.setWishlist(mockList);
+        assertEquals(mock.getWishlist().size(), 1);
+    }
+
+    /**
      * Test getter/setters/add/remove for the notification attribute.
      */
     @Test
     public void testNotificationMethods() {
         Notification mockNotification = new Notification("Mock notification.");
-        mock.addNotification(mockNotification);
-        assertEquals(mock.getNotifications().get(0).getDescription(), "Mock notification.");
+        mock.addNotification(mockNotification.getDescription());
+        assertEquals(mock.getNotifications().get(0), "Mock notification.");
 
-        mock.removeNotification(mockNotification);
+        mock.removeNotification(mockNotification.getDescription());
         assertEquals(mock.getNotifications().size(), 0);
 
-        ArrayList<Notification> newMockNotificationList = new ArrayList<>();
+        ArrayList<String> newMockNotificationList = new ArrayList<>();
         Notification anotherMockNotification = new Notification("Another mock notification.");
-        newMockNotificationList.add(anotherMockNotification);
+        newMockNotificationList.add(anotherMockNotification.getDescription());
         mock.setNotifications(newMockNotificationList);
-        assertEquals(mock.getNotifications().get(0).getDescription(), "Another mock notification.");
+        assertEquals(mock.getNotifications().get(0), "Another mock notification.");
     }
 }

@@ -28,10 +28,11 @@ import static android.app.Activity.RESULT_OK;
 public class RequestedBooksFragment extends RootFragment implements OnFragmentInteractionListener {
     Button filterButton;
     ListView bookListView;
-    List<String> filters = Arrays.asList("Requested", "Borrowing", "Accepted");
+    List<String> filters = Arrays.asList("Requested", "Borrowing", "Accepted", "Wishlist");
     List<String> activeFilters = new ArrayList<>();
     ArrayList<Book> borrowerBooks = new ArrayList<>();
     ArrayList<Book> displayBooks = new ArrayList<>();
+    ArrayList<Book> wishBooks = new ArrayList<>();
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -127,8 +128,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
             }
         } else {
             // If no filter was chosen, then display all the books.
-            // NOTE: We cannot make the displayBooks = myBooks. This assigns a pointer that we don't
-            // want.
+            // NOTE: We cannot make the displayBooks = borrowerBooks. This assigns a pointer that
+            // we don't want.
             displayBooks.addAll(borrowerBooks);
         }
         borrowerBooksListAdapter.notifyDataSetChanged();
