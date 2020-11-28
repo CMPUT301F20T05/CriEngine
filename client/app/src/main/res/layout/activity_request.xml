@@ -27,7 +27,8 @@
             android:gravity="center"
             android:text="@string/requests_header"
             android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/requests_filter_button"

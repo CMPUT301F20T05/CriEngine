@@ -13,37 +13,16 @@ import static junit.framework.TestCase.assertTrue;
  */
 public class TestUtilityMethods {
     /**
-     * Log in with the first intentTesting Account.
+     * Log in with an intentTesting Account.
      * @param solo The solo object.
+     * @param user The username for the account.
      */
-    public static void login1(Solo solo) {
+    public static void login(Solo solo, String user) {
         // Asserts that the current activity is the LoginActivity.
         solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
 
         // Input username and password
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
-
-        solo.clickOnButton("Login");
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
-        // at least 1 match. This is to counter potentially long wait times when logging in.
-        assertTrue(solo.waitForText("My Books", 1, 50000));
-    }
-
-    /**
-     * Log in with the second intentTesting account.
-     * @param solo The solo object.
-     */
-    public static void login2(Solo solo) {
-        // Asserts that the current activity is the LoginActivity.
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-
-        // Input username and password
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser2@email.com");
+        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), user);
         solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
 
         solo.clickOnButton("Login");

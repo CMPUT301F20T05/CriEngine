@@ -31,7 +31,7 @@ public class MyRequestTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        TestUtilityMethods.login1(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
     }
 
     /**
@@ -51,7 +51,7 @@ public class MyRequestTest {
     public void makeRequestAndReject() {
         TestUtilityMethods.addBook(solo);
         TestUtilityMethods.logout(solo);
-        TestUtilityMethods.login2(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
         TestUtilityMethods.searchBook(solo);
 
         solo.clickInList(0);
@@ -59,7 +59,7 @@ public class MyRequestTest {
         TestUtilityMethods.logout(solo);
 
         // Checks if we got the notification in the first account.
-        TestUtilityMethods.login1(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
         solo.clickOnButton("Dismiss");
 
@@ -76,13 +76,13 @@ public class MyRequestTest {
         TestUtilityMethods.logout(solo);
 
         // See if the second user got the notification that they were rejected.
-        TestUtilityMethods.login2(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
         solo.clickOnButton("Dismiss");
         TestUtilityMethods.logout(solo);
 
         // Cleanup.
-        TestUtilityMethods.login1(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         TestUtilityMethods.cleanup(solo);
     }
 
@@ -94,7 +94,7 @@ public class MyRequestTest {
     public void makeRequestAndAccept() {
         TestUtilityMethods.addBook(solo);
         TestUtilityMethods.logout(solo);
-        TestUtilityMethods.login2(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
         TestUtilityMethods.searchBook(solo);
 
         solo.clickInList(0);
@@ -102,7 +102,7 @@ public class MyRequestTest {
         TestUtilityMethods.logout(solo);
 
         // Checks if we got the notification in the first account.
-        TestUtilityMethods.login1(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
         solo.clickOnButton("Dismiss");
 
@@ -115,13 +115,13 @@ public class MyRequestTest {
         TestUtilityMethods.logout(solo);
 
         // See if the second user got the notification that they were accepted.
-        TestUtilityMethods.login2(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
         solo.clickOnButton("Dismiss");
         TestUtilityMethods.logout(solo);
 
         // Cleanup.
-        TestUtilityMethods.login1(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         TestUtilityMethods.cleanup(solo);
     }
 

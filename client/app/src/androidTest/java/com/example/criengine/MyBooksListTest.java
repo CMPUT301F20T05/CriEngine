@@ -31,7 +31,7 @@ public class MyBooksListTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        TestUtilityMethods.login1(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         TestUtilityMethods.addBook(solo);
     }
 
