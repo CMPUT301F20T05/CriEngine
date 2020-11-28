@@ -7,7 +7,6 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.criengine.Activities.LoginActivity;
 import com.example.criengine.Activities.MyBookActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
 
 import org.junit.After;
@@ -35,22 +34,7 @@ public class ViewMyBookTest {
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
 
-        // Asserts that the current activity is the LoginActivity.
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-
-        // Input username and password
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
-
-        solo.clickOnButton("Login");
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 50 seconds to find
-        // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 50000));
-
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         TestUtilityMethods.addBook(solo);
 
         solo.clickInList(0);
@@ -108,7 +92,6 @@ public class ViewMyBookTest {
      */
     @After
     public void tearDown() {
-        solo.goBack();
         TestUtilityMethods.cleanup(solo);
         solo.finishOpenedActivities();
     }

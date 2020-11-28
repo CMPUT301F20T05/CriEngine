@@ -1,14 +1,12 @@
 package com.example.criengine;
 
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.robotium.solo.Solo;
 
@@ -39,21 +37,9 @@ public class RootActivityTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        // Asserts that the current activity is the LoginActivity.
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        // Get view for EditText and enter a city name
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
-
-        solo.clickOnButton("Login");
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         viewPager = solo.getCurrentActivity().findViewById(R.id.view_pager);
         bottomNav = solo.getCurrentActivity().findViewById(R.id.bottom_navigation);
-
-        assertTrue(solo.waitForText("My Books", 1, 50000));
     }
 
     /**
