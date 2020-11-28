@@ -82,8 +82,17 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                 new OnSuccessListener<List<Book>>() {
                     @Override
                     public void onSuccess(List<Book> books) {
-                        borrowerBooks.addAll(books);
-                        displayBooks.addAll(books);
+                        for(Book book: books) {
+                            if (book == null || book.getStatus() == null){
+                                continue;
+                            }
+                            if(book.getStatus().equals("borrowed")
+                                || book.getStatus().equals("requested")
+                                || book.getStatus().equals("accepted")) {
+                                borrowerBooks.add(book);
+                                displayBooks.add(book);
+                            }
+                        }
                         borrowerBooksListAdapter.notifyDataSetChanged();
                     }
                 }
