@@ -122,7 +122,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         headerText.setText(book.getTitle());
 
         actionButton.setEnabled(true);
-        statusText.setText(book.getStatus());
+        String statusString = book.getStatus().substring(0, 1).toUpperCase()
+                + book.getStatus().substring(1);
+        statusText.setText(statusString);
 
         actionButton.setVisibility(View.VISIBLE);
         actionButton.setEnabled(true);
