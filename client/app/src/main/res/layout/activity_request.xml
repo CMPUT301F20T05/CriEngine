@@ -42,7 +42,6 @@
             android:gravity="center"
             android:text="@string/my_books_filter"
             android:textAllCaps="false" />
-
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -57,7 +56,5 @@
             android:divider="@null"
             android:dividerHeight="0dp"
             android:focusable="true" />
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 </LinearLayout>
