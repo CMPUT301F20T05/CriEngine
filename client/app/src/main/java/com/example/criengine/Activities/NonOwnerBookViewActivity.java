@@ -195,16 +195,6 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
                 }
             });
         }
-      
-        // Add the user ID to the list of requesters and update it in the database.
-        requestBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbw.makeRequest(userProfile.getUserID(), book.getBookID());
-                requestBookButton.setEnabled(false);
-                requestBookButton.setText("Request Sent");
-            }
-        });
     }
 
     /**
@@ -223,10 +213,40 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
             // The book is available for being requested.
             requestBookButton.setEnabled(true);
             requestBookButton.setText("Request This Book");
-        } else {
-            // The book is not available for being requested.
-            requestBookButton.setEnabled(false);
-            requestBookButton.setText("Cannot Request This Book");
+            // Add the user ID to the list of requesters and update it in the database.
+            requestBookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dbw.makeRequest(userProfile.getUserID(), book.getBookID());
+                    requestBookButton.setEnabled(false);
+                    requestBookButton.setText("Request Sent");
+                }
+            });
+        } else if ((book.getStatus().equals("borrowed") || book.getStatus().equals("accepted")) && !userProfile.getWishlist().contains(book.getBookID())) {
+            // The book is available for being wished.
+            requestBookButton.setEnabled(true);
+            requestBookButton.setText("Add To Wishlist");
+            // Add to wishlist
+            requestBookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dbw.wishForBook(userProfile.getUserID(), book.getBookID());
+                    requestBookButton.setEnabled(false);
+                    requestBookButton.setText("Added to wishlist");
+                }
+            });
+        } else if ((book.getStatus().equals("borrowed") || book.getStatus().equals("accepted")) && userProfile.getWishlist().contains(book.getBookID())) {
+            // The book is available for being wished.
+            requestBookButton.setEnabled(true);
+            requestBookButton.setText("Remove from Wishlist");
+            requestBookButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dbw.cancelWish(userProfile.getUserID(), book.getBookID());
+                    requestBookButton.setEnabled(false);
+                    requestBookButton.setText("Removed from wishlist");
+                }
+            });
         }
     }
 
