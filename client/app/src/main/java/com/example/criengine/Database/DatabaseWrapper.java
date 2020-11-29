@@ -336,6 +336,28 @@ public class DatabaseWrapper {
                 });
     }
 
+    public Task<List<Book>> getWishedForBooks(Profile user) {
+        return books.whereIn("bookID", user.getWishlist()).get().continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+            @Override
+            public List<Book> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                if (task.isSuccessful()) {
+                    QuerySnapshot query = task.getResult();
+                    assert query != null;
+                    try {
+                        return query.toObjects(Book.class);
+                    }
+                    catch(Exception e) {
+                        Log.e(TAG, e.getMessage());
+                        return null;
+                    }
+                } else {
+                    Log.d(TAG, "Get Failure: " + task.getException());
+                    return new ArrayList<Book>();
+                }
+            }
+        });
+    }
+
     public Task<List<Profile>> getBookBorrowers(String bookID) {
         return users
                 .whereArrayContains("booksBorrowedOrRequested", bookID)
