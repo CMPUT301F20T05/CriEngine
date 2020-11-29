@@ -1,12 +1,13 @@
 package com.example.criengine.Objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Creates a user profile.
  * Contains all information specific to a profile.
  */
-public class Profile {
+public class Profile implements Serializable {
     private String userID;
     private String email;
     private String username;
@@ -17,7 +18,7 @@ public class Profile {
     private String bio;
     private ArrayList<String> booksOwned;
     private ArrayList<String> booksBorrowedOrRequested;
-    private ArrayList<Notification> notifications;
+    private ArrayList<String> notifications;
 
     /**
      * Constructor 1. No inputs, simply instantiates the arraylists.
@@ -57,16 +58,15 @@ public class Profile {
      * @param userID The user ID.
      * @param email The email of the user.
      * @param username The username of the user.
-     * @param phone The phone number for the user.
      * @param firstname The first name of the user.
      * @param lastname The last name of the user.
      */
-    public Profile(String userID, String email, String username, String address, String phone, String firstname, String lastname) {
+    public Profile(String userID, String email, String username, String firstname, String lastname) {
         this.userID = userID;
         this.email = email;
         this.username = username;
-        this.address = address;
-        this.phone = phone;
+        this.address = null;
+        this.phone = null;
         this.firstname = firstname;
         this.lastname = lastname;
         this.bio = null;
@@ -271,7 +271,7 @@ public class Profile {
      * Add a notification for the user.
      * @param notif The notification to be added.
      */
-    public void addNotification(Notification notif) {
+    public void addNotification(String notif) {
         notifications.add(notif);
     }
 
@@ -279,7 +279,7 @@ public class Profile {
      * Remove a notification from the list.
      * @param notif The notification to remove.
      */
-    public void removeNotification(Notification notif) {
+    public void removeNotification(String notif) {
         notifications.remove(notif);
     }
 
@@ -287,7 +287,7 @@ public class Profile {
      * Get the list of notifications.
      * @return The list of notifications.
      */
-    public ArrayList<Notification> getNotifications() {
+    public ArrayList<String> getNotifications() {
         return notifications;
     }
 
@@ -295,7 +295,7 @@ public class Profile {
      * Set a new list of notifications.
      * @param newList The notification list to be set.
      */
-    public void setNotifications(ArrayList<Notification> newList) {
+    public void setNotifications(ArrayList<String> newList) {
         notifications = newList;
     }
 }

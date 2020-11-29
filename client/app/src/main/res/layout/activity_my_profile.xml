@@ -3,11 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/component_profile"
-        android:id="@+id/id" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/my_profile_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/component_profile" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/edit_save_button"
@@ -15,20 +21,24 @@
         android:layout_height="40sp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
+        android:textColor="@color/light_green"
         android:text="@string/edit_button"
         android:background="@drawable/rounded_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/cancel_button"
+        android:id="@+id/logout_cancel_button"
         android:layout_width="120sp"
         android:layout_height="40sp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/cancel_button"
         android:background="@drawable/rounded_button"
+        android:text="@string/logout_button"
+        android:textColor="@color/light_green"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAllCaps="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,15 +5,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.example.criengine.R;
 
 /**
  * General ProfileActivity class that sets up common features.
  */
 public abstract class ProfileFragment extends RootFragment {
-
     ImageButton userImageButton;
     TextView userTextView;
     EditText bioEditText;
@@ -53,5 +54,13 @@ public abstract class ProfileFragment extends RootFragment {
         bioEditText.setTag(bioEditText.getKeyListener());
         phoneEditText.setTag(phoneEditText.getKeyListener());
         addressEditText.setTag(addressEditText.getKeyListener());
+
+        // default not editable
+        bioEditText.setKeyListener(null);
+        phoneEditText.setKeyListener(null);
+        addressEditText.setKeyListener(null);
+        bioEditText.setBackground(null);
+        phoneEditText.setBackground(null);
+        addressEditText.setBackground(null);
     }
 }

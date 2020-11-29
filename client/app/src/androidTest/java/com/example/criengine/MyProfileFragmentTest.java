@@ -6,10 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.robotium.solo.Solo;
-
-import junit.framework.TestCase;
 
 import org.junit.After;
 import org.junit.Before;
@@ -36,20 +33,7 @@ public class MyProfileFragmentTest {
     @Before
     public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        // Asserts that the current activity is the LoginActivity.
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        // Input username and password
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
-
-        solo.clickOnButton("Login");
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
-        // at least 1 match.
-        TestCase.assertTrue(solo.waitForText("My Books", 1, 10000));
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
     }
 
     /**
@@ -168,6 +152,17 @@ public class MyProfileFragmentTest {
         solo.enterText((EditText) solo.getView(R.id.bio_text), prevString);
         solo.clickOnButton("Save");
         assertTrue(solo.waitForText(prevString, 1, 2000));
+    }
+
+    /**
+     * Test to see if the logout button allows the user to logout
+     */
+    @Test
+    public void logoutTest() {
+        solo.scrollToSide(Solo.RIGHT);
+        assertTrue(solo.waitForText("Profile", 1, 2000));
+        solo.clickOnButton("Logout");
+        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
     }
 
     /**

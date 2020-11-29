@@ -1,15 +1,17 @@
 package com.example.criengine;
 
-import android.widget.EditText;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
+
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
+import com.example.criengine.Activities.UserProfileActivity;
 import com.robotium.solo.Solo;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -25,11 +27,11 @@ public class MyRequestTest {
 
     /**
      * Runs before all tests and creates solo instance.
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
     }
 
     /**
@@ -37,33 +39,97 @@ public class MyRequestTest {
      */
     @Test
     public void navigateToMyRequests() {
-        // Asserts that the current activity is the LoginActivity.
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-
-        // Input username and password
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
-
-        solo.clickOnButton("Login");
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        // Returns True if you can find "My Books" on the screen. Waits 10 seconds to find
-        // at least 1 match.
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
         solo.clickOnView(solo.getView(R.id.bottom_navigation_item_my_requests));
-
         assertTrue(solo.waitForText("My Requests", 1, 2000));
     }
 
     /**
+     * Test to see if we can view requests for a book and the person's profile for who is requesting
+     * it.
+     */
+    @Test
+    public void makeRequestAndReject() {
+        TestUtilityMethods.addBook(solo);
+        TestUtilityMethods.logout(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
+        TestUtilityMethods.searchBook(solo);
+
+        solo.clickInList(0);
+        solo.clickOnButton("Request This Book");
+        TestUtilityMethods.logout(solo);
+
+        // Checks if we got the notification in the first account.
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
+        solo.clickOnButton("Dismiss");
+
+        // See if we can view their information.
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_my_books));
+        solo.clickOnButton("See Requests");
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Wrong Activity", UserProfileActivity.class);
+        solo.goBack();
+
+        // Decline their request and app should automatically return to book list view.
+        solo.clickOnButton("✖");
+        assertTrue(solo.waitForText("Available", 1, 2000));
+        TestUtilityMethods.logout(solo);
+
+        // See if the second user got the notification that they were rejected.
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
+        solo.clickOnButton("Dismiss");
+        TestUtilityMethods.logout(solo);
+
+        // Cleanup.
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
+        TestUtilityMethods.cleanup(solo);
+    }
+
+    /**
+     * Test to see if we can view requests for a book and the person's profile for who is requesting
+     * it. Then accept the book and test the workflow.
+     */
+    @Test
+    public void makeRequestAndAccept() {
+        TestUtilityMethods.addBook(solo);
+        TestUtilityMethods.logout(solo);
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
+        TestUtilityMethods.searchBook(solo);
+
+        solo.clickInList(0);
+        solo.clickOnButton("Request This Book");
+        TestUtilityMethods.logout(solo);
+
+        // Checks if we got the notification in the first account.
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
+        solo.clickOnButton("Dismiss");
+
+        // Accept the request. Book should now be "Accepted" status.
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_my_books));
+        solo.clickOnButton("See Requests");
+        solo.clickOnButton("✔");
+        solo.clickOnButton("Confirm");
+        assertTrue(solo.waitForText("Accepted", 1, 2000));
+        TestUtilityMethods.logout(solo);
+
+        // See if the second user got the notification that they were accepted.
+        TestUtilityMethods.login(solo, "intentTestingUser2@email.com");
+        solo.clickOnView(solo.getView(R.id.bottom_navigation_item_notifications));
+        solo.clickOnButton("Dismiss");
+        TestUtilityMethods.logout(solo);
+
+        // Cleanup.
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
+        TestUtilityMethods.cleanup(solo);
+    }
+
+    /**
      * Closes the activity after each test
-     * @throws Exception
      */
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() {
         solo.finishOpenedActivities();
     }
 }

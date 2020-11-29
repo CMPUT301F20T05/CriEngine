@@ -1,32 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradient_background"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/swipe_tutorial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:height="100dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="32dp"
         android:gravity="center"
-        android:text="@string/my_books_header"
-        android:textAlignment="center"
-        android:textSize="30sp"
+        android:text="@string/swipe_tutorial"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/header_layout" />
 
-    <ListView
-        android:id="@+id/bookListView"
+    <LinearLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="100dp"
+            android:gravity="center"
+            android:text="@string/my_books_header"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/filter_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button"
+            android:gravity="center"
+            android:text="@string/my_books_filter"
+            android:textAllCaps="false"
+            android:textColor="@color/light_green"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/my_books_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:focusable="true"
         app:layout_constraintBottom_toTopOf="@+id/add_a_book"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/header_layout">
+
+        <ListView
+            android:id="@+id/bookListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:focusable="true" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/add_a_book"
@@ -38,20 +87,38 @@
         android:background="@drawable/rounded_button"
         android:text="@string/add_a_book_button"
         android:textAllCaps="false"
+        android:textColor="@color/light_green"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/filter_button"
-        android:layout_width="74dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/refresh_tutorial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/rounded_button"
-        android:text="@string/my_books_filter"
-        android:textAllCaps="false"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="@string/refresh_tutorial"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/swipe_tutorial" />
+
+    <TextView
+        android:id="@+id/nav_bar_tutorial"
+        android:layout_width="0dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:text="@string/nav_var_tutorial"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_a_book"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

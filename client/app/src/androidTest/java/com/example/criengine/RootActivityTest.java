@@ -1,14 +1,12 @@
 package com.example.criengine;
 
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.criengine.Activities.LoginActivity;
-import com.example.criengine.Activities.RootActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.robotium.solo.Solo;
 
@@ -35,22 +33,11 @@ public class RootActivityTest {
 
     /**
      * Initialize solo instance before all tests
-     * @throws Exception
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        // Asserts that the current activity is the LoginActivity.
-        solo.assertCurrentActivity("Wrong Activity", LoginActivity.class);
-        // Get view for EditText and enter a city name
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextEmail), "intentTestingUser@email.com");
-        solo.enterText((EditText) solo.getView(R.id.loginEditTextPassword), "intentTesting");
-
-        solo.clickOnButton("Login");
-
-        // Asserts that the current activity is the RootActivity.
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
+        TestUtilityMethods.login(solo, "intentTestingUser@email.com");
         viewPager = solo.getCurrentActivity().findViewById(R.id.view_pager);
         bottomNav = solo.getCurrentActivity().findViewById(R.id.bottom_navigation);
     }
@@ -60,10 +47,6 @@ public class RootActivityTest {
      */
     @Test
     public void initialPageTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-
-        assertTrue(solo.waitForText("My Books", 1, 10000));
         Assert.assertEquals(viewPager.getCurrentItem(), 3);
         Assert.assertEquals(bottomNav.getSelectedItemId(), R.id.bottom_navigation_item_my_books);
     }
@@ -73,10 +56,6 @@ public class RootActivityTest {
      */
     @Test
     public void swipeTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
         // Right Swipe - My profile
         solo.scrollToSide(Solo.RIGHT);;
 
@@ -113,10 +92,6 @@ public class RootActivityTest {
      */
     @Test
     public void bottomNavigationTest() {
-        // Asserts that the current activity is the MainActivity. Otherwise, show “Wrong Activity”
-        solo.assertCurrentActivity("Wrong Activity", RootActivity.class);
-        assertTrue(solo.waitForText("My Books", 1, 10000));
-
         // Search Menu Button
         View searchMenuItem
                 = solo.getCurrentActivity().findViewById(R.id.bottom_navigation_item_search);
