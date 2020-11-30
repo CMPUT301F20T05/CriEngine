@@ -200,7 +200,7 @@ public class ProfileUnitTest {
         assertEquals(mock.getNotifications().size(), 0);
 
         ArrayList<String> newMockNotificationList = new ArrayList<>();
-        Notification anotherMockNotification = new Notification("Another mock notification.");
+        Notification anotherMockNotification = new Notification("Test|Another mock notification.");
         newMockNotificationList.add(anotherMockNotification.getDescription());
         mock.setNotifications(newMockNotificationList);
         assertEquals(mock.getNotifications().get(0), "Another mock notification.");
