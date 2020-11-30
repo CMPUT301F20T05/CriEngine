@@ -21,8 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 /**
  * Handles the user login and password validation.
- * Outstanding issues:
- * - Implement registration ability.
  */
 public class LoginActivity extends AppCompatActivity {
     EditText loginEmail;
