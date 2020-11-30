@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -335,6 +336,32 @@ public class DatabaseWrapper {
                 });
     }
 
+    public Task<List<Book>> getWishedForBooks(Profile user) {
+        if (user.getWishlist() == null || user.getWishlist().isEmpty()){
+            List<Book> books = new ArrayList<Book>();
+            return Tasks.forResult(books);
+        }
+        return books.whereIn("bookID", user.getWishlist()).get().continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+            @Override
+            public List<Book> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                if (task.isSuccessful()) {
+                    QuerySnapshot query = task.getResult();
+                    assert query != null;
+                    try {
+                        return query.toObjects(Book.class);
+                    }
+                    catch(Exception e) {
+                        Log.e(TAG, e.getMessage());
+                        return null;
+                    }
+                } else {
+                    Log.d(TAG, "Get Failure: " + task.getException());
+                    return new ArrayList<Book>();
+                }
+            }
+        });
+    }
+
     public Task<List<Profile>> getBookBorrowers(String bookID) {
         return users
                 .whereArrayContains("booksBorrowedOrRequested", bookID)
@@ -416,7 +443,65 @@ public class DatabaseWrapper {
                 });
     }
 
-    // TODO you cant request your own book
+    public Task<Boolean> wishForBook (final String borrowerUid, final String bookID) {
+    return db.runTransaction(new Transaction.Function<Boolean>() {
+
+        @Nullable
+        @Override
+        public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+            DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
+
+            List<String> wishList = (List<String>) userSnapshot.get("wishlist");
+            if (wishList == null) {
+                wishList = new ArrayList<>();
+            }
+
+            wishList.add(bookID);
+
+            transaction.update(users.document(borrowerUid), "wishlist", wishList);
+            return true;
+        }
+    });
+    }
+
+    public Task<Boolean> cancelWish (final String borrowerUid, final String bookID) {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
+
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
+                DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
+
+                String title = (String) bookSnapshot.get("title");
+
+                List<String> bookList = (List<String>) userSnapshot.get("booksBorrowedOrRequested");
+                if (bookList == null) {
+                    bookList = new ArrayList<>();
+                }
+                List<String> wishList = (List<String>) userSnapshot.get("wishlist");
+                if (wishList == null) {
+                    wishList = new ArrayList<>();
+                }
+                List<String> notificationList = (List<String>) userSnapshot.get("notifications");
+                if (notificationList == null) {
+                    notificationList = new ArrayList<>();
+                }
+
+                wishList.remove(bookID);
+                if (borrowerUid != userId) {
+                    notificationList.add(bookID + "|" + title + " was added to your requests automatically");
+                } else {
+                    notificationList.add(bookID + "|You removed " + title + " from your wishlist");
+                }
+
+                transaction.update(users.document(borrowerUid), "notifications", notificationList);
+                transaction.update(users.document(borrowerUid), "wishlist", wishList);
+                return true;
+            }
+        });
+    }
+
     public Task<Boolean> makeRequest (final String borrowerUid, final String bookID) {
         return db.runTransaction(new Transaction.Function<Boolean>() {
 
@@ -605,6 +690,32 @@ public class DatabaseWrapper {
                 transaction.update(books.document(bookID), "borrower", null);
                 transaction.update(books.document(bookID), "confirmationNeeded", false);
                 return true;
+            }
+        }).continueWithTask(new Continuation<Boolean, Task<Boolean>>() {
+            @Override
+            public Task<Boolean> then(@NonNull Task<Boolean> task) throws Exception {
+                users.whereArrayContains("wishlist", bookID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            try {
+                                ArrayList<Profile> wishers = (ArrayList<Profile>) query.toObjects(Profile.class);
+                                for (Profile wisher : wishers) {
+                                    dbw.makeRequest(wisher.getUserID(), bookID);
+                                    dbw.cancelWish(wisher.getUserID(), bookID);
+
+                                }
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                            }
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                        }
+                    }
+                });
+                return task;
             }
         });
     }
