@@ -622,9 +622,9 @@ public class DatabaseWrapper {
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 Log.d("testingDB", bookID);
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
-//                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && !(Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("accepted"))) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && !(Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("accepted"))) {
+                    return false;
+                }
 
                 transaction.update(books.document(bookID), "confirmationNeeded", true);
                 return true;
@@ -639,9 +639,9 @@ public class DatabaseWrapper {
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
 
-//                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && (Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("accepted"))) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && (Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("accepted"))) {
+                    return false;
+                }
                 transaction.update(books.document(bookID), "status", "borrowed");
                 transaction.update(books.document(bookID), "borrower", borrowerUid);
                 transaction.update(books.document(bookID), "confirmationNeeded", false);
@@ -657,9 +657,9 @@ public class DatabaseWrapper {
             @Override
             public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
                 DocumentSnapshot bookSnapshot = transaction.get(books.document(bookID));
-//                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && !(Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("borrowed"))) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && !(Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("borrowed"))) {
+                    return false;
+                }
                 transaction.update(books.document(bookID), "confirmationNeeded", true);
                 return true;
             }
@@ -680,9 +680,9 @@ public class DatabaseWrapper {
                 }
 
                 bookList.remove(bookID);
-//                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && (Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("borrowed"))) {
-//                    return false;
-//                }
+                if ( !(((String) bookSnapshot.get("isbn")).equals(ISBN) && (Boolean) bookSnapshot.get("confirmationNeeded") && ((String) bookSnapshot.get("status")).equals("borrowed"))) {
+                    return false;
+                }
                 transaction.update(users.document(borrowerID), "booksBorrowedOrRequested", bookList);
 
                 transaction.update(books.document(bookID), "requesters", new ArrayList<>());
