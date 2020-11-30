@@ -181,17 +181,17 @@ public class ProfileUnitTest {
      */
     @Test
     public void testNotificationMethods() {
-        Notification mockNotification = new Notification("Mock notification.");
-        mock.addNotification(mockNotification);
-        assertEquals(mock.getNotifications().get(0).getDescription(), "Mock notification.");
+        Notification mockNotification = new Notification("Test|Mock notification.");
+        mock.addNotification(mockNotification.getDescription());
+        assertEquals(mock.getNotifications().get(0), "Mock notification.");
 
-        mock.removeNotification(mockNotification);
+        mock.removeNotification(mockNotification.getDescription());
         assertEquals(mock.getNotifications().size(), 0);
 
-        ArrayList<Notification> newMockNotificationList = new ArrayList<>();
-        Notification anotherMockNotification = new Notification("Another mock notification.");
-        newMockNotificationList.add(anotherMockNotification);
+        ArrayList<String> newMockNotificationList = new ArrayList<>();
+        Notification anotherMockNotification = new Notification("Test|Another mock notification.");
+        newMockNotificationList.add(anotherMockNotification.getDescription());
         mock.setNotifications(newMockNotificationList);
-        assertEquals(mock.getNotifications().get(0).getDescription(), "Another mock notification.");
+        assertEquals(mock.getNotifications().get(0), "Another mock notification.");
     }
 }
