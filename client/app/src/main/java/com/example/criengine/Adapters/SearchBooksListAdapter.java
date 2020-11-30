@@ -6,13 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.NonOwnerBookViewActivity;
 import com.example.criengine.Activities.RootActivity;
 import com.example.criengine.Database.DatabaseWrapper;
@@ -20,8 +18,6 @@ import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.example.criengine.Objects.Book;
-import com.example.criengine.R;
 
 import java.util.ArrayList;
 

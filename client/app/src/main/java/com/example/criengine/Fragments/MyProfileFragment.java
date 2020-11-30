@@ -19,8 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A person's own profile fragment where they can edit their profile.
- * Outstanding Issues:
- * - Does not push changes to the database.
  */
 public class MyProfileFragment extends ProfileFragment implements IOnBackPressed {
     private Profile myProfile;

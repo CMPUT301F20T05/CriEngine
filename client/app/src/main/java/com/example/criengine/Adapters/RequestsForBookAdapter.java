@@ -25,8 +25,6 @@ import java.util.ArrayList;
 /*
  * RequestsForBookAdapter is custom ArrayAdapter that can be used to show User profiles that have
  * requested a book in a ListView.
- * Outstanding Issues:
- * - Does not retrieve nor push changes to the database.
  */
 public class RequestsForBookAdapter extends ArrayAdapter<Profile> {
     private ArrayList<Profile> userRequests;
