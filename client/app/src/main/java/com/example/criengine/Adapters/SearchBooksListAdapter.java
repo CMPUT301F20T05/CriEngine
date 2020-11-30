@@ -55,15 +55,14 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
         // Get the object from the xml file.
         TextView searchTitle = view.findViewById(R.id.search_book_title);
         TextView searchAuthor = view.findViewById(R.id.search_book_author);
-        TextView searchDesc = view.findViewById(R.id.search_book_desc);
         TextView searchStatus = view.findViewById(R.id.search_book_status);
         final TextView searchUser = view.findViewById(R.id.search_book_user);
 
         final Book book = items.get(position);
 
         searchTitle.setText(book.getTitle());
-        searchAuthor.setText(book.getAuthor());
-        searchDesc.setText(book.getDescription());
+        String author = "By: " + book.getAuthor();
+        searchAuthor.setText(author);
         searchStatus.setText(book.getStatus());
 
         // Get the book's owner username

@@ -139,6 +139,10 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
                     public void onSuccess(Profile profile) {
                         userProfile = profile;
                         checkIfAvailable();
+                        if (book.getLatLng() != null && book.getRequesters().contains(userProfile.getUserID())) {
+                            mapView.setVisibility(View.VISIBLE);
+                            meetingLocationText.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
         );
@@ -158,8 +162,6 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
 
         givenLocation = null;
         if (book.getLatLng() != null) {
-            mapView.setVisibility(View.VISIBLE);
-            meetingLocationText.setVisibility(View.VISIBLE);
             givenLocation = book.getLatLng();
             mapView.onCreate(savedInstanceState);
 
