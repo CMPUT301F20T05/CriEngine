@@ -10,6 +10,7 @@ import androidx.test.core.app.ApplicationProvider;
 import com.example.criengine.Adapters.RequestsForBookAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
+import com.example.criengine.Objects.Profile;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +38,7 @@ public class RequestsForBookAdapterTest {
     DatabaseWrapper dbw;
     private Context context;
 
-    String requester;
+    Profile requester;
     Book book;
 
     View adaptedView;
@@ -57,7 +58,7 @@ public class RequestsForBookAdapterTest {
 
         book = new Book();
 
-        requester = "";
+        requester = new Profile();
     }
 
     /**
@@ -65,7 +66,7 @@ public class RequestsForBookAdapterTest {
      *  and obtains the view of the first item
      *  It then it properties: adaptedView, actionButton and statusText
      */
-    public void setupAdaptedItemView(ArrayList<String> list) {
+    public void setupAdaptedItemView(ArrayList<Profile> list) {
         RequestsForBookAdapter RequestsForBookAdapter =
                 new RequestsForBookAdapter(context, list, book);
         View itemView = View.inflate(context, R.layout.user_accept_or_reject, null);
@@ -82,7 +83,7 @@ public class RequestsForBookAdapterTest {
      *  It then it properties: adaptedView, actionButton and statusText
      */
     public void setupAdaptedItemView() {
-        ArrayList<String> requesterList = new ArrayList<>();
+        ArrayList<Profile> requesterList = new ArrayList<>();
         requesterList.add(requester);
         setupAdaptedItemView(requesterList);
     }
@@ -93,55 +94,9 @@ public class RequestsForBookAdapterTest {
      */
     @Test
     public void ConstructorTest() {
-        ArrayList<String> requesterList = new ArrayList<>();
+        ArrayList<Profile> requesterList = new ArrayList<>();
         RequestsForBookAdapter RequestsForBookAdapter =
                 new RequestsForBookAdapter(context, requesterList, book);
         Assert.assertNotNull(RequestsForBookAdapter);
     }
-
-    /**
-     * Tests that the Requester username is displayed
-     */
-    @Test
-    public void RequesterUsernameTest() {
-        requester = "user1";
-        setupAdaptedItemView();
-        Assert.assertEquals(requester, usernameTextView.getText());
-    }
-
-    /*
-    @Test
-    public void AcceptRequestTest() {
-        ArrayList<String> requesterList = new ArrayList<>();
-        requesterList.add("user1");
-
-        setupAdaptedItemView(requesterList);
-        activity.addContentView(adaptedView, new ViewGroup.LayoutParams(0,0));
-
-        Assert.assertNull(book.getStatus());
-        acceptButton.performClick();
-        Assert.assertEquals("accepted", book.getStatus());
-        Assert.assertEquals(0, requesterList.size());
-    }
-
-    @Test
-    public void RejectRequestTest() {
-        ArrayList<String> requesterList = new ArrayList<>();
-        requesterList.add("user1");
-        requesterList.add("user2");
-
-        setupAdaptedItemView(requesterList);
-
-        rejectedButton.performClick();
-        setupAdaptedItemView(requesterList);
-        Assert.assertEquals(1, requesterList.size());
-
-
-        rejectedButton.performClick();
-        setupAdaptedItemView(requesterList);
-        Assert.assertEquals("available", book.getStatus());
-        Assert.assertEquals(0, requesterList.size());
-    }
-    */
-
 }
