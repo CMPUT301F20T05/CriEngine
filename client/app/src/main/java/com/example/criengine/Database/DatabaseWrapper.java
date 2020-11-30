@@ -337,6 +337,10 @@ public class DatabaseWrapper {
     }
 
     public Task<List<Book>> getWishedForBooks(Profile user) {
+        if (user.getWishlist() == null || user.getWishlist().isEmpty()){
+            List<Book> books = new ArrayList<Book>();
+            return Tasks.forResult(books);
+        }
         return books.whereIn("bookID", user.getWishlist()).get().continueWith(new Continuation<QuerySnapshot, List<Book>>() {
             @Override
             public List<Book> then(@NonNull Task<QuerySnapshot> task) throws Exception {
