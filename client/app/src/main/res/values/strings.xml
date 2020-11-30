@@ -111,4 +111,6 @@
     <!-- Search Activity -->
     <string name="search_book">Books Matching: </string>
     <string name="search_profile">Profiles Matching: </string>
+    <string name="search_checkbox">Show All Books</string>
+
 </resources>

@@ -28,10 +28,11 @@ import static android.app.Activity.RESULT_OK;
 public class RequestedBooksFragment extends RootFragment implements OnFragmentInteractionListener {
     Button filterButton;
     ListView bookListView;
-    List<String> filters = Arrays.asList("Requested", "Borrowing", "Accepted");
+    List<String> filters = Arrays.asList("Requested", "Borrowing", "Accepted", "Wishlist");
     List<String> activeFilters = new ArrayList<>();
     ArrayList<Book> borrowerBooks = new ArrayList<>();
     ArrayList<Book> displayBooks = new ArrayList<>();
+    ArrayList<Book> wishBooks = new ArrayList<>();
     BorrowerBooksListAdapter borrowerBooksListAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
 
@@ -73,7 +74,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
             }
         });
 
-        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks, this);
+        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks, this, wishBooks);
 
         bookListView = getView().findViewById(R.id.bookListView);
         bookListView.setAdapter(borrowerBooksListAdapter);
@@ -82,11 +83,32 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                 new OnSuccessListener<List<Book>>() {
                     @Override
                     public void onSuccess(List<Book> books) {
-                        borrowerBooks.addAll(books);
-                        displayBooks.addAll(books);
+                        for(Book book: books) {
+                            if (book == null || book.getStatus() == null){
+                                continue;
+                            }
+                            if(book.getStatus().equals("borrowed")
+                                    || book.getStatus().equals("requested")
+                                    || book.getStatus().equals("accepted")) {
+                                borrowerBooks.add(book);
+                                displayBooks.add(book);
+                            }
+                        }
                         borrowerBooksListAdapter.notifyDataSetChanged();
                     }
                 }
+        );
+
+        // Get the wishlist books.
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                profile -> dbw.getWishedForBooks(profile).addOnSuccessListener(
+                        books -> {
+                            wishBooks.addAll(books);
+                            borrowerBooks.addAll(books);
+                            displayBooks.addAll(books);
+                            borrowerBooksListAdapter.notifyDataSetChanged();
+                        }
+                )
         );
 
         // Setup Swipe refresh layout to use default root fragment lister
@@ -119,16 +141,18 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                 boolean isRequested = book.getStatus().equals("requested");
                 boolean userIsBorrower = book.getBorrower() != null && book.getBorrower().equals(dbw.userId);
                 boolean isBorrowed = book.getStatus().equals("borrowed") && userIsBorrower;
-                boolean isAccepted = book.getStatus().equals("accepted") && userIsBorrower;
+                boolean isWished = wishBooks.contains(book);
+                boolean isAccepted = book.getStatus().equals("accepted");
                 if ((activeFilters.contains("Requested") && isRequested)
                         || (activeFilters.contains("Borrowing") && isBorrowed)
-                        || (activeFilters.contains("Accepted") && isAccepted))
+                        || (activeFilters.contains("Accepted") && isAccepted)
+                        || (activeFilters.contains("Wishlist") && isWished))
                     displayBooks.add(book);
             }
         } else {
             // If no filter was chosen, then display all the books.
-            // NOTE: We cannot make the displayBooks = myBooks. This assigns a pointer that we don't
-            // want.
+            // NOTE: We cannot make the displayBooks = borrowerBooks. This assigns a pointer that
+            // we don't want.
             displayBooks.addAll(borrowerBooks);
         }
         borrowerBooksListAdapter.notifyDataSetChanged();

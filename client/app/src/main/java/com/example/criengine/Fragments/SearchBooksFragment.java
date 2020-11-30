@@ -11,6 +11,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,7 +47,9 @@ public class SearchBooksFragment extends RootFragment {
     private ListView profileResults;
     private TextView bookLabel;
     private TextView profileLabel;
+    private CheckBox checkBox;
 
+    private Boolean showAll = Boolean.FALSE;
     private DatabaseWrapper dbw;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SwipeRefreshLayout swipeProfileRefreshLayout;
@@ -77,6 +81,8 @@ public class SearchBooksFragment extends RootFragment {
         profileLabel = getView().findViewById(R.id.search_profile_label);
         profileLabel.setText(R.string.search_profile);
 
+        checkBox = getView().findViewById(R.id.search_all_books);
+
         // Setup lists of books and profiles
         allBooks = new ArrayList<Book>();
         allProfiles = new ArrayList<Profile>();
@@ -92,10 +98,14 @@ public class SearchBooksFragment extends RootFragment {
             @Override
             public void onSuccess(List<Book> books) {
                 allBooks.addAll(books);
-                for (Book book : allBooks) {
-                    if (!book.getStatus().equals("accepted")
-                        && !book.getStatus().equals("borrowed")) {
-                        searchBooks.add(book);
+                if (showAll) {
+                    searchBooks.addAll(allBooks);
+                } else {
+                    for (Book book : allBooks) {
+                        if (!book.getStatus().equals("accepted")
+                                && !book.getStatus().equals("borrowed")) {
+                            searchBooks.add(book);
+                        }
                     }
                 }
                 searchBookAdapter.notifyDataSetChanged();
@@ -129,17 +139,7 @@ public class SearchBooksFragment extends RootFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 bookString[0] = "Books Matching: " + s.toString();
                 bookLabel.setText(bookString[0]);
-                searchBooks.clear();
-                for (Book book : allBooks) {
-                    if ((book.getDescription().toLowerCase().contains(s.toString().toLowerCase())
-                        || book.getAuthor().toLowerCase().contains(s.toString().toLowerCase())
-                        || book.getTitle().toLowerCase().contains(s.toString().toLowerCase()))
-                        && !book.getStatus().equals("accepted")
-                        && !book.getStatus().equals("borrowed")) {
-                        searchBooks.add(book);
-                    }
-                }
-                searchBookAdapter.notifyDataSetChanged();
+                fill_books(s.toString());
 
                 profileString[0] = "Profiles Matching: " + s.toString();
                 profileLabel.setText(profileString[0]);
@@ -156,6 +156,18 @@ public class SearchBooksFragment extends RootFragment {
             public void afterTextChanged(Editable s) { }
         });
 
+        // Checkbox listener, shows all book when checked else does not show borrowed or accepted
+        // books
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                showAll = true;
+                fill_books(keyword.getText().toString());
+            } else {
+                showAll = false;
+                fill_books(keyword.getText().toString());
+            }
+        });
+
         // Setup Swipe refresh layout to use default root fragment lister
         swipeRefreshLayout = getView().findViewById(R.id.search_swipe_refresh_layout);
         if(swipeRefreshLayout != null) {
@@ -167,5 +179,25 @@ public class SearchBooksFragment extends RootFragment {
         if (swipeProfileRefreshLayout != null) {
             swipeProfileRefreshLayout.setOnRefreshListener(new RefreshRootListener(swipeProfileRefreshLayout));
         }
+    }
+
+    // Function to fill searchbooks with books with given keyword
+    public void fill_books(String key) {
+        searchBooks.clear();
+        for (Book book : allBooks) {
+            if ((book.getDescription().toLowerCase().contains(key.toLowerCase())
+                    || book.getAuthor().toLowerCase().contains(key.toLowerCase())
+                    || book.getTitle().toLowerCase().contains(key.toLowerCase()))) {
+                if (showAll) {
+                    searchBooks.add(book);
+                } else {
+                    if (!book.getStatus().equals("accepted")
+                            && !book.getStatus().equals("borrowed")) {
+                        searchBooks.add(book);
+                    }
+                }
+            }
+        }
+        searchBookAdapter.notifyDataSetChanged();
     }
 }

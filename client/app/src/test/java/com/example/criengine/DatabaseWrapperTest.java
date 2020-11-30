@@ -1,16 +1,10 @@
 package com.example.criengine;
 
-import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
-
-import com.example.criengine.Adapters.BorrowerBooksListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
 import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,8 +23,6 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
-
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -39,8 +31,8 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricTestRunner.class)
 public class DatabaseWrapperTest {
 
-@Rule
-public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     FirebaseFirestore firestoreMock;
@@ -48,12 +40,8 @@ public MockitoRule mockitoRule = MockitoJUnit.rule();
     @Mock
     FirebaseUser userMock;
 
-//    @Mock
-
-
     @Mock
     Task<DocumentSnapshot> mockDocumentTaskSnapshot;
-
 
     @Mock
     Task<Book> mockTaskBook;
@@ -123,7 +111,4 @@ public MockitoRule mockitoRule = MockitoJUnit.rule();
         Assert.assertNotNull(book);
         Assert.assertEquals(book, returnedBook);
     }
-
-
-
 }
