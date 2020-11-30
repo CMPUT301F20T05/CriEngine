@@ -490,7 +490,7 @@ public class DatabaseWrapper {
 
                 wishList.remove(bookID);
                 if (borrowerUid != userId) {
-                    notificationList.add(bookID + "|" + title + " was added to your wishlist automatically");
+                    notificationList.add(bookID + "|" + title + " was added to your requests automatically");
                 } else {
                     notificationList.add(bookID + "|You removed " + title + " from your wishlist");
                 }
