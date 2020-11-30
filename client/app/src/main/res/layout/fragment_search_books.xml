@@ -35,26 +35,42 @@
         android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif-black"
         android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/LinearLayout"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/search_all_books"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_box" />
+
+    <CheckBox
+        android:id="@+id/search_all_books"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="2dp"
+        android:checked="false"
+        android:text="@string/search_checkbox"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/LinearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_book_label" />
 
     <LinearLayout
         android:id="@+id/LinearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="2dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/search_profile_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_book_label">
+        app:layout_constraintTop_toBottomOf="@+id/search_all_books">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/search_swipe_refresh_layout"
@@ -66,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
     <TextView
@@ -78,7 +95,7 @@
         android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif-black"
         android:text="TextView"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
