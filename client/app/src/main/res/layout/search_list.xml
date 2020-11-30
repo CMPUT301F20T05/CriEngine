@@ -10,8 +10,8 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:background="@color/list_background"
         android:layout_height="match_parent"
+        android:background="@color/list_background"
         android:orientation="vertical">
 
         <TextView
@@ -35,60 +35,46 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="2dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="4dp"
             android:layout_weight="0.5"
             android:fontFamily="sans-serif-black"
             android:gravity="center_horizontal"
             android:textAlignment="center"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/search_book_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="0.5"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/search_book_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="4dp"
-            android:layout_weight="0.3"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center_horizontal"
-            android:textAlignment="center"
-            android:textSize="14sp"
-            android:textStyle="italic" />
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/search_book_desc"
+                android:id="@+id/search_book_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginEnd="4dp"
                 android:layout_marginBottom="4dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.5"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/search_book_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="4dp"
+                android:layout_weight="0.5"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_horizontal"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
         </LinearLayout>
 
     </LinearLayout>
