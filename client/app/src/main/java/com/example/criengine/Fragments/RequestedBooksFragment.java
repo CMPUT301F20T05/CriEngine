@@ -88,8 +88,8 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                                 continue;
                             }
                             if(book.getStatus().equals("borrowed")
-                                || book.getStatus().equals("requested")
-                                || book.getStatus().equals("accepted")) {
+                                    || book.getStatus().equals("requested")
+                                    || book.getStatus().equals("accepted")) {
                                 borrowerBooks.add(book);
                                 displayBooks.add(book);
                             }

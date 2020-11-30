@@ -31,8 +31,8 @@ import static org.mockito.Mockito.when;
 @RunWith(RobolectricTestRunner.class)
 public class DatabaseWrapperTest {
 
-@Rule
-public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     FirebaseFirestore firestoreMock;

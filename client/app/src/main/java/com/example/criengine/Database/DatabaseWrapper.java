@@ -393,26 +393,26 @@ public class DatabaseWrapper {
      */
     public Task<List<Book>> searchBooks() {
         return books
-            .get()
-            .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
-                @Override
-                public List<Book> then(@NonNull Task<QuerySnapshot> task) throws Exception {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot query = task.getResult();
-                        assert query != null;
-                        try {
-                            return query.toObjects(Book.class);
+                .get()
+                .continueWith(new Continuation<QuerySnapshot, List<Book>>() {
+                    @Override
+                    public List<Book> then(@NonNull Task<QuerySnapshot> task) throws Exception {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            assert query != null;
+                            try {
+                                return query.toObjects(Book.class);
+                            }
+                            catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                return null;
+                            }
+                        } else {
+                            Log.d(TAG, "Get Failure: " + task.getException());
+                            return new ArrayList<Book>();
                         }
-                        catch(Exception e) {
-                            Log.e(TAG, e.getMessage());
-                            return null;
-                        }
-                    } else {
-                        Log.d(TAG, "Get Failure: " + task.getException());
-                        return new ArrayList<Book>();
                     }
-                }
-            });
+                });
     }
 
     /**
@@ -444,24 +444,24 @@ public class DatabaseWrapper {
     }
 
     public Task<Boolean> wishForBook (final String borrowerUid, final String bookID) {
-    return db.runTransaction(new Transaction.Function<Boolean>() {
+        return db.runTransaction(new Transaction.Function<Boolean>() {
 
-        @Nullable
-        @Override
-        public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-            DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
+            @Nullable
+            @Override
+            public Boolean apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot userSnapshot = transaction.get(users.document(borrowerUid));
 
-            List<String> wishList = (List<String>) userSnapshot.get("wishlist");
-            if (wishList == null) {
-                wishList = new ArrayList<>();
+                List<String> wishList = (List<String>) userSnapshot.get("wishlist");
+                if (wishList == null) {
+                    wishList = new ArrayList<>();
+                }
+
+                wishList.add(bookID);
+
+                transaction.update(users.document(borrowerUid), "wishlist", wishList);
+                return true;
             }
-
-            wishList.add(bookID);
-
-            transaction.update(users.document(borrowerUid), "wishlist", wishList);
-            return true;
-        }
-    });
+        });
     }
 
     public Task<Boolean> cancelWish (final String borrowerUid, final String bookID) {
@@ -732,24 +732,24 @@ public class DatabaseWrapper {
         UploadTask uploadTask = imageRef.putBytes(data);
 
         return uploadTask.continueWith(new Continuation<UploadTask.TaskSnapshot, Boolean>() {
-                                    @Override
-                                    public Boolean then(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            UploadTask.TaskSnapshot result = task.getResult();
-                                            assert result != null;
-                                            try {
-                                                return true;
-                                            }
-                                            catch(Exception e) {
-                                                Log.e(TAG, e.getMessage());
-                                                return null;
-                                            }
-                                        } else {
-                                            Log.d(TAG, "Get Failure: " + task.getException());
-                                            return null;
-                                        }
-                                    }
-                                }
+                                           @Override
+                                           public Boolean then(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                               if (task.isSuccessful()) {
+                                                   UploadTask.TaskSnapshot result = task.getResult();
+                                                   assert result != null;
+                                                   try {
+                                                       return true;
+                                                   }
+                                                   catch(Exception e) {
+                                                       Log.e(TAG, e.getMessage());
+                                                       return null;
+                                                   }
+                                               } else {
+                                                   Log.d(TAG, "Get Failure: " + task.getException());
+                                                   return null;
+                                               }
+                                           }
+                                       }
 
         );
 

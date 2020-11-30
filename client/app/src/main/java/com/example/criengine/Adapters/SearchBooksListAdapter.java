@@ -81,7 +81,7 @@ public class SearchBooksListAdapter extends ArrayAdapter<Book> {
                 // Book was clicked in search fragment
                 if (isSearchFragment) {
                     intent.putExtra("Page", RootActivity.PAGE.SEARCH);
-                // Book was clicked in another activity
+                    // Book was clicked in another activity
                 } else {
                     intent.putExtra("Page", RootActivity.PAGE.OTHER);
                 }
