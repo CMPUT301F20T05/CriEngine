@@ -4,6 +4,8 @@ Scrum Board: https://github.com/CMPUT301F20T05/CriEngine/projects/1
 
 Wiki Link: https://github.com/CMPUT301F20T05/CriEngine/wiki
 
+Demo Link: https://drive.google.com/file/d/1O3_8AlQRsDWSMYsN19EIMyER12gJNC1m/view?usp=sharing
+
 ----
 
 ## Workflow
