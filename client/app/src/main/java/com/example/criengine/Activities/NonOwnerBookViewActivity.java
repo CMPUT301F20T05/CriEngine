@@ -258,7 +258,6 @@ public class NonOwnerBookViewActivity extends AppCompatActivity implements OnMap
         editText.setTextColor(Color.BLACK);
     }
 
-    //TODO return to the correct page by passing startpage as intent
     @Override
     public void onBackPressed() {
         // go back to previous activity

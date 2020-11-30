@@ -89,7 +89,5 @@ public class UserProfileActivity extends ProfileActivity {
                 });
             }
         });
-
-        // TODO: write integration tests once the search is in place
     }
 }
