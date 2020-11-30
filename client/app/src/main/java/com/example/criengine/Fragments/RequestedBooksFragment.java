@@ -90,6 +90,18 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                 }
         );
 
+        // Get the wishlist books.
+        dbw.getProfile(dbw.userId).addOnSuccessListener(
+                profile -> dbw.getWishedForBooks(profile).addOnSuccessListener(
+                        books -> {
+                            wishBooks.addAll(books);
+                            borrowerBooks.addAll(books);
+                            displayBooks.addAll(books);
+                            borrowerBooksListAdapter.notifyDataSetChanged();
+                        }
+                )
+        );
+
         // Setup Swipe refresh layout to use default root fragment lister
         swipeRefreshLayout = getView().findViewById(R.id.my_requests_swipe_refresh_layout);
         if (swipeRefreshLayout != null) {
@@ -121,9 +133,11 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
                 boolean userIsBorrower = book.getBorrower() != null && book.getBorrower().equals(dbw.userId);
                 boolean isBorrowed = book.getStatus().equals("borrowed") && userIsBorrower;
                 boolean isAccepted = book.getStatus().equals("accepted") && userIsBorrower;
+                boolean isWished = wishBooks.contains(book);
                 if ((activeFilters.contains("Requested") && isRequested)
                         || (activeFilters.contains("Borrowing") && isBorrowed)
-                        || (activeFilters.contains("Accepted") && isAccepted))
+                        || (activeFilters.contains("Accepted") && isAccepted)
+                        || (activeFilters.contains("Wishlist") && isWished))
                     displayBooks.add(book);
             }
         } else {
