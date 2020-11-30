@@ -9,6 +9,7 @@ import androidx.test.core.app.ApplicationProvider;
 
 import com.example.criengine.Adapters.MyBooksAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
+import com.example.criengine.Fragments.MyBooksListFragment;
 import com.example.criengine.Objects.Book;
 
 import org.junit.Assert;
@@ -42,6 +43,8 @@ public class MyBooksAdapterTest {
     Button actionButton;
     TextView statusText;
 
+    MyBooksListFragment fragment;
+
     /**
      * Initializes a mock database and context before every test
      */
@@ -55,6 +58,8 @@ public class MyBooksAdapterTest {
         book = new Book();
         book.setTitle("Test");
         book.setStatus("");
+
+        fragment = new MyBooksListFragment();
     }
 
     /**
@@ -65,7 +70,7 @@ public class MyBooksAdapterTest {
     public void setupAdaptedItemView() {
         ArrayList<Book> bookList = new ArrayList<>();
         bookList.add(book);
-        MyBooksAdapter MyBooksAdapter = new MyBooksAdapter(context, bookList);
+        MyBooksAdapter MyBooksAdapter = new MyBooksAdapter(context, bookList, fragment);
         View itemView = View.inflate(context, R.layout.list_format, null);
         adaptedView = MyBooksAdapter.getView(0, itemView, null);
         actionButton = adaptedView.findViewById(R.id.actionButton);
@@ -78,7 +83,7 @@ public class MyBooksAdapterTest {
     @Test
     public void MyBooksAdapterConstructorTest() {
         ArrayList<Book> bookList = new ArrayList<>();
-        MyBooksAdapter MyBooksAdapter = new MyBooksAdapter(context, bookList);
+        MyBooksAdapter MyBooksAdapter = new MyBooksAdapter(context, bookList, fragment);
         Assert.assertNotNull(MyBooksAdapter);
     }
 
@@ -91,40 +96,6 @@ public class MyBooksAdapterTest {
         setupAdaptedItemView();
         Assert.assertEquals("See Requests", actionButton.getText());
         Assert.assertEquals("Has Requests", statusText.getText());
-    }
-
-    /**
-     * Tests the view in the case of a borrowed book
-     */
-    @Test
-    public void MyBooksAdapterBookBorrowedTest() {
-        book.setStatus("borrowed");
-        setupAdaptedItemView();
-        Assert.assertEquals("Scan", actionButton.getText());
-        Assert.assertEquals("Borrowed", statusText.getText());
-    }
-
-    /**
-     * Tests the view in the case of an accepted book with no geolocation
-     */
-    @Test
-    public void MyBooksAdapterBookAcceptedLocationTest() {
-        book.setStatus("accepted");
-        setupAdaptedItemView();
-        Assert.assertEquals("Location", actionButton.getText());
-        Assert.assertEquals("Accepted", statusText.getText());
-    }
-
-    /**
-     * Tests the view in the case of an accepted book with geolocation
-     */
-    @Test
-    public void MyBooksAdapterBookAcceptedScanTest() {
-        book.setStatus("accepted");
-        book.setGeolocation("Edmonton");
-        setupAdaptedItemView();
-        Assert.assertEquals("Scan", actionButton.getText());
-        Assert.assertEquals("Accepted", statusText.getText());
     }
 
     /**
