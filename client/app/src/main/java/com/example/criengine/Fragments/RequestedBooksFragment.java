@@ -74,7 +74,7 @@ public class RequestedBooksFragment extends RootFragment implements OnFragmentIn
             }
         });
 
-        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks, this);
+        borrowerBooksListAdapter = new BorrowerBooksListAdapter(getContext(), displayBooks, this, wishBooks);
 
         bookListView = getView().findViewById(R.id.bookListView);
         bookListView.setAdapter(borrowerBooksListAdapter);
