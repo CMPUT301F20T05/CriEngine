@@ -17,7 +17,7 @@ public class NotificationUnitTest {
      */
     @Before
     public void init() {
-        notification = new Notification("This is a mock notification");
+        notification = new Notification("Test|This is a mock notification");
     }
 
     /**
