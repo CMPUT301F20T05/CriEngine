@@ -11,10 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.criengine.Activities.MyBookActivity;
 import com.example.criengine.Activities.UserProfileActivity;
 import com.example.criengine.Database.DatabaseWrapper;
-import com.example.criengine.Objects.Book;
 import com.example.criengine.Objects.Profile;
 import com.example.criengine.R;
 

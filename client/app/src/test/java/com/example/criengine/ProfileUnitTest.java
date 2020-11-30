@@ -177,6 +177,17 @@ public class ProfileUnitTest {
     }
 
     /**
+     * Test getter/setters for wishlist attribute.
+     */
+    @Test
+    public void testWishlistMethods() {
+        ArrayList<String> mockList = new ArrayList<>();
+        mockList.add("Book1");
+        mock.setWishlist(mockList);
+        assertEquals(mock.getWishlist().size(), 1);
+    }
+
+    /**
      * Test getter/setters/add/remove for the notification attribute.
      */
     @Test

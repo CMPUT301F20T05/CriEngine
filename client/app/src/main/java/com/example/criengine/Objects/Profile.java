@@ -18,6 +18,7 @@ public class Profile implements Serializable {
     private String bio;
     private ArrayList<String> booksOwned;
     private ArrayList<String> booksBorrowedOrRequested;
+    private ArrayList<String> wishlist;
     private ArrayList<String> notifications;
 
     /**
@@ -50,6 +51,7 @@ public class Profile implements Serializable {
         this.bio = bio;
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.wishlist = new ArrayList<>();
         this.notifications = new ArrayList<>();
     }
 
@@ -72,6 +74,7 @@ public class Profile implements Serializable {
         this.bio = null;
         this.booksOwned = new ArrayList<>();
         this.booksBorrowedOrRequested = new ArrayList<>();
+        this.wishlist = new ArrayList<>();
         this.notifications = new ArrayList<>();
     }
 
@@ -265,6 +268,22 @@ public class Profile implements Serializable {
      */
     public void removeBooksBorrowedOrRequested(String bookID) {
         this.booksBorrowedOrRequested.remove(bookID);
+    }
+
+    /**
+     * Get the list of wished for books
+     * @return The list of wished for books
+     */
+    public ArrayList<String> getWishlist() {
+        return wishlist;
+    }
+
+    /**
+     * Set the list of wished for books
+     * @param wishlist The list of wished for books
+     */
+    public void setWishlist(ArrayList<String> wishlist) {
+        this.wishlist = wishlist;
     }
 
     /**

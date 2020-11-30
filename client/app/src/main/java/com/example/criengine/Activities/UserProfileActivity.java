@@ -2,12 +2,8 @@ package com.example.criengine.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.criengine.Adapters.SearchBooksListAdapter;
 import com.example.criengine.Database.DatabaseWrapper;
@@ -21,8 +17,6 @@ import java.util.List;
 
 /**
  * User profile activity.
- * Outstanding Issues:
- * - Not currently implemented.
  */
 public class UserProfileActivity extends ProfileActivity {
 
@@ -89,7 +83,5 @@ public class UserProfileActivity extends ProfileActivity {
                 });
             }
         });
-
-        // TODO: write integration tests once the search is in place
     }
 }

@@ -35,11 +35,8 @@ import static android.content.ContentValues.TAG;
 
 /**
  * Handles user account registration.
- * Outstanding issues:
- * - Does not push to the database.
  */
 public class RegisterAccount extends AppCompatActivity {
-//    DatabaseWrapper dbw;
     Button submitButton;
     EditText usernameField;
     EditText emailField;

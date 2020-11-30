@@ -31,6 +31,7 @@ import java.util.ArrayList;
 public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
 
     private ArrayList<Book> bookItems;
+    private ArrayList<Book> wished;
     private Context context;
     private Fragment fragment;
     private DatabaseWrapper dbw;
@@ -44,11 +45,12 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
      * @param context   The context.
      * @param bookItems The list of book items to be displayed.
      */
-    public BorrowerBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems, Fragment fragment) {
+    public BorrowerBooksListAdapter(@NonNull Context context, @NonNull ArrayList<Book> bookItems, Fragment fragment, ArrayList<Book> wished) {
         super(context, 0, bookItems);
         this.context = context;
         this.fragment = fragment;
         this.bookItems = bookItems;
+        this.wished = wished;
         dbw = DatabaseWrapper.getWrapper();
     }
 
@@ -122,7 +124,9 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
         headerText.setText(book.getTitle());
 
         actionButton.setEnabled(true);
-        statusText.setText(book.getStatus());
+        String statusString = book.getStatus().substring(0, 1).toUpperCase()
+                + book.getStatus().substring(1);
+        statusText.setText(statusString);
 
         actionButton.setVisibility(View.VISIBLE);
         actionButton.setEnabled(true);
@@ -178,6 +182,11 @@ public class BorrowerBooksListAdapter extends ArrayAdapter<Book> {
                     actionButton.setVisibility(View.GONE);
                 }
                 break;
+        }
+
+        if (wished.contains(book)) {
+            statusText.setText("Wishlisted");
+            actionButton.setVisibility(View.GONE);
         }
 
         return view;

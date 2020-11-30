@@ -25,7 +25,6 @@ import java.io.IOException;
 
 /**
  * The main activity for all things scan related.
- * <p>
  * code referenced from https://medium.com/analytics-vidhya/creating-a-barcode-scanner-using-android-studio-71cff11800a2
  * Accessed Nov 5 2020
  */
