@@ -59,7 +59,7 @@ public class TestUtilityMethods {
         solo.clickInList(0);
         solo.clickOnButton("Delete Book");
         solo.clickOnText("DELETE");
-        solo.sleep(1000);
+        solo.sleep(2000);
     }
 
     /**
